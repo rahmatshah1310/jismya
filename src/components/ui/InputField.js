@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ErrorMessage, Button } from "@components";
+import Button from "./Button";
 
 //inputprops interface removed
 const InputField = ({
@@ -40,22 +40,16 @@ const InputField = ({
         {isPassword && (
           <Button
             onClick={() =>
-              setSelectedType(
-                selectedType === "password" ? "text" : "password"
-              )
+              setSelectedType(selectedType === "password" ? "text" : "password")
             }
             className="absolute top-1/2 -translate-y-1/2 right-3"
           >
             {selectedType === "password" ? "Show" : "Hide"}
           </Button>
         )}
-        <label
-          htmlFor={name}
-        >
-          {label}
-        </label>
+        <label htmlFor={name}>{label}</label>
       </div>
-      {error && <ErrorMessage error={error} />}
+      {/* {error && <ErrorMessage error={error} />} */}
     </div>
   );
 };
