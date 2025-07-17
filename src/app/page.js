@@ -13,12 +13,41 @@ import 'swiper/css/pagination'
 import { useCart } from '@/context/CartContext'
 import { useRouter } from 'next/navigation'
 import FeaturedProductsPage from './featured/page'
+import InputField from '@/components/ui/InputField'
+import { useBannersByDevice, useGetBanners } from './api/bannerApi'
 
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [swiperInstance, setSwiperInstance] = useState(null)
+  const [deviceType, setDeviceType] = useState('laptop');
+
+const { data: laptopBanners } = useBannersByDevice('laptop')
+const { data: tabletBanners } = useBannersByDevice('tablet')
+const { data: mobileBanners } = useBannersByDevice('mobile')
+
   const router = useRouter()
+
+useEffect(() => {
+  const updateDeviceType = () => {
+    const width = window.innerWidth;
+    if (width < 768) setDeviceType('mobile');
+    else if (width < 1024) setDeviceType('tablet');
+    else setDeviceType('laptop');
+  };
+
+  updateDeviceType();
+  window.addEventListener('resize', updateDeviceType);
+  return () => window.removeEventListener('resize', updateDeviceType);
+}, []);
+
+const banners = deviceType === 'mobile'
+  ? mobileBanners
+  : deviceType === 'tablet'
+    ? tabletBanners
+    : laptopBanners;
+
   const { addToCart } = useCart()
+const sortedBanners = banners?.slice().sort((a, b) => a.order - b.order) || [];
 
 
   
@@ -54,13 +83,13 @@ export default function Home() {
           onSlideChange={(swiper) => setCurrentSlide(swiper.realIndex)}
           className="h-full w-full"
         >
-          {slides.map((slide, index) => (
+          {sortedBanners?.map((slide, index) => (
             <SwiperSlide
               key={index}
               className="relative flex justify-center items-center min-h-[300px] sm:min-h-[400px] md:min-h-[500px]"
             >
               <Image
-                src={slide.image}
+                src={slide.imageUrl}
                 alt={`Slide ${index + 1}`}
                 fill
                 className="object-cover rounded-2xl"
@@ -91,14 +120,21 @@ export default function Home() {
                       >
                         {slide.description}
                       </motion.p>
-                      <motion.div variants={slideVariants} transition={{ duration: 0.8, delay: 0.6 }}>
+                        <motion.p
+                        variants={slideVariants}
+                        transition={{ duration: 0.8, delay: 0.4 }}
+                        className="text-sm sm:text-base md:text-lg mb-4"
+                      >
+                        {slide.deviceType}
+                      </motion.p>
+                      {/* <motion.div variants={slideVariants} transition={{ duration: 0.8, delay: 0.6 }}>
                         <Link
                           href={slide.buttonLink}
                           className="inline-block bg-pink-500 hover:bg-pink-600 px-6 py-2 rounded-md text-white text-sm"
                         >
                           {slide.buttonText}
                         </Link>
-                      </motion.div>
+                      </motion.div> */}
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -171,7 +207,7 @@ export default function Home() {
           <h2 className="text-2xl sm:text-3xl font-bold mb-2 sm:mb-4 text-[var(--color-pink-600)]">Subscribe to Our Newsletter</h2>
           <p className="mb-4 sm:mb-8 text-[var(--color-gray-600)] text-sm sm:text-base">Get updates on new arrivals and exclusive offers</p>
           <form className="flex flex-col md:flex-row gap-3 sm:gap-4">
-            <input
+            <InputField
               type="email"
               placeholder="Enter your email"
               className="flex-1 px-3 sm:px-4 py-2 sm:py-3 border border-[var(--color-gray-300)] rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 text-sm sm:text-base"
