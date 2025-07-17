@@ -1,17 +1,20 @@
-'use client'
+"use client";
 
-import { useCart } from '@/context/CartContext'
-import Image from 'next/image'
-import Link from 'next/link'
-import dynamic from 'next/dynamic'
+import { useCart } from "@/context/CartContext";
+import Image from "next/image";
+import Link from "next/link";
+import dynamic from "next/dynamic";
 
 // Dynamically import OrderPage so it runs client-side only
-const OrderPage = dynamic(() => import('../orders/addorders/page'), { ssr: false })
+// const OrderPage = dynamic(() => import("../orders/addorders/page"), {
+//   ssr: false,
+// });
 
 export default function AddedProduct() {
-  const { cart, updateItem, removeItem } = useCart()
+  const { cart, updateItem, removeItem } = useCart();
 
-  const totalPrice = cart?.reduce((total, item) => total + item.price * item.quantity, 0) || 0
+  const totalPrice =
+    cart?.reduce((total, item) => total + item.price * item.quantity, 0) || 0;
 
   if (!cart || cart.length === 0) {
     return (
@@ -21,12 +24,14 @@ export default function AddedProduct() {
           Start Shopping
         </Link>
       </main>
-    )
+    );
   }
 
   return (
     <main className="py-12 px-4 max-w-7xl mx-auto">
-      <h1 className="text-3xl font-bold mb-8 text-center">Your Shopping Cart</h1>
+      <h1 className="text-3xl font-bold mb-8 text-center">
+        Your Shopping Cart
+      </h1>
 
       {/* FLEX LAYOUT */}
       <div className="flex flex-col lg:flex-row gap-8">
@@ -55,7 +60,9 @@ export default function AddedProduct() {
                 </p>
                 <p className="text-gray-700 mt-1">Quantity: {item.quantity}</p>
                 {item.selectedOption && (
-                  <p className="text-gray-700 mt-1">Option: {item.selectedOption}</p>
+                  <p className="text-gray-700 mt-1">
+                    Option: {item.selectedOption}
+                  </p>
                 )}
               </div>
 
@@ -83,10 +90,10 @@ export default function AddedProduct() {
         </div>
 
         {/* Order Form Section */}
-        <div className="w-full lg:w-1/3">
+        {/* <div className="w-full lg:w-1/3">
           <OrderPage />
-        </div>
+        </div> */}
       </div>
     </main>
-  )
+  );
 }
