@@ -1,5 +1,6 @@
 'use client'
 
+import InputField from '@/components/ui/InputField'
 import { useCart } from '@/context/CartContext'
 import { useState } from 'react'
 
@@ -61,13 +62,13 @@ export default function OrderPage() {
         <h2 className="text-xl font-semibold">Shipping Details</h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <input name="fullName" value={form.fullName} onChange={handleChange} required placeholder="Full Name" className="border p-2 rounded" />
-          <input name="email" value={form.email} onChange={handleChange} required placeholder="Email" type="email" className="border p-2 rounded" />
-          <input name="phoneNumber" value={form.phoneNumber} onChange={handleChange} required placeholder="Phone Number" className="border p-2 rounded" />
-          <input name="street" value={form.street} onChange={handleChange} required placeholder="Street Address" className="border p-2 rounded col-span-full" />
-          <input name="city" value={form.city} onChange={handleChange} required placeholder="City" className="border p-2 rounded" />
-          <input name="postalCode" value={form.postalCode} onChange={handleChange} required placeholder="Postal Code" className="border p-2 rounded" />
-          <input name="country" value={form.country} onChange={handleChange} required placeholder="Country" className="border p-2 rounded" />
+          <InputField name="fullName" value={form.fullName} onChange={handleChange} required placeholder="Full Name" className="border p-2 rounded" />
+          <InputField name="email" value={form.email} onChange={handleChange} required placeholder="Email" type="email" className="border p-2 rounded" />
+          <InputField name="phoneNumber" value={form.phoneNumber} onChange={handleChange} required placeholder="Phone Number" className="border p-2 rounded" />
+          <InputField name="street" value={form.street} onChange={handleChange} required placeholder="Street Address" className="border p-2 rounded col-span-full" />
+          <InputField name="city" value={form.city} onChange={handleChange} required placeholder="City" className="border p-2 rounded" />
+          <InputField name="postalCode" value={form.postalCode} onChange={handleChange} required placeholder="Postal Code" className="border p-2 rounded" />
+          <InputField name="country" value={form.country} onChange={handleChange} required placeholder="Country" className="border p-2 rounded" />
         </div>
 
         {/* Payment Method */}
