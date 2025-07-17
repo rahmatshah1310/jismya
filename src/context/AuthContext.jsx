@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect, useContext, createContext } from "react";
-import {authService} from "@/app/services/authService"; 
+import {authService} from "@/services/authService"; 
 
 const AuthContext = createContext(null);
 
@@ -10,7 +10,6 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
 
-  console.log(userData, "userData in AuthProvider");
   // Fetch current user data
  const fetchCurrentUser = async () => {
   try {
