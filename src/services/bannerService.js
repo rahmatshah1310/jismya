@@ -29,7 +29,6 @@ export const getBanners = async () => {
   }
 };
 
-
 export const getSingleBanner = async (id) => {
   try {
     const response = await sendRequest({
@@ -42,7 +41,6 @@ export const getSingleBanner = async (id) => {
     throw error;
   }
 };
-
 
 export const getBannersByDevice = async (deviceType) => {
   try {
@@ -57,12 +55,11 @@ export const getBannersByDevice = async (deviceType) => {
   }
 };
 
-
 export const reorderBanner = async (id,data) => {
   try {
     const response = await sendRequest({
       method: "PUT", // or PATCH, based on your backend
-      url: `/banners/order/${id}`, 
+      url: `/banners/order/${id}`,
       data,
     });
     return response.data;
@@ -71,7 +68,6 @@ export const reorderBanner = async (id,data) => {
    throw error;
   }
 };
-
 
 // ✅ Delete Banner (Admin)
 export const deleteBanner = async (id) => {
