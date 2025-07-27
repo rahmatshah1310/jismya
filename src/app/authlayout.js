@@ -5,6 +5,7 @@ import { useEffect } from 'react'
 import Header from '@/layouts/Header'
 import Footer from '@/layouts/Footer'
 import { useAuth } from '@/context/AuthContext'
+import { ClipLoader } from 'react-spinners'
 
 export default function AuthLayout({ children }) {
   const { userData, loading } = useAuth()
@@ -24,7 +25,7 @@ export default function AuthLayout({ children }) {
   }, [userData, loading, pathname, isAuthPage, router])
 
   if (loading) {
-    return <div className="h-screen flex justify-center items-center">Loading...</div>
+    return <div className="h-screen flex justify-center items-center"><ClipLoader/></div>
   }
 
   return (
