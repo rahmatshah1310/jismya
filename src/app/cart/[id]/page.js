@@ -1,48 +1,53 @@
-"use client"
+"use client";
 
-import { useParams, useRouter } from 'next/navigation'
-import { useState, useEffect } from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
-import { useCart } from '@/context/CartContext'
-import { cartItems } from '@/constants/data'
+import { useParams, useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { useCart } from "@/context/CartContext";
+import { cartItems } from "@/constants/data";
+import { useSingleProduct } from "@/app/api/productApi";
 
 export default function SingleCartItem() {
-  const { id } = useParams()
-  const router = useRouter()
-  const { cart, addToCart, removeItem, loading } = useCart()
+  const { id } = useParams();
+  const router = useRouter();
+  const { cart, addToCart, removeItem, loading } = useCart();
+  const { data, isLoading, isError } = useSingleProduct(id);
+  const product = data?.data;
+  console.log(product, "product...............");
 
-  const product = cartItems.find((item) => item.id === String(id))
-  const cartItem = cart.find((item) => item.id === String(id))
+  // const product = cartItems.find((item) => item.id === String(id))
 
-  const [quantity, setQuantity] = useState(1)
-  const [selectedOption, setSelectedOption] = useState("")
-  const [alreadyAdded, setAlreadyAdded] = useState(false)
+  const cartItem = cart.find((item) => item.id === String(id));
+
+  const [quantity, setQuantity] = useState(1);
+  const [selectedOption, setSelectedOption] = useState("");
+  const [alreadyAdded, setAlreadyAdded] = useState(false);
 
   useEffect(() => {
-    setQuantity(1)
-    setSelectedOption("")
-    setAlreadyAdded(!!cartItem)
-  }, [id, cartItem])
+    setQuantity(1);
+    setSelectedOption("");
+    setAlreadyAdded(!!cartItem);
+  }, [id, cartItem]);
 
-  if (loading) return <h1 className="text-center py-20">Loading...</h1>
-  if (!product) return <h1 className="text-center py-20">Item not found.</h1>
+  if (loading) return <h1 className="text-center py-20">Loading...</h1>;
+  // if (!product) return <h1 className="text-center py-20">Item not found.</h1>
 
   const handleAddToCart = () => {
     addToCart({
       ...product,
       quantity,
-      selectedOption
-    })
-    setAlreadyAdded(true)
-    alert('Item added to cart!')
-  }
+      selectedOption,
+    });
+    setAlreadyAdded(true);
+    alert("Item added to cart!");
+  };
 
   const handleRemove = () => {
-    removeItem(product.id)
-    alert('Item removed from cart')
-    router.push('/')
-  }
+    removeItem(product.id);
+    alert("Item removed from cart");
+    router.push("/");
+  };
 
   return (
     <main className="px-4 py-8 sm:px-6 lg:px-12">
@@ -50,28 +55,28 @@ export default function SingleCartItem() {
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Product Image */}
           <div className="flex justify-center items-center lg:w-1/2">
-            <Image
-              src={product.image}
-              alt={product.name}
-              width={300}
-              height={300}
-              className="rounded-md object-cover w-full max-w-sm bg-gray-100"
-            />
+            <Image src={product.imageUrl} alt={product.name} width={300} height={300} className="rounded-md object-cover w-full max-w-sm bg-gray-100" />
           </div>
 
           {/* Product Details */}
           <div className="flex-1 flex flex-col justify-between">
             <div>
               <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-4">{product.name}</h1>
-              <p className="text-xl text-pink-600 font-semibold mb-4">
-                Rs. {product.price.toLocaleString()}
-              </p>
+              <p className="text-xl text-pink-600 font-semibold mb-4">Rs. {product.price.toLocaleString()}</p>
 
               <div className="text-gray-600 mb-4 space-y-1 text-sm sm:text-base">
-                <div><strong>Ships In:</strong> {product.delivery}</div>
-                <div><strong>Delivery Area:</strong> {product.area}</div>
-                <div><strong>Origin:</strong> {product.origin}</div>
-                <div><strong>Shipped By:</strong> {product.shippedBy}</div>
+                <div>
+                  <strong>Ships In:</strong> {product.delivery}
+                </div>
+                <div>
+                  <strong>Delivery Area:</strong> {product.area}
+                </div>
+                <div>
+                  <strong>Origin:</strong> {product.origin}
+                </div>
+                <div>
+                  <strong>Shipped By:</strong> {product.shippedBy}
+                </div>
               </div>
 
               {/* Size Selection */}
@@ -84,7 +89,9 @@ export default function SingleCartItem() {
                 >
                   <option value="">Choose an Option...</option>
                   {product.options.map((opt) => (
-                    <option key={opt} value={opt}>{opt}</option>
+                    <option key={opt} value={opt}>
+                      {opt}
+                    </option>
                   ))}
                 </select>
               </div>
@@ -97,7 +104,7 @@ export default function SingleCartItem() {
                   onChange={(e) => setQuantity(Number(e.target.value))}
                   className="w-full sm:w-24 px-2 py-2 border border-gray-300 rounded"
                 >
-                  {(product.availableQuantities || ['1', '2', '3', '4']).map((qty) => (
+                  {(product.availableQuantities || ["1", "2", "3", "4"]).map((qty) => (
                     <option key={qty} value={qty}>
                       {qty}
                     </option>
@@ -127,10 +134,7 @@ export default function SingleCartItem() {
                 </button>
               )}
 
-              <Link
-                href="/"
-                className="w-full sm:w-auto text-center bg-gray-100 hover:bg-gray-200 text-gray-800 px-6 py-2 rounded-md font-semibold transition"
-              >
+              <Link href="/" className="w-full sm:w-auto text-center bg-gray-100 hover:bg-gray-200 text-gray-800 px-6 py-2 rounded-md font-semibold transition">
                 Back
               </Link>
             </div>
@@ -138,5 +142,5 @@ export default function SingleCartItem() {
         </div>
       </div>
     </main>
-  )
+  );
 }
