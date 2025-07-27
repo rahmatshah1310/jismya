@@ -1,75 +1,72 @@
-'use client'
+"use client";
 
-import { useEffect, useState } from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
-import Button from '@/components/ui/Button'
-import { slides, policy, products, category, cartItems } from '@/constants/data'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Swiper, SwiperSlide } from 'swiper/react'
-import { Autoplay, Pagination } from 'swiper/modules'
-import 'swiper/css'
-import 'swiper/css/pagination'
-import { useCart } from '@/context/CartContext'
-import { useRouter } from 'next/navigation'
-import FeaturedProductsPage from './featured/page'
-import InputField from '@/components/ui/InputField'
-import { useBannersByDevice, useGetBanners } from './api/bannerApi'
+import { useEffect, useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import Button from "@/components/ui/Button";
+import { slides, policy, category, cartItems } from "@/constants/data";
+import { motion, AnimatePresence } from "framer-motion";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
+import { useCart } from "@/context/CartContext";
+import { useRouter } from "next/navigation";
+import InputField from "@/components/ui/InputField";
+import { useBannersByDevice, useGetBanners } from "./api/bannerApi";
+import { useGetAllProducts } from "./api/productApi";
+import ProductCategoryGrid from "@/components/product/ProductCategoryGrid";
 
 export default function Home() {
-  const [currentSlide, setCurrentSlide] = useState(0)
-  const [swiperInstance, setSwiperInstance] = useState(null)
-  const [deviceType, setDeviceType] = useState('laptop');
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [swiperInstance, setSwiperInstance] = useState(null);
+  const [deviceType, setDeviceType] = useState("laptop");
 
-const { data: laptopBanners } = useBannersByDevice('laptop')
-const { data: tabletBanners } = useBannersByDevice('tablet')
-const { data: mobileBanners } = useBannersByDevice('mobile')
+  const { data: laptopBanners } = useBannersByDevice("laptop");
+  const { data: tabletBanners } = useBannersByDevice("tablet");
+  const { data: mobileBanners } = useBannersByDevice("mobile");
 
-  const router = useRouter()
+  const { data: allProductsData, isLoading } = useGetAllProducts();
+  const products = allProductsData?.data || [];
 
-useEffect(() => {
-  const updateDeviceType = () => {
-    const width = window.innerWidth;
-    if (width < 768) setDeviceType('mobile');
-    else if (width < 1024) setDeviceType('tablet');
-    else setDeviceType('laptop');
-  };
+  const router = useRouter();
 
-  updateDeviceType();
-  window.addEventListener('resize', updateDeviceType);
-  return () => window.removeEventListener('resize', updateDeviceType);
-}, []);
+  useEffect(() => {
+    const updateDeviceType = () => {
+      const width = window.innerWidth;
+      if (width < 768) setDeviceType("mobile");
+      else if (width < 1024) setDeviceType("tablet");
+      else setDeviceType("laptop");
+    };
 
-const banners = deviceType === 'mobile'
-  ? mobileBanners
-  : deviceType === 'tablet'
-    ? tabletBanners
-    : laptopBanners;
+    updateDeviceType();
+    window.addEventListener("resize", updateDeviceType);
+    return () => window.removeEventListener("resize", updateDeviceType);
+  }, []);
 
-  const { addToCart } = useCart()
-const sortedBanners = banners?.slice().sort((a, b) => a.order - b.order) || [];
+  const banners = deviceType === "mobile" ? mobileBanners : deviceType === "tablet" ? tabletBanners : laptopBanners;
 
+  const { addToCart } = useCart();
+  const sortedBanners = banners?.slice().sort((a, b) => a.order - b.order) || [];
 
-  
   const slideVariants = {
     hidden: {
       opacity: 0,
-      y: 50
+      y: 50,
     },
     visible: {
       opacity: 1,
-      y: 0
+      y: 0,
     },
     exit: {
       opacity: 0,
-      y: -20
-    }
+      y: -20,
+    },
   };
 
-
   const handleAddToCart = (product) => {
-    addToCart({ ...product, quantity: 1 })
-  }
+    addToCart({ ...product, quantity: 1 });
+  };
 
   return (
     <main className="px-4 sm:px-6 md:px-8 lg:px-12 xl:px-20">
@@ -84,17 +81,8 @@ const sortedBanners = banners?.slice().sort((a, b) => a.order - b.order) || [];
           className="h-full w-full"
         >
           {sortedBanners?.map((slide, index) => (
-            <SwiperSlide
-              key={index}
-              className="relative flex justify-center items-center min-h-[300px] sm:min-h-[400px] md:min-h-[500px]"
-            >
-              <Image
-                src={slide.imageUrl}
-                alt={`Slide ${index + 1}`}
-                fill
-                className="object-cover rounded-2xl"
-                priority={index === 0}
-              />
+            <SwiperSlide key={index} className="relative flex justify-center items-center min-h-[300px] sm:min-h-[400px] md:min-h-[500px]">
+              <Image src={slide.imageUrl} alt={`Slide ${index + 1}`} fill className="object-cover rounded-2xl" priority={index === 0} />
               <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-4 sm:px-8">
                 <AnimatePresence mode="wait">
                   {currentSlide === index && (
@@ -103,7 +91,11 @@ const sortedBanners = banners?.slice().sort((a, b) => a.order - b.order) || [];
                       initial="hidden"
                       animate="visible"
                       exit="exit"
-                      variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 }, exit: { opacity: 0 } }}
+                      variants={{
+                        hidden: { opacity: 0 },
+                        visible: { opacity: 1 },
+                        exit: { opacity: 0 },
+                      }}
                       transition={{ duration: 0.5 }}
                     >
                       <motion.h2
@@ -113,18 +105,10 @@ const sortedBanners = banners?.slice().sort((a, b) => a.order - b.order) || [];
                       >
                         {slide.heading}
                       </motion.h2>
-                      <motion.p
-                        variants={slideVariants}
-                        transition={{ duration: 0.8, delay: 0.4 }}
-                        className="text-sm sm:text-base md:text-lg mb-4"
-                      >
+                      <motion.p variants={slideVariants} transition={{ duration: 0.8, delay: 0.4 }} className="text-sm sm:text-base md:text-lg mb-4">
                         {slide.description}
                       </motion.p>
-                        <motion.p
-                        variants={slideVariants}
-                        transition={{ duration: 0.8, delay: 0.4 }}
-                        className="text-sm sm:text-base md:text-lg mb-4"
-                      >
+                      <motion.p variants={slideVariants} transition={{ duration: 0.8, delay: 0.4 }} className="text-sm sm:text-base md:text-lg mb-4">
                         {slide.deviceType}
                       </motion.p>
                       {/* <motion.div variants={slideVariants} transition={{ duration: 0.8, delay: 0.6 }}>
@@ -146,23 +130,23 @@ const sortedBanners = banners?.slice().sort((a, b) => a.order - b.order) || [];
       <section id="categories" className="py-10 px-2 sm:px-4 md:px-8 bg-[var(--color-white)]">
         <div className="container mx-auto">
           <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8 sm:mb-12 text-[var(--color-pink-600)]">Shop by Category</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
-            {category.map((category) => (
-              <div key={category.text} className="group relative overflow-hidden rounded-lg bg-[var(--color-gray-50)]">
-                <Image
-                  src={category.image}
-                  alt={category.text}
-                  width={300}
-                  height={400}
-                  className="w-full h-56 sm:h-72 md:h-80 object-cover transition-transform group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                <h3 className="absolute bottom-4 left-1/2 -translate-x-1/2 text-[var(--color-white)] text-base sm:text-xl font-semibold bg-black/50 px-4 sm:px-6 py-2 rounded">
-                  {category.text}
-                </h3>
-              </div>
-            ))}
-          </div>
+<div className="grid grid-cols-1 gap-10">
+  {[...new Set(products.map((p) => p.categoryName))].map((category) => {
+    const filteredProducts = products.filter((p) => p.categoryName === category);
+
+    return (
+      <section key={category} className="mb-10">
+        <h3 className="text-xl font-semibold mb-4 text-[var(--color-pink-600)]">{category}</h3>
+        {filteredProducts.length === 0 ? (
+          <p className="text-gray-400">No products found in this category.</p>
+        ) : (
+          <ProductCategoryGrid products={filteredProducts} />
+        )}
+      </section>
+    );
+  })}
+</div>
+
         </div>
       </section>
 
@@ -181,11 +165,6 @@ const sortedBanners = banners?.slice().sort((a, b) => a.order - b.order) || [];
           </div>
         </div>
       </section>
-
-      {/* Featured Products */}
-      <section className="py-10 sm:py-16 px-2 sm:px-4 md:px-8 bg-[var(--color-white)]">
-      <FeaturedProductsPage/>
-    </section>
 
       {/* Special Offers */}
       <section className="py-8 sm:py-14 px-2 sm:px-4 md:px-8 sm:mx-5 bg-gradient-to-r from-pink-500 to-pink-600 text-[var(--color-white)] w-full md:w-[90%] rounded-2xl md:mx-auto">
@@ -231,5 +210,5 @@ const sortedBanners = banners?.slice().sort((a, b) => a.order - b.order) || [];
         <i className="fab fa-whatsapp"></i>
       </Link>
     </main>
-  )
+  );
 }
