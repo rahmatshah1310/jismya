@@ -8,7 +8,7 @@ import { useParams } from "next/navigation";
 import { useSingleProduct } from "../../api/productApi";
 import ProductReview from "../../../components/products/product-review-form";
 import { useCart } from "../../../context/CartContext"; //
-import { BeatLoader } from "react-spinners"
+import { BeatLoader } from "react-spinners";
 
 export default function ProductDetailPage() {
   const [selectedImage, setSelectedImage] = useState(0);
@@ -18,12 +18,15 @@ export default function ProductDetailPage() {
 
   const { data: productsData, isLoading: productsIsLoading } = useSingleProduct(id);
   const product = productsData?.data;
-  console.log(product, "product............")
 
   const allImages = product ? [product.imageUrl, ...(product.additionalImages?.map((img) => img.imageUrl) || [])].filter(Boolean) : [];
 
   if (productsIsLoading) {
-    return <div className="w-full h-full flex justify-center"><BeatLoader color="lightBlue" /></div>;
+    return (
+      <div className="w-full h-full flex justify-center">
+        <BeatLoader color="lightBlue" />
+      </div>
+    );
   }
 
   return (
@@ -59,10 +62,8 @@ export default function ProductDetailPage() {
             {/* Reviews */}
             <div className="flex items-center justify-between gap-2 mb-4">
               <div className="flex gap-x-2 items-center">
-              <span className="text-gray-600 ml-2">{product.averageRating.toFixed(1)} / 5</span>
-                <HiOutlineStar
-                  className={`w-5 h-5 ${product.averageRating ? "text-yellow-400" : "text-gray-300"}`}
-                />
+                <span className="text-gray-600 ml-2">{product.averageRating.toFixed(1)} / 5</span>
+                <HiOutlineStar className={`w-5 h-5 ${product.averageRating ? "text-yellow-400" : "text-gray-300"}`} />
               </div>
               <div>{product.ratingCount}Total Rating</div>
             </div>
@@ -118,8 +119,9 @@ export default function ProductDetailPage() {
                 )
               }
               disabled={processingItems[product._id]}
-              className={`w-full py-3 px-6 rounded-lg font-semibold text-lg ${processingItems[product._id] ? "bg-gray-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700 text-white"
-                }`}
+              className={`w-full py-3 px-6 rounded-lg font-semibold text-lg ${
+                processingItems[product._id] ? "bg-gray-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700 text-white"
+              }`}
             >
               {processingItems[product._id] ? <BeatLoader color="lightBlue" /> : "Add to Cart"}
             </button>
