@@ -82,7 +82,7 @@ export function TrackOrderForm() {
           <div className="space-y-3 text-sm text-gray-600">
             <p>• Make sure you have the correct order number from your confirmation email</p>
             <p>• Enter the phone number you used when placing the order</p>
-            <p>• If you're having trouble, contact our customer support at (021) 111-624-333</p>
+            <p>• If youre having trouble, contact our customer support at (021) 111-624-333</p>
           </div>
         </div>
       </CardContent>
