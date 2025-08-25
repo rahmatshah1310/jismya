@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# User.pk E-commerce Platform
 
-## Getting Started
+Pakistan's leading e-commerce platform for health & beauty, electronics, fashion, and more.
 
-First, run the development server:
+## ProductSection Component Usage
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+The `ProductSection` component has been updated to use both category and product APIs:
+
+### Features:
+- **Category API Integration**: Fetches category details (name, description) for the section heading
+- **Product API Integration**: Fetches products related to the specified category
+- **Dynamic Headings**: Section titles are now dynamically loaded from the category API
+- **Fallback Support**: Falls back to the provided title if the API fails
+
+### Usage Examples:
+
+#### Using categoryId (Recommended):
+```jsx
+<ProductSection 
+  title="For His Beard" 
+  categoryId="for-his-beard" 
+  maxProducts={6} 
+  showViewAll={true} 
+/>
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+#### Using category (Legacy support):
+```jsx
+<ProductSection 
+  title="Women Perfumes" 
+  category="women-perfumes" 
+  maxProducts={4} 
+  showViewAll={false} 
+/>
+```
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+#### With custom configuration:
+```jsx
+<ProductSection 
+  title="Electronics" 
+  categoryId="electronics" 
+  maxProducts={8} 
+  showViewAll={true} 
+  isLoading={false} 
+/>
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### API Integration:
 
-## Learn More
+The component now makes two API calls:
+1. **Category API**: `GET /categories/:id` - Fetches category details for the heading
+2. **Product API**: `GET /categories/:id` - Fetches products in that category
 
-To learn more about Next.js, take a look at the following resources:
+### Props:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `title` (string): Fallback title if category API fails
+- `categoryId` (string): Category ID for API calls (recommended)
+- `category` (string): Category identifier (legacy support)
+- `maxProducts` (number): Maximum number of products to display (default: 6)
+- `showViewAll` (boolean): Whether to show "View All" button (default: true)
+- `isLoading` (boolean): Force loading state (default: false)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Notes:
 
-## Deploy on Vercel
+- The component automatically handles loading states for both APIs
+- Error handling gracefully falls back to the provided title
+- Navigation and pagination elements use unique IDs based on the category
+- The "View All" link dynamically uses the category ID for routing
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Development
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is built with:
+- Next.js 14
+- React 18
+- Tailwind CSS
+- React Query (TanStack Query)
+- Swiper for product carousels
