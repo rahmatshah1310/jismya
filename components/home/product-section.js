@@ -66,7 +66,7 @@ export function ProductSection({ title, category, showViewAll = true, maxProduct
         <div className="flex flex-col sm:flex-row items-center justify-between mb-6 sm:mb-8 gap-4">
           <h2 className="text-2xl md:text-3xl font-bold text-gray-800">{title}</h2>
           {showViewAll && (
-            <Link href={`/category/${category._id}`}>
+            <Link href={`/category/${category}`}>
               <Button className="hidden md:block bg-red-600 hover:bg-red-700 text-white border-red-600 hover:border-red-700">View All</Button>
             </Link>
           )}
