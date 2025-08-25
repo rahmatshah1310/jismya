@@ -1,0 +1,164 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap");
+
+@layer base {
+  :root {
+    /* 🌐 2025 Professional E-commerce Color Palette */
+    --background: 0 0% 100%;
+    --foreground: 220 14% 16%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 14% 16%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 14% 16%;
+
+    /* Primary: Vibrant Coral/Red-Orange */
+    --primary: 14 85% 55%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Secondary: Electric Blue / Indigo */
+    --secondary: 230 85% 58%;
+    --secondary-foreground: 0 0% 100%;
+
+    /* Accent: Emerald / Mint */
+    --accent: 160 65% 40%;
+    --accent-foreground: 0 0% 100%;
+
+    /* Support / Luxury */
+    --highlight: 280 70% 55%; /* Modern Purple */
+    --highlight-foreground: 0 0% 100%;
+
+    /* Muted */
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%;
+
+    /* Destructive */
+    --destructive: 0 72% 55%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Border & Inputs */
+    --border: 220 13% 90%;
+    --input: 220 13% 90%;
+    --ring: 14 85% 55%;
+
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer components {
+  /* Modern 2025 E-commerce Buttons */
+  .btn-primary {
+    @apply bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-3 px-6 rounded-lg transition-colors duration-200;
+  }
+
+  .btn-secondary {
+    @apply bg-secondary hover:bg-secondary/90 text-secondary-foreground font-semibold py-3 px-6 rounded-lg transition-colors duration-200;
+  }
+
+  .btn-accent {
+    @apply bg-accent hover:bg-accent/90 text-accent-foreground font-semibold py-3 px-6 rounded-lg transition-colors duration-200;
+  }
+
+  .btn-outline {
+    @apply border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground font-semibold py-3 px-6 rounded-lg transition-all duration-200;
+  }
+
+  .card {
+    @apply bg-card rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200;
+  }
+
+  .input-field {
+    @apply w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200;
+  }
+
+  .section-title {
+    @apply text-2xl md:text-3xl font-bold text-foreground mb-6;
+  }
+
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Text truncation utilities */
+  .line-clamp-1 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+  }
+
+  .line-clamp-2 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .line-clamp-3 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+
+  /* Color utility classes */
+  .bg-user-coral {
+    @apply bg-primary;
+  }
+  .text-user-coral {
+    @apply text-primary;
+  }
+
+  .bg-user-indigo {
+    @apply bg-secondary;
+  }
+  .text-user-indigo {
+    @apply text-secondary;
+  }
+
+  .bg-user-mint {
+    @apply bg-accent;
+  }
+  .text-user-mint {
+    @apply text-accent;
+  }
+
+  .bg-user-purple {
+    @apply bg-highlight;
+  }
+  .text-user-purple {
+    @apply bg-highlight;
+  }
+}
+
+/* Hide scrollbars for the product carousel */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+
+.secondary-nav {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+.hidden-nav {
+  transform: translateY(-100%);
+  opacity: 0;
+}
