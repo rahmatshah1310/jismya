@@ -18,6 +18,7 @@ const CheckoutPage = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm();
 
   const handleCompleteOrder = async (data) => {
@@ -50,9 +51,10 @@ const CheckoutPage = () => {
     try {
       const res = await placeOrderMutation.mutateAsync(orderData);
       toast.success(res?.message || "Order placed successfully!");
+      reset();
     } catch (error) {
       console.error("Order placement error:", error);
-      toast.error(error?.response?.data?.message || "Failed to place order.");
+      toast.error(typeof error === "string" ? error : "Failed to place order.");
     }
   };
 
