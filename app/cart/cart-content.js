@@ -8,9 +8,10 @@ import { toast } from "react-toastify";
 import { HiOutlineLockClosed, HiOutlineMinus, HiOutlinePlus, HiOutlineTrash } from "react-icons/hi";
 import { useCart } from "../../context/CartContext"; // adjust import path
 import { formatPrice } from "../../lib/utils";
+import { BeatLoader } from "react-spinners";
 
 export function CartContent() {
-  const { cart, updateQuantity, removeFromCart, getCartTotal } = useCart();
+  const { cart, updateQuantity, removeFromCart, getCartTotal, processingItems } = useCart();
 
   if (cart.length === 0) {
     return (
@@ -22,7 +23,7 @@ export function CartContent() {
             </svg>
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-3 sm:mb-4">Your cart is empty</h1>
-          <p className="text-muted-foreground mb-6 sm:mb-8 text-sm sm:text-base">Looks like you haven't added any items yet.</p>
+          <p className="text-muted-foreground mb-6 sm:mb-8 text-sm sm:text-base">Looks like you havenst added any items yet.</p>
           <Link href="/">
             <Button variant="user" size="lg">
               Start Shopping
@@ -156,7 +157,8 @@ export function CartContent() {
             </CardHeader>
             <CardContent>
               <Link href="/checkout" className="w-full bg-gray-100 p-2 flex rounded items-center justify-center">
-                <HiOutlineLockClosed className="mr-2" />Proceed To Checkout
+                <HiOutlineLockClosed className="mr-2" />
+                Proceed To Checkout
               </Link>
             </CardContent>
           </Card>
