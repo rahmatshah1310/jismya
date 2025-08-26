@@ -24,13 +24,7 @@ export const useUpdateOrder = () => {
 };
 
 export const useUpdateOrderStatus = () => {
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: ({ id, status }) => orderService.updateOrderStatus(id, status),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["orders"] });
-    },
-  });
+  return useMutation(({ orderId, status }) => orderService.updateOrderStatus(orderId, status));
 };
 
 export const useDeleteOrder = () => {
@@ -58,39 +52,32 @@ export const useGetSingleOrder = (id) =>
     enabled: !!id,
   });
 
-  export const useUpdateShippingAddress = () => {
-    const queryClient = useQueryClient();
-    return useMutation({
-      mutationFn: ({ orderId, shippingAddress }) =>
-        orderService.updateShippingAddress(orderId, shippingAddress),
-      onSuccess: () => {
-        queryClient.invalidateQueries(["orders"]);
-      },
-    });
-  };
-  
-  // Update billing address
-  export const useUpdateBillingAddress = () => {
-    const queryClient = useQueryClient();
-    return useMutation({
-      mutationFn: ({ orderId, billingAddress }) =>
-        orderService.updateBillingAddress(orderId, billingAddress),
-      onSuccess: () => {
-        queryClient.invalidateQueries(["orders"]);
-      },
-  
-    });
-  };
+export const useUpdateShippingAddress = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ orderId, shippingAddress }) => orderService.updateShippingAddress(orderId, shippingAddress),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["orders"]);
+    },
+  });
+};
 
-  export const useTrackOrder = (trackingId) => {
-    return useQuery(
-      ["trackOrder", trackingId],
-      () => orderService.trackOrder(trackingId),
-      {
-        enabled: !!trackingId,
-        onError: () => {
-          toast.error("Failed to track order.");
-        },
-      }
-    );
-  };
+// Update billing address
+export const useUpdateBillingAddress = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ orderId, billingAddress }) => orderService.updateBillingAddress(orderId, billingAddress),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["orders"]);
+    },
+  });
+};
+
+export const useTrackOrder = (trackingId) => {
+  return useQuery(["trackOrder", trackingId], () => orderService.trackOrder(trackingId), {
+    enabled: !!trackingId,
+    onError: () => {
+      toast.error("Failed to track order.");
+    },
+  });
+};
