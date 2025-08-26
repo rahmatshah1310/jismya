@@ -32,20 +32,11 @@ export function ContactForm() {
 
   return (
     <>
-      {/* Breadcrumbs */}
-      <div className="mb-8">
-        <nav className="text-sm text-gray-500">
-          <span>Home</span>
-          <span className="mx-2">/</span>
-          <span className="text-gray-900">Contact Us</span>
-        </nav>
-      </div>
-
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
         {/* Contact Form */}
         <div>
           <h1 className="text-3xl font-bold text-gray-900 mb-4">Get in touch with us</h1>
-          <p className="text-gray-600 mb-8">If you have any query, Please don't hesitate to send us a message</p>
+          <p className="text-gray-600 mb-8">If you have any query, Please dont hesitate to send us a message</p>
 
           <Card>
             <CardContent className="p-6">
@@ -115,7 +106,7 @@ export function ContactForm() {
                 {/* Message */}
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                    What's on your mind?
+                    Whats on your mind?
                   </label>
                   <textarea
                     id="message"
