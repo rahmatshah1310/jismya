@@ -4,15 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import {
-  HiOutlineMenu,
-  HiOutlineSearch,
-  HiOutlineUser,
-  HiOutlineHeart,
-  HiOutlineShoppingCart,
-  HiOutlinePhone,
-  HiX,
-} from "react-icons/hi";
+import { HiOutlineMenu, HiOutlineSearch, HiOutlineUser, HiOutlineHeart, HiOutlineShoppingCart, HiOutlinePhone, HiX } from "react-icons/hi";
 import { useGetAllCategories } from "../../app/api/productApi";
 import { useCart } from "../../context/CartContext";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
@@ -35,19 +27,13 @@ function CategoriesButton({ categories }) {
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
-        <Button
-          variant="outline"
-          className="w-full border-gray-300 text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-        >
+        <Button variant="outline" className="w-full border-gray-300 text-gray-700 hover:bg-gray-100 hover:text-gray-900">
           <HiOutlineMenu className="w-5 h-5 mr-2" />
           CATEGORIES
         </Button>
       </DropdownMenu.Trigger>
 
-      <DropdownMenu.Content
-        sideOffset={8}
-        className="w-64 bg-white border border-gray-200 rounded-lg shadow-lg p-2"
-      >
+      <DropdownMenu.Content sideOffset={8} className="w-64 bg-white border border-gray-200 rounded-lg shadow-lg p-2">
         <DropdownMenu.Item asChild>
           <Link
             href="/category"
@@ -131,10 +117,7 @@ export function Header() {
                 <span className="text-xs">0 item</span>
               </button>
 
-              <Link
-                href="/cart"
-                className="flex flex-col items-center text-gray-700 hover:text-gray-900 transition-colors relative"
-              >
+              <Link href="/cart" className="flex flex-col items-center text-gray-700 hover:text-gray-900 transition-colors relative">
                 <HiOutlineShoppingCart className="w-6 h-6" />
                 <span className="text-xs">Cart</span>
                 <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
@@ -153,10 +136,7 @@ export function Header() {
                   </span>
                 )}
               </Link>
-              <button
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="text-gray-700"
-              >
+              <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-gray-700">
                 <HiOutlineMenu className="w-6 h-6" />
               </button>
             </div>
@@ -167,17 +147,11 @@ export function Header() {
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
         <div className="lg:hidden fixed inset-0 bg-black/50 z-50" onClick={closeMobileMenu}>
-          <div
-            className="absolute top-0 right-0 h-full w-80 bg-card shadow-xl"
-            onClick={(e) => e.stopPropagation()}
-          >
+          <div className="absolute top-0 right-0 h-full w-80 bg-card shadow-xl" onClick={(e) => e.stopPropagation()}>
             <div className="p-6">
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-lg font-semibold text-foreground">Menu</h3>
-                <button
-                  onClick={closeMobileMenu}
-                  className="text-muted-foreground hover:text-foreground"
-                >
+                <button onClick={closeMobileMenu} className="text-muted-foreground hover:text-foreground">
                   <HiX className="w-6 h-6" />
                 </button>
               </div>
@@ -211,11 +185,8 @@ export function Header() {
                     <Link href="/track-order" className="block p-2 rounded hover:bg-muted transition-colors text-foreground">
                       Track Order
                     </Link>
-                    <Link href="/loyalty" className="block p-2 rounded hover:bg-muted transition-colors text-foreground">
-                      user Loyalty
-                    </Link>
-                    <Link href="/affiliate" className="block p-2 rounded hover:bg-muted transition-colors text-foreground">
-                      Affiliate Program
+                    <Link href="/my-orders" className="block p-2 rounded hover:bg-muted transition-colors text-foreground">
+                      My Orders
                     </Link>
                   </div>
                 </div>
@@ -250,11 +221,8 @@ export function Header() {
               <Link href="/track-order" className="hover:text-gray-900 transition-colors">
                 Track Order
               </Link>
-              <Link href="/loyalty" className="hover:text-gray-900 transition-colors">
-                user Loyalty
-              </Link>
-              <Link href="/affiliate" className="hover:text-gray-900 transition-colors">
-                Affiliate Program
+              <Link href="/my-orders" className="block p-2 rounded hover:bg-muted transition-colors text-foreground">
+                My Orders
               </Link>
             </nav>
           </div>
