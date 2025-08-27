@@ -49,7 +49,7 @@ export function ProductGrid({ categoryId }) {
 
   if (isLoading) {
     return (
-      <div className="container-custom py-8">
+      <div className="container-custom py-10">
         <ProductGridSkeleton count={8} />
       </div>
     );
@@ -70,20 +70,20 @@ export function ProductGrid({ categoryId }) {
   }
 
   return (
-    <div className="container-custom py-8">
+    <div className="container-custom py-10">
       {/* Header */}
-      <div className="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <h1 className="text-3xl font-bold text-gray-800">{categoryName} Category</h1>
-        <p className="text-gray-600">
+      <div className="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 animate-fade-in-up">
+        <h1 className="text-3xl sm:text-4xl font-serif font-bold text-ink dark:text-d-ink">{categoryName} Category</h1>
+        <p className="text-ink/70 dark:text-d-ink/70">
           Showing {displayedProducts.length} of {products.length} products
         </p>
 
         {/* Sort Options */}
-        <div className="sm:w-48 mt-4 sm:mt-0">
+        <div className="sm:w-56 mt-4 sm:mt-0">
           <select
             value={sortBy}
             onChange={(e) => handleSortChange(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full px-3 py-2 border border-border dark:border-d-border bg-white dark:bg-d-card text-ink dark:text-d-ink rounded-xl focus:ring-2 focus:ring-brand/30 focus:border-brand/40 transition-colors"
           >
             <option value="newest">Newest First</option>
             <option value="oldest">Oldest First</option>
@@ -96,27 +96,29 @@ export function ProductGrid({ categoryId }) {
       {/* Products Grid */}
       {displayedProducts.length > 0 ? (
         <>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 mb-10">
             {displayedProducts.map((product) => (
-              <ProductCard key={product._id} product={product} />
+              <div key={product._id} className="animate-fade-in">
+                <ProductCard product={product} />
+              </div>
             ))}
           </div>
           {totalPages > 1 && (
             <div className="flex justify-center">
               {currentPage < totalPages ? (
-                <button onClick={handleLoadMore} className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium">
+                <button onClick={handleLoadMore} className="bg-brand hover:bg-brand-600 text-white px-8 py-3 rounded-2xl shadow-card hover:shadow-hover transition-all duration-200 font-medium">
                   Load More Products
                 </button>
               ) : (
-                <p className="text-gray-600 text-center py-4">Youve reached the end of all products.</p>
+                <p className="text-ink/70 dark:text-d-ink/70 text-center py-4">Youve reached the end of all products.</p>
               )}
             </div>
           )}
         </>
       ) : (
         <div className="text-center py-12">
-          <h3 className="text-xl font-semibold text-gray-800 mb-2">No Products Found</h3>
-          <p className="text-gray-600 mb-4">No products found in this category.</p>
+          <h3 className="text-xl font-semibold text-ink dark:text-d-ink mb-2">No Products Found</h3>
+          <p className="text-ink/70 dark:text-d-ink/70 mb-4">No products found in this category.</p>
         </div>
       )}
     </div>
