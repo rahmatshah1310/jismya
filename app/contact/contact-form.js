@@ -6,7 +6,7 @@ import { Input } from "../../components/ui/input";
 import { Button } from "../../components/ui/button";
 import { HiOutlineLocationMarker, HiOutlinePhone, HiOutlineMail, HiOutlineClock, HiOutlineShoppingBag, HiX } from "react-icons/hi";
 
-export function ContactForm() {
+export default function ContactForm() {
   const [isOnSaleVisible, setIsOnSaleVisible] = useState(true);
   const [formData, setFormData] = useState({
     name: "",
