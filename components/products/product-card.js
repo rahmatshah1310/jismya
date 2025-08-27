@@ -33,9 +33,9 @@ export default function ProductCard({ product }) {
   const isProcessing = processingItems[product._id];
 
   return (
-    <div className="group bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100 hover:border-blue-200 overflow-hidden">
+    <div className="group bg-white dark:bg-d-card rounded-2xl shadow-card hover:shadow-hover transition-all duration-300 border border-border dark:border-d-border hover:border-brand/30 dark:hover:border-brand/30 overflow-hidden animate-fade-in">
       {/* Product Image Container */}
-      <div className="relative aspect-square overflow-hidden bg-gray-50">
+      <div className="relative aspect-square overflow-hidden bg-sand/30 dark:bg-white/5">
         <Link href={`/product/${product._id}`} className="block w-full h-full">
           <Image
             src={product.imageUrl || "/watch.jpg"}
@@ -48,12 +48,12 @@ export default function ProductCard({ product }) {
 
         {/* Discount Badge */}
         {product.discount > 0 && (
-          <div className="absolute top-3 left-3 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow-sm">{product.discount}% OFF</div>
+          <div className="absolute top-3 left-3 bg-brand text-white text-xs font-bold px-2.5 py-1 rounded-full shadow-soft animate-scale-in">{product.discount}% OFF</div>
         )}
 
         {/* Quick Actions - Hover */}
         <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-          <button className="w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center text-gray-700 hover:text-red-500 hover:bg-white transition-colors shadow-sm">
+          <button className="w-8 h-8 bg-white/90 dark:bg-d-card/90 backdrop-blur-sm rounded-full flex items-center justify-center text-ink dark:text-d-ink hover:text-rose hover:bg-white dark:hover:bg-d-card transition-all duration-200 shadow-soft hover:scale-110">
             <HiOutlineHeart className="w-4 h-4" />
           </button>
         </div>
@@ -63,13 +63,15 @@ export default function ProductCard({ product }) {
           <button
             onClick={handleAddToCart}
             disabled={isProcessing}
-            className={`w-full py-2 px-3 rounded-lg font-medium text-sm transition-all duration-200 ${
-              isProcessing ? "bg-gray-300 text-gray-500 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700 text-white shadow-lg hover:shadow-xl"
+            className={`w-full py-2 px-3 rounded-xl font-medium text-sm transition-all duration-200 ${
+              isProcessing 
+                ? "bg-sand/60 dark:bg-white/20 text-ink/50 dark:text-d-ink/50 cursor-not-allowed" 
+                : "bg-brand hover:bg-brand-600 text-white shadow-card hover:shadow-hover active:scale-[0.99]"
             }`}
           >
             {isProcessing ? (
               <span className="flex items-center justify-center gap-2">
-                <div className="w-4 h-4 border-2 border-gray-500 border-t-transparent rounded-full animate-spin"></div>
+                <div className="w-4 h-4 border-2 border-ink/30 dark:border-d-ink/30 border-t-transparent rounded-full animate-spin"></div>
                 Adding...
               </span>
             ) : (
@@ -86,7 +88,7 @@ export default function ProductCard({ product }) {
       <div className="p-4">
         {/* Product Name */}
         <Link href={`/product/${product._id}`} className="block group">
-          <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2 mb-2">{truncateText(product.productName, 60)}</h3>
+          <h3 className="font-medium text-ink dark:text-d-ink group-hover:text-brand dark:group-hover:text-brand transition-colors duration-200 line-clamp-2 mb-2">{truncateText(product.productName, 60)}</h3>
         </Link>
 
         {/* Rating */}
@@ -97,8 +99,8 @@ export default function ProductCard({ product }) {
         )}
 
         {/* Additional Info */}
-        <div className="text-xs text-gray-500 space-y-1 mb-3">
-          {product.brand && <p className="font-medium text-gray-700">{product.brand}</p>}
+        <div className="text-xs text-ink/60 dark:text-d-ink/60 space-y-1 mb-3">
+          {product.brand && <p className="font-medium text-ink/80 dark:text-d-ink/80">{product.brand}</p>}
           {product.category.name && <p className="capitalize">{product.category.name}</p>}
         </div>
 
@@ -107,11 +109,11 @@ export default function ProductCard({ product }) {
           <div className="flex items-center gap-2">
             {product.discount > 0 ? (
               <>
-                <span className="text-lg font-bold text-gray-900">{formatPrice(product.price * (1 - product.discount / 100))}</span>
-                <span className="text-sm text-gray-500 line-through">{formatPrice(product.price)}</span>
+                <span className="text-lg font-bold text-ink dark:text-d-ink">{formatPrice(product.price * (1 - product.discount / 100))}</span>
+                <span className="text-sm text-ink/50 dark:text-d-ink/50 line-through">{formatPrice(product.price)}</span>
               </>
             ) : (
-              <span className="text-lg font-bold text-gray-900">{formatPrice(product.price)}</span>
+              <span className="text-lg font-bold text-ink dark:text-d-ink">{formatPrice(product.price)}</span>
             )}
           </div>
 
@@ -119,7 +121,7 @@ export default function ProductCard({ product }) {
           <button
             onClick={handleAddToCart}
             disabled={isProcessing}
-            className="sm:hidden w-8 h-8 bg-blue-600 hover:bg-blue-700 text-white rounded-full flex items-center justify-center transition-colors shadow-sm"
+            className="sm:hidden w-8 h-8 bg-brand hover:bg-brand-600 text-white rounded-full flex items-center justify-center transition-all duration-200 shadow-soft hover:scale-110 active:scale-95"
           >
             {isProcessing ? (
               <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
