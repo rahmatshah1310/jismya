@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const sendRequest = async (configs) => {
-  const token = typeof window !== "undefined" && configs.auth === true ? localStorage.getItem("accessToken") : null;
+  const token = typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
 
   const headers = { ...(configs.headers || {}) };
 
