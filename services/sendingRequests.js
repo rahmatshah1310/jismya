@@ -1,9 +1,7 @@
 import axios from "axios";
 
 export const sendRequest = async (configs) => {
-  const requireAuth = process.env.NEXT_PUBLIC_REQUIRE_AUTH === "true";
-
-  const token = typeof window !== "undefined" && requireAuth ? localStorage.getItem("accessToken") : null;
+  const token = typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
 
   const headers = { ...(configs.headers || {}) };
 
@@ -11,7 +9,8 @@ export const sendRequest = async (configs) => {
     delete headers["Content-Type"];
   }
 
-  if (token) {
+  console.log(token, "token...............");
+  if (configs.requireAuth && token) {
     headers.Authorization = `Bearer ${token}`;
   }
 
@@ -30,6 +29,7 @@ export const sendRequest = async (configs) => {
       if (error.code === "ERR_CANCELED") return Promise.reject(error);
 
       const errorData = error.response?.data;
+
       const responseError = errorData?.errors || errorData?.data || errorData?.message;
 
       if (responseError) {
