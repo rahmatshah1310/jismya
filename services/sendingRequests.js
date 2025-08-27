@@ -1,10 +1,7 @@
 import axios from "axios";
 
 export const sendRequest = async (configs) => {
-  const token =
-    typeof window !== "undefined"
-      ? localStorage.getItem("accessToken")
-      : null;
+  const token = typeof window !== "undefined" && configs.auth === true ? localStorage.getItem("accessToken") : null;
 
   const headers = { ...(configs.headers || {}) };
 
@@ -39,10 +36,8 @@ export const sendRequest = async (configs) => {
         }
 
         if (typeof responseError === "object") {
-          const messages = Object.entries(responseError).map(
-            ([field, value]) => Array.isArray(value)
-              ? `${field}: ${value.join(", ")}`
-              : `${field}: ${value}`
+          const messages = Object.entries(responseError).map(([field, value]) =>
+            Array.isArray(value) ? `${field}: ${value.join(", ")}` : `${field}: ${value}`
           );
           return Promise.reject(messages.join("\n"));
         }
@@ -51,6 +46,4 @@ export const sendRequest = async (configs) => {
 
     return Promise.reject("An unknown error occurred");
   }
-
 };
-
