@@ -1,6 +1,5 @@
 import { sendRequest } from "./sendingRequests";
 
-// POST /orders
 export const createOrder = async (data) => {
   const response = await sendRequest({
     method: "POST",
@@ -56,7 +55,6 @@ export const updateOrderStatus = async (id, status) => {
   });
   return response.data;
 };
-
 
 export const updateShippingAddress = async (orderId, shippingAddress) => {
   const response = await sendRequest({
