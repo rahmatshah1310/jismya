@@ -30,10 +30,10 @@ export function ProductSection({ title, category, showViewAll = true, maxProduct
   // Loading
   if (isLoading || apiLoading) {
     return (
-      <section className="py-8 sm:py-12 md:py-16 bg-white">
-        <div className="container-custom">
+      <section className="py-8 sm:py-12 md:py-16 bg-white dark:bg-d-card">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row items-center justify-between mb-6 sm:mb-8 gap-4">
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-800">{title}</h2>
+            <h2 className="text-2xl md:text-3xl font-serif font-bold text-ink dark:text-d-ink">{title}</h2>
             {showViewAll && (
               <Button variant="outline" className="hidden md:block">
                 View All
@@ -49,25 +49,25 @@ export function ProductSection({ title, category, showViewAll = true, maxProduct
   // Error
   if (error) {
     return (
-      <section className="py-8 sm:py-12 md:py-16 bg-white">
-        <div className="container-custom">
+      <section className="py-8 sm:py-12 md:py-16 bg-white dark:bg-d-card">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row items-center justify-between mb-6 sm:mb-8 gap-4">
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-800">{title}</h2>
+            <h2 className="text-2xl md:text-3xl font-serif font-bold text-ink dark:text-d-ink">{title}</h2>
           </div>
-          <p className="text-center text-gray-600">Failed to load products. Please try again later.</p>
+          <p className="text-center text-ink/60 dark:text-d-ink/60">Failed to load products. Please try again later.</p>
         </div>
       </section>
     );
   }
 
   return (
-    <section className="py-8 sm:py-12 md:py-16 bg-gray-50">
-      <div className="container-custom">
+    <section className="py-8 sm:py-12 md:py-16 bg-sand/30 dark:bg-white/5">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row items-center justify-between mb-6 sm:mb-8 gap-4">
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-800">{title}</h2>
+          <h2 className="text-2xl md:text-3xl font-serif font-bold text-ink dark:text-d-ink">{title}</h2>
           {showViewAll && (
             <Link href={`/category/${category}`}>
-              <Button className="hidden md:block bg-red-600 hover:bg-red-700 text-white border-red-600 hover:border-red-700">View All</Button>
+              <Button className="hidden md:block bg-brand hover:bg-brand-600 text-white border-brand hover:border-brand-600">View All</Button>
             </Link>
           )}
         </div>
@@ -75,7 +75,7 @@ export function ProductSection({ title, category, showViewAll = true, maxProduct
         {displayedProducts.length > 0 ? (
           <>
             <div className="relative w-full group/carousel">
-              <div className="w-full overflow-hidden bg-white rounded-lg shadow-md border border-gray-200 p-1">
+              <div className="w-full overflow-hidden bg-white dark:bg-d-card rounded-2xl shadow-card border border-border dark:border-d-border p-1">
                 <Swiper
                   modules={[Navigation, Pagination]}
                   spaceBetween={0}
@@ -93,9 +93,9 @@ export function ProductSection({ title, category, showViewAll = true, maxProduct
                   {displayedProducts.map((product) => (
                     <SwiperSlide
                       key={product._id}
-                      className="!w-64 flex-shrink-0 border border-transparent hover:border-blue-500 hover:rounded-xl transition-all duration-300"
+                      className="!w-64 flex-shrink-0 border border-transparent hover:border-brand/30 dark:hover:border-brand/30 hover:rounded-2xl transition-all duration-300"
                     >
-                      <div className="bg-white h-full flex flex-col p-3 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 group/slide">
+                      <div className="dark:bg-d-card h-full flex flex-col p-3 hover:shadow-hover transition-all duration-300 group/slide">
                         <div className="relative aspect-square overflow-hidden mb-3">
                           <Link href={`/product/${product._id}`}>
                             <Image
@@ -107,7 +107,7 @@ export function ProductSection({ title, category, showViewAll = true, maxProduct
                           </Link>
 
                           {product.discount > 0 && (
-                            <div className="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow-sm">
+                            <div className="absolute top-2 left-2 bg-brand text-white text-xs font-bold px-2.5 py-1 rounded-full shadow-soft animate-scale-in">
                               {product.discount}% OFF
                             </div>
                           )}
@@ -128,8 +128,10 @@ export function ProductSection({ title, category, showViewAll = true, maxProduct
                                   )
                                 }
                                 disabled={processingItems[product._id]} // 👈 disable when busy
-                                className={`w-10 h-10 rounded-lg shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-105 ${
-                                  processingItems[product._id] ? "bg-gray-300 text-gray-500 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700 text-white"
+                                className={`w-10 h-10 rounded-xl shadow-card flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95 ${
+                                  processingItems[product._id]
+                                    ? "bg-sand/60 dark:bg-white/20 text-ink/50 dark:text-d-ink/50 cursor-not-allowed"
+                                    : "bg-brand hover:bg-brand-600 text-white"
                                 }`}
                                 title="Add to Cart"
                               >
@@ -138,13 +140,13 @@ export function ProductSection({ title, category, showViewAll = true, maxProduct
                                 ) : (
                                   <div className="relative">
                                     <HiOutlineShoppingCart className="w-5 h-5" />
-                                    <HiOutlinePlus className="w-3 h-3 absolute -top-1 -right-1 bg-white text-blue-600 rounded-full" />
+                                    <HiOutlinePlus className="w-3 h-3 absolute -top-1 -right-1 bg-white text-brand rounded-full" />
                                   </div>
                                 )}
                               </button>
 
                               <button
-                                className="w-10 h-10 bg-white hover:bg-gray-50 text-gray-600 hover:text-red-500 rounded-lg shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-105"
+                                className="w-10 h-10 bg-white dark:bg-d-card hover:bg-sand/40 dark:hover:bg-white/20 text-ink dark:text-d-ink hover:text-rose rounded-xl shadow-card flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95"
                                 title="Add to Wishlist"
                               >
                                 <HiOutlineHeart className="w-5 h-5" />
@@ -154,8 +156,8 @@ export function ProductSection({ title, category, showViewAll = true, maxProduct
                         </div>
 
                         <div className="flex flex-col items-center">
-                          <h3 className="text-sm font-medium text-gray-800">{truncateText(product.productName, 40)}</h3>
-                          <p className="text-sm text-gray-600 mt-1">Rs.{product.price}</p>
+                          <h3 className="text-sm font-medium text-ink dark:text-d-ink">{truncateText(product.productName, 40)}</h3>
+                          <p className="text-sm text-ink/70 dark:text-d-ink/70 mt-1">Rs.{product.price}</p>
                         </div>
                       </div>
                     </SwiperSlide>
@@ -165,12 +167,12 @@ export function ProductSection({ title, category, showViewAll = true, maxProduct
 
               {/* Arrows */}
               <button
-                className={`product-swiper-prev-${category} absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 w-12 h-12 rounded-full bg-white border border-gray-300 shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-105 text-gray-700 hover:bg-gray-50 hover:border-gray-400 opacity-0 group-hover/carousel:opacity-100`}
+                className={`product-swiper-prev-${category} absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 w-12 h-12 rounded-full bg-white dark:bg-d-card border border-border dark:border-d-border shadow-card flex items-center justify-center transition-all duration-200 hover:scale-105 text-ink dark:text-d-ink hover:bg-sand/40 dark:hover:bg-white/20 hover:border-brand/30 dark:hover:border-brand/30 opacity-0 group-hover/carousel:opacity-100`}
               >
                 ‹
               </button>
               <button
-                className={`product-swiper-next-${category} absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 w-12 h-12 rounded-full bg-white border border-gray-300 shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-105 text-gray-700 hover:bg-gray-50 hover:border-gray-400 opacity-0 group-hover/carousel:opacity-100`}
+                className={`product-swiper-next-${category} absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 w-12 h-12 rounded-full bg-white dark:bg-d-card border border-border dark:border-d-border shadow-card flex items-center justify-center transition-all duration-200 hover:scale-105 text-ink dark:text-d-ink hover:bg-sand/40 dark:hover:bg-white/20 hover:border-brand/30 dark:hover:border-brand/30 opacity-0 group-hover/carousel:opacity-100`}
               >
                 ›
               </button>
@@ -179,14 +181,14 @@ export function ProductSection({ title, category, showViewAll = true, maxProduct
             </div>
           </>
         ) : (
-          <p className="text-center text-muted-foreground">No products found in category: {category}</p>
+          <p className="text-center text-ink/60 dark:text-d-ink/60">No products found in category: {category}</p>
         )}
 
         {/* Mobile "View All" */}
         {showViewAll && (
           <div className="text-center mt-6 sm:mt-8 md:hidden">
             <Link href={`/category/${category}`}>
-              <Button className="bg-red-600 hover:bg-red-700 text-white border-red-600 hover:border-red-700">View All</Button>
+              <Button className="bg-brand hover:bg-brand-600 text-white border-brand hover:border-brand-600">View All</Button>
             </Link>
           </div>
         )}
