@@ -1,7 +1,7 @@
-import { Inter, Poppins } from "next/font/google";
+import { Inter, Merriweather } from "next/font/google";
+import "./globals.css";
 import { Layout } from "../components/layout/layout";
 import { QueryProvider } from "../components/providers/query-provider";
-import "./globals.css";
 import { CartProvider } from "../context/CartContext";
 import { ToastProvider } from "../components/providers/toast-providers";
 
@@ -11,10 +11,10 @@ const inter = Inter({
   display: "swap",
 });
 
-const poppins = Poppins({
-  weight: ["400", "500", "600", "700", "800"],
+const merriweather = Merriweather({
+  weight: ["300", "400", "700", "900"],
   subsets: ["latin"],
-  variable: "--font-poppins",
+  variable: "--font-merriweather",
   display: "swap",
 });
 
@@ -82,7 +82,10 @@ export default function RootLayout({ children }) {
       <head>
         <link rel="icon" href="/favicon.ico" />
       </head>
-      <body suppressHydrationWarning className={`${inter.variable} ${poppins.variable} font-sans antialiased`}>
+      <body
+        suppressHydrationWarning
+        className={`${inter.variable} ${merriweather.variable} font-sans antialiased bg-cream dark:bg-d-bg text-ink dark:text-d-ink`}
+      >
         <QueryProvider>
           <CartProvider>
             <Layout>{children}</Layout>
