@@ -73,7 +73,7 @@ export function TrendingBrands() {
   
   return (
     <section className="py-8 sm:py-12 md:py-16 bg-white">
-      <div className="container-custom">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row items-center justify-between mb-6 sm:mb-8 gap-4">
           <h2 className="text-2xl md:text-3xl font-bold mb-0 text-center sm:text-left text-gray-800">Trending Brands</h2>
           <Button variant="outline" className="hidden md:block">
