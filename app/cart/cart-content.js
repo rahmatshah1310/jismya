@@ -15,7 +15,7 @@ export function CartContent() {
 
   if (cart.length === 0) {
     return (
-      <div className="container-custom py-12 sm:py-16 md:py-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20">
         <div className="text-center">
           <div className="w-20 h-20 sm:w-24 sm:h-24 bg-muted rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
             <svg className="w-10 h-10 sm:w-12 sm:h-12 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -35,7 +35,7 @@ export function CartContent() {
   }
 
   return (
-    <div className="container-custom py-6 sm:py-8">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
       <h1 className="text-2xl sm:text-3xl font-bold text-center mb-8 sm:mb-12 text-foreground">SHOPPING CART</h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
