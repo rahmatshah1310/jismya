@@ -13,7 +13,7 @@ export default function HomePage() {
   const categories = categoryResponse?.data || []
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-cream dark:bg-d-bg animate-fade-in">
       <CarouselBanner />
 
       {/* Popular Categories */}
