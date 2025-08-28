@@ -126,9 +126,9 @@ export function RatingReviewDemo() {
                 <div className="text-2xl font-bold text-blue-600">{mockProduct.rating}</div>
                 <div className="text-sm text-blue-600">Average Rating</div>
               </div>
-              <div className="p-4 bg-green-50 rounded-lg">
-                <div className="text-2xl font-bold text-green-600">{mockRatings.length}</div>
-                <div className="text-sm text-green-600">Total Ratings</div>
+                      <div className="p-4 bg-blue-50 rounded-lg">
+          <div className="text-2xl font-bold text-blue-600">{mockRatings.length}</div>
+          <div className="text-sm text-blue-600">Total Ratings</div>
               </div>
               <div className="p-4 bg-purple-50 rounded-lg">
                 <div className="text-2xl font-bold text-purple-600">{mockReviews.length}</div>
