@@ -13,6 +13,7 @@ import { Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import { toast } from "react-toastify";
 
 const truncateText = (text, maxLength) => {
   if (!text) return "";
@@ -22,7 +23,7 @@ const truncateText = (text, maxLength) => {
 export function ProductSection({ title, category, showViewAll = true, maxProducts = 6, isLoading = false }) {
   const { data: apiResponse, isLoading: apiLoading, error } = useProductsByCategory(category);
 
-  const { addToCart, processingItems } = useCart(); // 👈 include processing state
+  const { addToCart, processingItems } = useCart();
 
   const products = apiResponse?.data || [];
   const displayedProducts = products.slice(0, maxProducts);
@@ -54,7 +55,7 @@ export function ProductSection({ title, category, showViewAll = true, maxProduct
           <div className="flex flex-col sm:flex-row items-center justify-between mb-6 sm:mb-8 gap-4">
             <h2 className="text-2xl md:text-3xl font-serif font-bold text-ink dark:text-d-ink">{title}</h2>
           </div>
-          <p className="text-center text-ink/60 dark:text-d-ink/60">Failed to load products. Please try again later.</p>
+          <p className="text-center text-ink/60 dark:text-d-ink/60">{error}</p>
         </div>
       </section>
     );
@@ -95,15 +96,18 @@ export function ProductSection({ title, category, showViewAll = true, maxProduct
                       key={product._id}
                       className="!w-64 flex-shrink-0 border border-transparent hover:border-brand/30 dark:hover:border-brand/30 hover:rounded-2xl transition-all duration-300"
                     >
-                      <div className="dark:bg-d-card h-full flex flex-col p-3 hover:shadow-hover transition-all duration-300 group/slide">
+                      <div className="dark:bg-d-card h-full flex flex-col p-3 hover:shadow-hover transition-all duration-300 group/slide relative">
                         <div className="relative aspect-square overflow-hidden mb-3">
-                          <Link href={`/product/${product._id}`}>
-                            <Image
-                              src={product.imageUrl}
-                              alt={product.productName}
-                              fill
-                              className="object-cover transition-transform duration-300 group-hover/slide:scale-105"
-                            />
+                          <Link href={`/product/${product._id}`} className="block w-full h-full">
+                            <div className="relative w-full h-full">
+                              <Image
+                                src={product.imageUrl}
+                                alt={product.productName}
+                                fill
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw,33vw"
+                                className="object-cover transition-transform duration-300 group-hover/slide:scale-105"
+                              />
+                            </div>
                           </Link>
 
                           {product.discount > 0 && (
