@@ -48,7 +48,9 @@ export default function ProductCard({ product }) {
 
         {/* Discount Badge */}
         {product.discount > 0 && (
-          <div className="absolute top-3 left-3 bg-brand text-white text-xs font-bold px-2.5 py-1 rounded-full shadow-soft animate-scale-in">{product.discount}% OFF</div>
+          <div className="absolute top-3 left-3 bg-brand text-white text-xs font-bold px-2.5 py-1 rounded-full shadow-soft animate-scale-in">
+            {product.discount}% OFF
+          </div>
         )}
 
         {/* Quick Actions - Hover */}
@@ -64,8 +66,8 @@ export default function ProductCard({ product }) {
             onClick={handleAddToCart}
             disabled={isProcessing}
             className={`w-full py-2 px-3 rounded-xl font-medium text-sm transition-all duration-200 ${
-              isProcessing 
-                ? "bg-sand/60 dark:bg-white/20 text-ink/50 dark:text-d-ink/50 cursor-not-allowed" 
+              isProcessing
+                ? "bg-sand/60 dark:bg-white/20 text-ink/50 dark:text-d-ink/50 cursor-not-allowed"
                 : "bg-brand hover:bg-brand-600 text-white shadow-card hover:shadow-hover active:scale-[0.99]"
             }`}
           >
@@ -88,7 +90,9 @@ export default function ProductCard({ product }) {
       <div className="p-4">
         {/* Product Name */}
         <Link href={`/product/${product._id}`} className="block group">
-          <h3 className="font-medium text-ink dark:text-d-ink group-hover:text-brand dark:group-hover:text-brand transition-colors duration-200 line-clamp-2 mb-2">{truncateText(product.productName, 60)}</h3>
+          <h3 className="font-medium text-ink dark:text-d-ink group-hover:text-brand dark:group-hover:text-brand transition-colors duration-200 line-clamp-2 mb-2">
+            {truncateText(product.productName, 60)}
+          </h3>
         </Link>
 
         {/* Rating */}
@@ -109,11 +113,11 @@ export default function ProductCard({ product }) {
           <div className="flex items-center gap-2">
             {product.discount > 0 ? (
               <>
-                <span className="text-lg font-bold text-ink dark:text-d-ink">{formatPrice(product.price * (1 - product.discount / 100))}</span>
-                <span className="text-sm text-ink/50 dark:text-d-ink/50 line-through">{formatPrice(product.price)}</span>
+                <span className="text-lg font-bold text-ink dark:text-d-ink">{product.price * (1 - product.discount / 100)}</span>
+                <span className="text-sm text-ink/50 dark:text-d-ink/50 line-through">{product.price}</span>
               </>
             ) : (
-              <span className="text-lg font-bold text-ink dark:text-d-ink">{formatPrice(product.price)}</span>
+              <span className="text-lg font-bold text-ink dark:text-d-ink">{product.price}</span>
             )}
           </div>
 
