@@ -5,10 +5,13 @@ import Image from "next/image";
 import { Button } from "../ui/button";
 import { HiOutlineShoppingCart, HiOutlinePlus, HiOutlineHeart } from "react-icons/hi";
 import { useCart } from "../../context/CartContext";
-import { useProductsByCategory } from "../../app/api/productApi";
+import { useProductsByCategory, useGetAllProducts } from "../../app/api/productApi";
 import { ProductGridSkeleton } from "../skeletons/product-skeleton";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination } from "swiper/modules";
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import { motion } from "framer-motion";
+import { useInView } from "framer-motion";
+import { useRef } from "react";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -23,17 +26,31 @@ const truncateText = (text, maxLength) => {
 export function ProductSection({ title, category, showViewAll = true, maxProducts = 6, isLoading = false }) {
   const { addToCart, processingItems, toggleWishlist, wishlist } = useCart();
   const { data: apiResponse, isLoading: apiLoading, error } = useProductsByCategory(category);
+  const { data: allProductsResponse } = useGetAllProducts();
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
 
-  const products = apiResponse?.data || [];
+  // Use all products if category is "all", otherwise use category products
+  const products = category === "all" 
+    ? (allProductsResponse?.data || [])
+    : (apiResponse?.data || []);
   const displayedProducts = products.slice(0, maxProducts);
 
+  console.log(`ProductSection - ${title}:`, {
+    category,
+    products: products.length,
+    displayedProducts: displayedProducts.length,
+    apiLoading,
+    error
+  });
+
   // Loading
-  if (isLoading || apiLoading) {
+  if (isLoading || (category !== "all" && apiLoading)) {
     return (
-      <section className="py-8 sm:py-12 md:py-16 bg-white dark:bg-d-card">
+      <section className="py-8 sm:py-12 md:py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row items-center justify-between mb-6 sm:mb-8 gap-4">
-            <h2 className="text-2xl md:text-3xl font-serif font-bold text-ink dark:text-d-ink">{title}</h2>
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900">{title}</h2>
             {showViewAll && (
               <Button variant="outline" className="hidden md:block">
                 View All
@@ -49,37 +66,59 @@ export function ProductSection({ title, category, showViewAll = true, maxProduct
   // Error
   if (error) {
     return (
-      <section className="py-8 sm:py-12 md:py-16 bg-white dark:bg-d-card">
+      <section className="py-8 sm:py-12 md:py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row items-center justify-between mb-6 sm:mb-8 gap-4">
-            <h2 className="text-2xl md:text-3xl font-serif font-bold text-ink dark:text-d-ink">{title}</h2>
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900">{title}</h2>
           </div>
-          <p className="text-center text-ink/60 dark:text-d-ink/60">{error}</p>
+          <p className="text-center text-gray-600">{error}</p>
         </div>
       </section>
     );
   }
 
   return (
-    <section className="py-8 sm:py-12 md:py-16 bg-sand/30 dark:bg-white/5">
+    <motion.section 
+      ref={ref}
+      initial={{ opacity: 0, y: 50 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      className="py-12 bg-white"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col sm:flex-row items-center justify-between mb-6 sm:mb-8 gap-4">
-          <h2 className="text-2xl md:text-3xl font-serif font-bold text-ink dark:text-d-ink">{title}</h2>
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+          className="flex flex-col sm:flex-row items-center justify-between mb-8 gap-4"
+        >
+          <div>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">{title}</h2>
+            <p className="text-gray-600">Discover our latest collection</p>
+          </div>
           {showViewAll && (
             <Link href={`/category/${category}`}>
-              <Button className="hidden md:block bg-brand hover:bg-brand-600 text-white border-brand hover:border-brand-600">View All</Button>
+              <Button className="hidden md:block bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
+                View All Products
+              </Button>
             </Link>
           )}
-        </div>
+        </motion.div>
 
         {displayedProducts.length > 0 ? (
           <>
             <div className="relative w-full group/carousel">
-              <div className="w-full overflow-hidden bg-white dark:bg-d-card rounded-2xl shadow-card border border-border dark:border-d-border p-1">
+              <div className="w-full overflow-hidden bg-white rounded-2xl shadow-lg border border-gray-100 p-1">
                 <Swiper
-                  modules={[Navigation, Pagination]}
-                  spaceBetween={0}
+                  modules={[Navigation, Pagination, Autoplay]}
+                  spaceBetween={20}
                   slidesPerView="auto"
+                  autoplay={{
+                    delay: 3000,
+                    disableOnInteraction: false,
+                    pauseOnMouseEnter: true,
+                  }}
+                  loop={true}
                   navigation={{
                     nextEl: `.product-swiper-next-${category}`,
                     prevEl: `.product-swiper-prev-${category}`,
@@ -90,12 +129,18 @@ export function ProductSection({ title, category, showViewAll = true, maxProduct
                   }}
                   className="w-full [&_.swiper-wrapper]:flex [&_.swiper-wrapper]:items-stretch"
                 >
-                  {displayedProducts.map((product) => (
+                  {displayedProducts.map((product, index) => (
                     <SwiperSlide
                       key={product._id}
-                      className="!w-64 flex-shrink-0 border border-transparent hover:border-brand/30 dark:hover:border-brand/30 hover:rounded-2xl transition-all duration-300"
+                      className="!w-72 flex-shrink-0 border border-transparent hover:border-blue-200 hover:rounded-xl transition-all duration-300"
                     >
-                      <div className="dark:bg-d-card h-full flex flex-col p-3 hover:shadow-hover transition-all duration-300 group/slide relative">
+                      <motion.div 
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+                        transition={{ duration: 0.5, delay: index * 0.1, ease: "easeOut" }}
+                        whileHover={{ y: -5, scale: 1.02 }}
+                        className="h-full flex flex-col p-4 hover:shadow-xl transition-all duration-300 group/slide relative bg-white rounded-xl"
+                      >
                         <div className="relative aspect-square overflow-hidden mb-3">
                           <Link href={`/product/${product._id}`} className="block w-full h-full">
                             <div className="relative w-full h-full">
@@ -110,14 +155,14 @@ export function ProductSection({ title, category, showViewAll = true, maxProduct
                           </Link>
 
                           {product.discount > 0 && (
-                            <div className="absolute top-2 left-2 bg-brand text-white text-xs font-bold px-2.5 py-1 rounded-full shadow-soft animate-scale-in">
+                            <div className="absolute top-3 left-3 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg animate-pulse">
                               {product.discount}% OFF
                             </div>
                           )}
 
                           {/* Hover actions */}
-                          <div className="absolute bottom-2 left-2 opacity-0 group-hover/slide:opacity-100 transition-all duration-300 transform translate-y-2 group-hover/slide:translate-y-0">
-                            <div className="flex flex-col gap-2">
+                          <div className="absolute bottom-3 right-3 opacity-0 group-hover/slide:opacity-100 transition-all duration-300 transform translate-y-2 group-hover/slide:translate-y-0">
+                            <div className="flex gap-2">
                               <button
                                 onClick={() =>
                                   addToCart(
@@ -130,30 +175,27 @@ export function ProductSection({ title, category, showViewAll = true, maxProduct
                                     1
                                   )
                                 }
-                                disabled={processingItems[product._id]} // 👈 disable when busy
-                                className={`w-10 h-10 rounded-xl shadow-card flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95 ${
+                                disabled={processingItems[product._id]}
+                                className={`w-10 h-10 rounded-full shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95 ${
                                   processingItems[product._id]
-                                    ? "bg-sand/60 dark:bg-white/20 text-ink/50 dark:text-d-ink/50 cursor-not-allowed"
-                                    : "bg-brand hover:bg-brand-600 text-white"
+                                    ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                                    : "bg-blue-600 hover:bg-blue-700 text-white"
                                 }`}
                                 title="Add to Cart"
                               >
                                 {processingItems[product._id] ? (
-                                  <span className="text-xs">...</span>
+                                  <div className="w-4 h-4 border-2 border-gray-400 border-t-transparent rounded-full animate-spin"></div>
                                 ) : (
-                                  <div className="relative">
-                                    <HiOutlineShoppingCart className="w-5 h-5" />
-                                    <HiOutlinePlus className="w-3 h-3 absolute -top-1 -right-1 bg-white text-brand rounded-full" />
-                                  </div>
+                                  <HiOutlineShoppingCart className="w-5 h-5" />
                                 )}
                               </button>
                               {/* Wishlist Button */}
                               <button
                                 onClick={() => toggleWishlist(product)}
-                                className={`w-10 h-10 rounded-xl shadow-card flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95 ${
+                                className={`w-10 h-10 rounded-full shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95 ${
                                   wishlist.find((item) => item._id === product._id)
-                                    ? "bg-rose-100 text-rose" // Active wishlist
-                                    : "bg-white dark:bg-d-card text-ink dark:text-d-ink hover:bg-sand/40 dark:hover:bg-white/20"
+                                    ? "bg-red-50 text-red-500"
+                                    : "bg-white text-gray-600 hover:text-red-500 hover:bg-white"
                                 }`}
                                 title={wishlist.find((item) => item._id === product._id) ? "Remove from Wishlist" : "Add to Wishlist"}
                               >
@@ -164,10 +206,10 @@ export function ProductSection({ title, category, showViewAll = true, maxProduct
                         </div>
 
                         <div className="flex flex-col items-center">
-                          <h3 className="text-sm font-medium text-ink dark:text-d-ink">{truncateText(product.productName, 40)}</h3>
-                          <p className="text-sm text-ink/70 dark:text-d-ink/70 mt-1">Rs.{product.price}</p>
+                          <h3 className="text-sm font-semibold text-gray-900 text-center">{truncateText(product.productName, 40)}</h3>
+                          <p className="text-lg font-bold text-gray-900 mt-2">Rs. {product.price}</p>
                         </div>
-                      </div>
+                      </motion.div>
                     </SwiperSlide>
                   ))}
                 </Swiper>
@@ -175,12 +217,12 @@ export function ProductSection({ title, category, showViewAll = true, maxProduct
 
               {/* Arrows */}
               <button
-                className={`product-swiper-prev-${category} absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 w-12 h-12 rounded-full bg-white dark:bg-d-card border border-border dark:border-d-border shadow-card flex items-center justify-center transition-all duration-200 hover:scale-105 text-ink dark:text-d-ink hover:bg-sand/40 dark:hover:bg-white/20 hover:border-brand/30 dark:hover:border-brand/30 opacity-0 group-hover/carousel:opacity-100`}
+                className={`product-swiper-prev-${category} absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 w-12 h-12 rounded-full bg-white border border-gray-200 shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-110 text-gray-600 hover:bg-gray-50 hover:border-blue-300 opacity-0 group-hover/carousel:opacity-100`}
               >
                 ‹
               </button>
               <button
-                className={`product-swiper-next-${category} absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 w-12 h-12 rounded-full bg-white dark:bg-d-card border border-border dark:border-d-border shadow-card flex items-center justify-center transition-all duration-200 hover:scale-105 text-ink dark:text-d-ink hover:bg-sand/40 dark:hover:bg-white/20 hover:border-brand/30 dark:hover:border-brand/30 opacity-0 group-hover/carousel:opacity-100`}
+                className={`product-swiper-next-${category} absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 w-12 h-12 rounded-full bg-white border border-gray-200 shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-110 text-gray-600 hover:bg-gray-50 hover:border-blue-300 opacity-0 group-hover/carousel:opacity-100`}
               >
                 ›
               </button>
@@ -189,18 +231,20 @@ export function ProductSection({ title, category, showViewAll = true, maxProduct
             </div>
           </>
         ) : (
-          <p className="text-center text-ink/60 dark:text-d-ink/60">No products found in category: {category}</p>
+          <p className="text-center text-gray-600">No products found in category: {category}</p>
         )}
 
         {/* Mobile "View All" */}
         {showViewAll && (
-          <div className="text-center mt-6 sm:mt-8 md:hidden">
+          <div className="text-center mt-8 md:hidden">
             <Link href={`/category/${category}`}>
-              <Button className="bg-brand hover:bg-brand-600 text-white border-brand hover:border-brand-600">View All</Button>
+              <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
+                View All Products
+              </Button>
             </Link>
           </div>
         )}
       </div>
-    </section>
+    </motion.section>
   );
 }
