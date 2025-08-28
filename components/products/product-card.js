@@ -13,7 +13,7 @@ const truncateText = (text, maxLength = 50) => {
 };
 
 export default function ProductCard({ product }) {
-  const { addToCart, processingItems } = useCart();
+  const { addToCart, processingItems, toggleWishlist, wishlist } = useCart();
 
   const handleAddToCart = (e) => {
     e.preventDefault();
@@ -55,7 +55,19 @@ export default function ProductCard({ product }) {
 
         {/* Quick Actions - Hover */}
         <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-          <button className="w-8 h-8 bg-white/90 dark:bg-d-card/90 backdrop-blur-sm rounded-full flex items-center justify-center text-ink dark:text-d-ink hover:text-rose hover:bg-white dark:hover:bg-d-card transition-all duration-200 shadow-soft hover:scale-110">
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              toggleWishlist(product);
+            }}
+            className={`w-8 h-8 backdrop-blur-sm rounded-full flex items-center justify-center transition-all duration-200 shadow-soft hover:scale-110 ${
+              wishlist?.find((item) => item._id === product._id)
+                ? "bg-rose-100 text-rose"
+                : "bg-white/90 dark:bg-d-card/90 text-ink dark:text-d-ink hover:text-rose hover:bg-white dark:hover:bg-d-card"
+            }`}
+            title={wishlist?.find((item) => item._id === product._id) ? "Remove from Wishlist" : "Add to Wishlist"}
+          >
             <HiOutlineHeart className="w-4 h-4" />
           </button>
         </div>
