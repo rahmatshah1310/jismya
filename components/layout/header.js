@@ -71,8 +71,9 @@ export function Header() {
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const { getCartItemCount } = useCart();
+  const { getCartItemCount, wishlist } = useCart();
   const cartItemCount = getCartItemCount();
+  const wishlistCount = wishlist?.length || 0;
   const { data: categoriesResponse } = useGetAllCategories();
   const categories = categoriesResponse?.data || [];
 
@@ -118,10 +119,19 @@ export function Header() {
             <div className="hidden md:flex md:col-span-2 items-center justify-end gap-4">
               <ThemeToggle />
 
-              <button className="flex flex-col items-center text-ink dark:text-d-ink hover:text-brand dark:hover:text-brand transition-colors duration-200 group">
+
+              <Link
+                href="/wishlist"
+                className="flex flex-col items-center text-ink dark:text-d-ink hover:text-brand dark:hover:text-brand transition-colors duration-200 group relative"
+              >
                 <HiOutlineHeart className="w-6 h-6 group-hover:scale-110 transition-transform duration-200" />
-                <span className="text-xs">0 item</span>
-              </button>
+                <span className="text-xs">Wishlist</span>
+                {wishlistCount > 0 && (
+                  <span className="absolute -top-2 -right-0 bg-brand text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center animate-scale-in">
+                    {wishlistCount||0}
+                  </span>
+                )}
+              </Link>
 
               <Link
                 href="/cart"
@@ -131,7 +141,7 @@ export function Header() {
                 <span className="text-xs">Cart</span>
                 {cartItemCount > 0 && (
                   <span className="absolute -top-2 -right-2 bg-brand text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center animate-scale-in">
-                    {cartItemCount}
+                    {cartItemCount||0}
                   </span>
                 )}
               </Link>
@@ -139,11 +149,22 @@ export function Header() {
 
             {/* Actions - Mobile (cart + menu) */}
             <div className="col-span-6 sm:col-span-8 md:hidden flex items-center justify-end gap-3">
+            <Link
+                href="/wishlist"
+                className="flex flex-col items-center text-ink dark:text-d-ink hover:text-brand dark:hover:text-brand transition-colors duration-200 group relative"
+              >
+                <HiOutlineHeart className="w-6 h-6 group-hover:scale-110 transition-transform duration-200" />
+                {wishlistCount > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-brand text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center animate-scale-in">
+                    {wishlistCount||0}
+                  </span>
+                )}
+              </Link>
               <Link href="/cart" className="text-ink dark:text-d-ink relative hover:text-brand dark:hover:text-brand transition-colors duration-200">
                 <HiOutlineShoppingCart className="w-6 h-6" />
                 {cartItemCount > 0 && (
                   <span className="absolute -top-2 -right-2 bg-brand text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center animate-scale-in">
-                    {cartItemCount}
+                    {cartItemCount||0}
                   </span>
                 )}
               </Link>
@@ -162,7 +183,7 @@ export function Header() {
       {isMobileMenuOpen && (
         <div className="lg:hidden fixed inset-0 bg-black/50 z-50 animate-fade-in" onClick={closeMobileMenu}>
           <div className="absolute top-0 right-0 h-full w-80 bg-white dark:bg-d-card shadow-hover animate-slide-up" onClick={(e) => e.stopPropagation()}>
-            <div className="p-6">
+            <div className="p-6 bg-white">
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-lg font-serif font-semibold text-ink dark:text-d-ink">Menu</h3>
                 <button
@@ -173,21 +194,19 @@ export function Header() {
                 </button>
               </div>
 
-              <div className="space-y-4">
+              <div className="space-y-4 bg-white">
                 <button className="flex items-center gap-3 w-full text-left p-3 rounded-xl hover:bg-sand/40 dark:hover:bg-white/10 transition-colors duration-200 text-ink dark:text-d-ink">
                   <HiOutlineUser className="w-5 h-5" />
                   <span>Hello, Sign In</span>
                 </button>
 
-                <button className="flex items-center gap-3 w-full text-left p-3 rounded-xl hover:bg-sand/40 dark:hover:bg-white/10 transition-colors duration-200 text-ink dark:text-d-ink">
-                  <HiOutlineHeart className="w-5 h-5" />
-                  <span>Wishlist (0 items)</span>
-                </button>
+               
+
 
                 {/* Reuse same categories component inside the drawer */}
                 <CategoriesButton categories={categories} />
 
-                <div className="border-t bg-whtie border-border dark:border-d-border pt-4">
+                <div className="border-t bg-white border-border dark:border-d-border pt-4">
                   <h4 className="font-medium mb-3 text-ink dark:text-d-ink">Quick Links</h4>
                   <div className="space-y-2">
                     <Link
