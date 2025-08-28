@@ -219,7 +219,7 @@ export function Header() {
              animate={{ x: 0 }}
              exit={{ x: "100%" }}
              transition={{ type: "spring", damping: 25, stiffness: 200 }}
-             className="absolute top-0 right-0 h-full w-80 bg-white shadow-2xl"
+             className="absolute top-0 right-0 h-full w-80 bg-gradient-to-b from-white to-gray-50 shadow-2xl border-l border-gray-200"
              onClick={(e) => e.stopPropagation()}
            >
              <div className="p-6">
