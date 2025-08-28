@@ -21,9 +21,8 @@ const truncateText = (text, maxLength) => {
 };
 
 export function ProductSection({ title, category, showViewAll = true, maxProducts = 6, isLoading = false }) {
+  const { addToCart, processingItems, toggleWishlist, wishlist } = useCart();
   const { data: apiResponse, isLoading: apiLoading, error } = useProductsByCategory(category);
-
-  const { addToCart, processingItems } = useCart();
 
   const products = apiResponse?.data || [];
   const displayedProducts = products.slice(0, maxProducts);
@@ -148,10 +147,15 @@ export function ProductSection({ title, category, showViewAll = true, maxProduct
                                   </div>
                                 )}
                               </button>
-
+                              {/* Wishlist Button */}
                               <button
-                                className="w-10 h-10 bg-white dark:bg-d-card hover:bg-sand/40 dark:hover:bg-white/20 text-ink dark:text-d-ink hover:text-rose rounded-xl shadow-card flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95"
-                                title="Add to Wishlist"
+                                onClick={() => toggleWishlist(product)}
+                                className={`w-10 h-10 rounded-xl shadow-card flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95 ${
+                                  wishlist.find((item) => item._id === product._id)
+                                    ? "bg-rose-100 text-rose" // Active wishlist
+                                    : "bg-white dark:bg-d-card text-ink dark:text-d-ink hover:bg-sand/40 dark:hover:bg-white/20"
+                                }`}
+                                title={wishlist.find((item) => item._id === product._id) ? "Remove from Wishlist" : "Add to Wishlist"}
                               >
                                 <HiOutlineHeart className="w-5 h-5" />
                               </button>
