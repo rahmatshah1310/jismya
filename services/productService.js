@@ -160,8 +160,6 @@ export const createProductRating = async (id, data) => {
   return response.data;
 };
 
-
-
 export const getProductSalestats = async () => {
   const response = await sendRequest({
     method: "GET",
