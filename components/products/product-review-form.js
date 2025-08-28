@@ -92,7 +92,7 @@ export default function ProductReview({ productId }) {
           <input type="text" value={from} onChange={e => setFrom(e.target.value)} placeholder="From" className="w-full px-3 py-2 border rounded-lg" />
           {/* Description */}
           <textarea value={reviewDescription} onChange={e => setReviewDescription(e.target.value)} placeholder="Your Review" rows={4} className="w-full px-3 py-2 border rounded-lg" />
-          <button type="submit" disabled={createReview.isPending} className={`px-6 py-2 rounded-lg font-medium ${createReview.isLoading ? "bg-gray-300 text-gray-500 cursor-not-allowed" : "bg-green-600 hover:bg-green-700 text-white"}`}>
+          <button type="submit" disabled={createReview.isPending} className={`px-6 py-2 rounded-lg font-medium ${createReview.isLoading ? "bg-gray-300 text-gray-500 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700 text-white"}`}>
             {createReview.isPending ? <BeatLoader color="lightBlue"/> : "Submit Review"}
           </button>
         </form>
