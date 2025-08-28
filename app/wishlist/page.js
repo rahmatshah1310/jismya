@@ -102,7 +102,7 @@ export default function WishlistContent() {
                         <HiOutlineShoppingCart className="w-4 h-4 mr-2" />
                         Add to Cart
                       </Button>
-                      <Button onClick={() => removeFromWishlist(item._id)} variant="destructive" size="sm" className="px-3">
+                      <Button onClick={() => removeFromWishlist(item._id)}  size="sm" className="px-3">
                         <HiOutlineTrash className="w-4 h-4" />
                       </Button>
                     </div>
