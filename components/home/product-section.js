@@ -26,9 +26,17 @@ const truncateText = (text, maxLength) => {
 export function ProductSection({ title, category, showViewAll = true, maxProducts = 6, isLoading = false }) {
   const { addToCart, processingItems, toggleWishlist, wishlist } = useCart();
   const { data: apiResponse, isLoading: apiLoading, error } = useProductsByCategory(category);
-  const { data: allProductsResponse } = useGetAllProducts();
+  const { data: allProductsResponse, isLoading: allProductsLoading } = useGetAllProducts();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  // Check if we're loading products (either from category or all products)
+  const isProductsLoading = category === "all" ? allProductsLoading : apiLoading;
+  
+  // Check if we have data to display
+  const hasData = category === "all" 
+    ? (allProductsResponse?.data && allProductsResponse.data.length > 0)
+    : (apiResponse?.data && apiResponse.data.length > 0);
 
   // Use all products if category is "all", otherwise use category products
   const products = category === "all" 
@@ -41,11 +49,14 @@ export function ProductSection({ title, category, showViewAll = true, maxProduct
     products: products.length,
     displayedProducts: displayedProducts.length,
     apiLoading,
+    allProductsLoading,
+    isProductsLoading,
+    hasData,
     error
   });
 
-  // Loading
-  if (isLoading || (category !== "all" && apiLoading)) {
+  // Loading - show skeleton when products are loading OR when we don't have data yet
+  if (isLoading || isProductsLoading || !hasData) {
     return (
       <section className="py-8 sm:py-12 md:py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -60,7 +71,7 @@ export function ProductSection({ title, category, showViewAll = true, maxProduct
           <ProductGridSkeleton count={maxProducts} />
         </div>
       </section>
-    );
+      );
   }
 
   // Error
@@ -105,6 +116,7 @@ export function ProductSection({ title, category, showViewAll = true, maxProduct
           )}
         </motion.div>
 
+
         {displayedProducts.length > 0 ? (
           <>
             <div className="relative w-full group/carousel">
@@ -118,7 +130,7 @@ export function ProductSection({ title, category, showViewAll = true, maxProduct
                     disableOnInteraction: false,
                     pauseOnMouseEnter: true,
                   }}
-                  loop={true}
+                  loop={displayedProducts.length > 3}
                   navigation={{
                     nextEl: `.product-swiper-next-${category}`,
                     prevEl: `.product-swiper-prev-${category}`,
