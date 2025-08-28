@@ -35,7 +35,7 @@ export function CartContent() {
   }
 
   return (
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
       <h1 className="text-2xl sm:text-3xl font-bold text-center mb-8 sm:mb-12 text-foreground">SHOPPING CART</h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
@@ -64,7 +64,7 @@ export function CartContent() {
 
                       <div className="flex-1">
                         <h3 className="font-medium text-sm text-foreground">{item.name}</h3>
-                        <p className="text-xs text-muted-foreground">{formatPrice(item.price)}</p>
+                        <p className="text-xs text-muted-foreground">{item.price}</p>
                       </div>
                     </div>
 
@@ -81,7 +81,7 @@ export function CartContent() {
                       </div>
                       <div className="text-right">
                         <p className="text-xs text-muted-foreground">Subtotal</p>
-                        <p className="font-semibold text-sm">{formatPrice(item.price * item.quantity)}</p>
+                        <p className="font-semibold text-sm">{item.price * item.quantity}</p>
                       </div>
                     </div>
 
@@ -107,7 +107,7 @@ export function CartContent() {
 
                     {/* Price Column */}
                     <div className="text-center">
-                      <span className="text-sm text-muted-foreground">{formatPrice(item.price)}</span>
+                      <span className="text-sm text-muted-foreground">{item.price}</span>
                     </div>
 
                     {/* Quantity Column */}
@@ -127,7 +127,7 @@ export function CartContent() {
 
                     {/* Subtotal Column */}
                     <div className="text-center">
-                      <span className="font-semibold text-sm">{formatPrice(item.price * item.quantity)}</span>
+                      <span className="font-semibold text-sm">{item.price * item.quantity}</span>
                     </div>
 
                     {/* Remove Column */}
@@ -152,7 +152,7 @@ export function CartContent() {
             <CardHeader>
               <CardTitle className="flex justify-between">
                 <span>Total</span>
-                <span className="text-xl font-bold">{formatPrice(getCartTotal())}</span>
+                <span className="text-xl font-bold">{getCartTotal()}</span>
               </CardTitle>
             </CardHeader>
             <CardContent>
