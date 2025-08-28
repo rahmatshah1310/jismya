@@ -4,71 +4,75 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { ThemeToggle } from "../ui/theme-toggle";
-import { HiOutlineMenu, HiOutlineSearch, HiOutlineUser, HiOutlineHeart, HiOutlineShoppingCart, HiOutlinePhone, HiX } from "react-icons/hi";
+import { HiOutlineMenu, HiOutlineSearch, HiOutlineUser, HiOutlineHeart, HiOutlineShoppingCart, HiOutlinePhone, HiX, HiOutlineChevronDown } from "react-icons/hi";
 import { useGetAllCategories } from "../../app/api/productApi";
 import { useCart } from "../../context/CartContext";
+import { motion } from "framer-motion";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 
 function SearchBar() {
   return (
-    <div className="relative">
+    <div className="relative flex-1 max-w-2xl">
       <Input
-        placeholder="Search products..."
-        className="w-full pl-4 pr-12 py-3 rounded-xl border-0 bg-sand/60 dark:bg-white/10 focus:ring-2 focus:ring-brand/30 focus:border-transparent transition-all duration-200"
+        placeholder="Search for products, brands, and categories..."
+        className="w-full pl-4 pr-12 py-3 rounded-full border-2 border-gray-200 bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 shadow-sm"
       />
-      <button className="absolute right-3 top-1/2 transform -translate-y-1/2 text-ink/60 dark:text-d-ink/60 hover:text-brand dark:hover:text-brand transition-colors">
+      <button className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-blue-600 transition-colors">
         <HiOutlineSearch className="w-5 h-5" />
       </button>
     </div>
   );
 }
 
-function CategoriesButton({ categories }) {
+function CategoriesButton({ categories, isMobile = false, onClose }) {
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
         <Button
           variant="outline"
-          className="w-full border-border dark:border-d-border text-ink dark:text-d-ink hover:bg-sand/60 dark:hover:bg-white/10 hover:text-ink dark:hover:text-d-ink transition-all duration-200"
+          className={`flex items-center gap-2 px-3 py-2 border-2 border-gray-200 text-gray-700 hover:bg-gray-50 hover:border-gray-300 transition-all duration-200 rounded-lg font-medium text-sm ${
+            isMobile ? 'w-full justify-between' : ''
+          }`}
         >
-          <HiOutlineMenu className="w-5 h-5 mr-2" />
-          CATEGORIES
+          <HiOutlineMenu className="w-4 h-4" />
+          <span className={isMobile ? 'block' : 'hidden sm:inline'}>Categories</span>
+          <HiOutlineChevronDown className="w-4 h-4" />
         </Button>
       </DropdownMenu.Trigger>
 
       <DropdownMenu.Content
         sideOffset={8}
-        className="w-64 bg-white dark:bg-d-card border border-border dark:border-d-border rounded-2xl shadow-hover p-2 animate-scale-in"
+        className="w-64 bg-white border border-gray-200 rounded-xl shadow-xl p-2 animate-in fade-in-0 zoom-in-95"
       >
-        <DropdownMenu.Item asChild>
-          <Link
-            href="/category"
-            className="block px-3 py-2 rounded-xl hover:bg-sand/40 dark:hover:bg-white/10 text-ink dark:text-d-ink hover:text-ink dark:hover:text-d-ink font-medium border-b border-border/50 dark:border-d-border/50 mb-2 transition-colors duration-200"
-          >
-            View All Categories
-          </Link>
-        </DropdownMenu.Item>
+                 <DropdownMenu.Item asChild>
+           <Link
+             href="/category"
+             className="block px-4 py-3 rounded-lg hover:bg-blue-50 text-gray-700 hover:text-blue-600 font-medium border-b border-gray-100 mb-2 transition-colors"
+             onClick={isMobile && onClose ? onClose : undefined}
+           >
+             View All Categories
+           </Link>
+         </DropdownMenu.Item>
 
-        {categories.slice(0, 8).map((category) => (
-          <DropdownMenu.Item key={category._id} asChild>
-            <Link
-              href={`/category/${category._id}`}
-              className="flex items-center justify-between px-3 py-2 rounded-xl hover:bg-sand/40 dark:hover:bg-white/10 text-ink dark:text-d-ink hover:text-ink dark:hover:text-d-ink transition-colors duration-200"
-            >
-              <span className="font-medium">{category.name}</span>
-              <span className="text-xs text-ink/50 dark:text-d-ink/50">→</span>
-            </Link>
-          </DropdownMenu.Item>
-        ))}
+                 {categories.slice(0, 8).map((category) => (
+           <DropdownMenu.Item key={category._id} asChild>
+             <Link
+               href={`/category/${category._id}`}
+               className="flex items-center justify-between px-4 py-3 rounded-lg hover:bg-blue-50 text-gray-700 hover:text-blue-600 transition-colors"
+               onClick={isMobile && onClose ? onClose : undefined}
+             >
+               <span className="font-medium">{category.name}</span>
+               <span className="text-xs text-gray-400">→</span>
+             </Link>
+           </DropdownMenu.Item>
+         ))}
       </DropdownMenu.Content>
     </DropdownMenu.Root>
   );
 }
 
 export function Header() {
-  const [isTopBannerVisible, setIsTopBannerVisible] = useState(true);
-  const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const { getCartItemCount, wishlist } = useCart();
@@ -77,199 +81,192 @@ export function Header() {
   const { data: categoriesResponse } = useGetAllCategories();
   const categories = categoriesResponse?.data || [];
 
+  // Handle scroll effect
   useEffect(() => {
-    // Reserved for future header-related side effects
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const closeMobileMenu = () => {
     setIsMobileMenuOpen(false);
-    setIsCategoriesOpen(false);
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-cream/60 dark:bg-d-bg/60 backdrop-blur supports-[backdrop-filter]:bg-cream/60 dark:supports-[backdrop-filter]:bg-d-bg/60 shadow-soft">
+    <header className={`sticky top-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white shadow-lg' : 'bg-white/95 backdrop-blur-sm'}`}>
+      {/* Top Bar */}
+      <div className="bg-blue-600 text-white py-2">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between text-sm">
+            <div className="flex items-center gap-4">
+              <span className="font-medium">Free shipping on orders over $50!</span>
+              <div className="hidden sm:flex items-center gap-2">
+                <HiOutlinePhone className="w-4 h-4" />
+                <span>(021) 111-624-333</span>
+              </div>
+            </div>
+            <nav className="hidden sm:flex items-center gap-6">
+              <Link href="/contact" className="hover:text-blue-200 transition-colors">Contact</Link>
+              <Link href="/track-order" className="hover:text-blue-200 transition-colors">Track Order</Link>
+            </nav>
+          </div>
+        </div>
+      </div>
+
       {/* Main Navigation */}
-      <div className="bg-white dark:bg-d-card border-b border-border dark:border-d-border">
+      <div className="border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          {/* Single responsive layout */}
-          <div className="grid grid-cols-12 items-center gap-4">
+          <div className="flex items-center justify-between gap-4">
             {/* Logo */}
-            <div className="col-span-6 sm:col-span-4 md:col-span-2">
+            <div className="flex-shrink-0">
               <Link href="/" className="flex items-center gap-2 group">
-                <div className="w-8 md:w-10 h-8 md:h-10 bg-brand rounded-2xl flex items-center justify-center group-hover:bg-brand-600 transition-colors duration-200">
-                  <span className="text-white font-bold text-lg md:text-xl">U</span>
+                <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center group-hover:bg-blue-700 transition-colors">
+                  <span className="text-white font-bold text-xl">U</span>
                 </div>
-                <span className="text-ink dark:text-d-ink text-xl md:text-2xl font-serif font-bold group-hover:text-brand dark:group-hover:text-brand transition-colors duration-200">
+                <span className="text-gray-900 text-2xl font-bold group-hover:text-blue-600 transition-colors">
                   user
                 </span>
               </Link>
             </div>
 
-            {/* Categories (desktop/tablet only) */}
-            <div className="hidden md:block md:col-span-2">
-              <CategoriesButton categories={categories} />
-            </div>
+                         {/* Categories - Desktop Only */}
+             <div className="hidden lg:block">
+               <CategoriesButton categories={categories} />
+             </div>
 
-            {/* Search (single instance; full-width on mobile) */}
-            <div className="order-3 md:order-none col-span-12 md:col-span-6">
+            {/* Search - Desktop */}
+            <div className="hidden lg:block flex-1 max-w-2xl mx-8">
               <SearchBar />
             </div>
 
-            {/* Actions - Desktop/Tablet */}
-            <div className="hidden md:flex md:col-span-2 items-center justify-end gap-4">
-              <ThemeToggle />
-
-
+            {/* Actions - Desktop */}
+            <div className="hidden lg:flex items-center gap-6">
               <Link
                 href="/wishlist"
-                className="flex flex-col items-center text-ink dark:text-d-ink hover:text-brand dark:hover:text-brand transition-colors duration-200 group relative"
+                className="flex flex-col items-center text-gray-600 hover:text-blue-600 transition-colors group relative"
               >
-                <HiOutlineHeart className="w-6 h-6 group-hover:scale-110 transition-transform duration-200" />
-                <span className="text-xs">Wishlist</span>
+                <HiOutlineHeart className="w-6 h-6 group-hover:scale-110 transition-transform" />
+                <span className="text-xs font-medium">Wishlist</span>
                 {wishlistCount > 0 && (
-                  <span className="absolute -top-2 -right-0 bg-brand text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center animate-scale-in">
-                    {wishlistCount||0}
+                  <span className="absolute -top-1 right-1 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center animate-pulse">
+                    {wishlistCount}
                   </span>
                 )}
               </Link>
 
               <Link
                 href="/cart"
-                className="flex flex-col items-center text-ink dark:text-d-ink hover:text-brand dark:hover:text-brand transition-colors duration-200 group relative"
+                className="flex flex-col items-center text-gray-600 hover:text-blue-600 transition-colors group relative"
               >
-                <HiOutlineShoppingCart className="w-6 h-6 group-hover:scale-110 transition-transform duration-200" />
-                <span className="text-xs">Cart</span>
+                <HiOutlineShoppingCart className="w-6 h-6 group-hover:scale-110 transition-transform" />
+                <span className="text-xs font-medium">Cart</span>
                 {cartItemCount > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-brand text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center animate-scale-in">
-                    {cartItemCount||0}
+                  <span className="absolute -top-1 -right-2 bg-blue-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center animate-pulse">
+                    {cartItemCount}
                   </span>
                 )}
               </Link>
             </div>
 
-            {/* Actions - Mobile (cart + menu) */}
-            <div className="col-span-6 sm:col-span-8 md:hidden flex items-center justify-end gap-3">
-            <Link
-                href="/wishlist"
-                className="flex flex-col items-center text-ink dark:text-d-ink hover:text-brand dark:hover:text-brand transition-colors duration-200 group relative"
-              >
-                <HiOutlineHeart className="w-6 h-6 group-hover:scale-110 transition-transform duration-200" />
-                {wishlistCount > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-brand text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center animate-scale-in">
-                    {wishlistCount||0}
-                  </span>
-                )}
-              </Link>
-              <Link href="/cart" className="text-ink dark:text-d-ink relative hover:text-brand dark:hover:text-brand transition-colors duration-200">
-                <HiOutlineShoppingCart className="w-6 h-6" />
-                {cartItemCount > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-brand text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center animate-scale-in">
-                    {cartItemCount||0}
-                  </span>
-                )}
-              </Link>
-              <button
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="text-ink dark:text-d-ink hover:text-brand dark:hover:text-brand transition-colors duration-200"
-              >
-                <HiOutlineMenu className="w-6 h-6" />
-              </button>
-            </div>
+                         {/* Mobile Actions */}
+             <div className="lg:hidden flex items-center gap-3">
+               <Link href="/wishlist" className="text-gray-600 relative hover:text-blue-600 transition-colors">
+                 <HiOutlineHeart className="w-6 h-6" />
+                 {wishlistCount > 0 && (
+                   <span className="absolute -top-1 -right-2 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                     {wishlistCount}
+                   </span>
+                 )}
+               </Link>
+               <Link href="/cart" className="text-gray-600 relative hover:text-blue-600 transition-colors">
+                 <HiOutlineShoppingCart className="w-6 h-6" />
+                 {cartItemCount > 0 && (
+                   <span className="absolute -top-1 -right-2 bg-blue-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                     {cartItemCount}
+                   </span>
+                 )}
+               </Link>
+               <button
+                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                 className="text-gray-600 hover:text-blue-600 transition-colors"
+               >
+                 <HiOutlineMenu className="w-6 h-6" />
+               </button>
+             </div>
+          </div>
+
+          {/* Search - Mobile */}
+          <div className="lg:hidden mt-4">
+            <SearchBar />
           </div>
         </div>
       </div>
 
-      {/* Mobile Menu Overlay */}
-      {isMobileMenuOpen && (
-        <div className="lg:hidden fixed inset-0 bg-black/50 z-50 animate-fade-in" onClick={closeMobileMenu}>
-          <div className="absolute top-0 right-0 h-full w-80 bg-white dark:bg-d-card shadow-hover animate-slide-up" onClick={(e) => e.stopPropagation()}>
-            <div className="p-6 bg-white">
-              <div className="flex items-center justify-between mb-6">
-                <h3 className="text-lg font-serif font-semibold text-ink dark:text-d-ink">Menu</h3>
-                <button
-                  onClick={closeMobileMenu}
-                  className="text-ink/60 dark:text-d-ink/60 hover:text-ink dark:hover:text-d-ink transition-colors duration-200"
-                >
-                  <HiX className="w-6 h-6" />
-                </button>
-              </div>
+             {/* Mobile Menu */}
+       {isMobileMenuOpen && (
+         <motion.div 
+           initial={{ opacity: 0 }}
+           animate={{ opacity: 1 }}
+           exit={{ opacity: 0 }}
+           transition={{ duration: 0.3 }}
+           className="lg:hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50" 
+           onClick={closeMobileMenu}
+         >
+           <motion.div
+             initial={{ x: "100%" }}
+             animate={{ x: 0 }}
+             exit={{ x: "100%" }}
+             transition={{ type: "spring", damping: 25, stiffness: 200 }}
+             className="absolute top-0 right-0 h-full w-80 bg-white shadow-2xl"
+             onClick={(e) => e.stopPropagation()}
+           >
+             <div className="p-6">
+               <div className="flex items-center justify-between mb-6">
+                 <h3 className="text-lg font-semibold text-gray-900">Menu</h3>
+                 <button
+                   onClick={closeMobileMenu}
+                   className="text-gray-400 hover:text-gray-600 transition-colors"
+                 >
+                   <HiX className="w-6 h-6" />
+                 </button>
+               </div>
 
-              <div className="space-y-4 bg-white">
-                <button className="flex items-center gap-3 w-full text-left p-3 rounded-xl hover:bg-sand/40 dark:hover:bg-white/10 transition-colors duration-200 text-ink dark:text-d-ink">
-                  <HiOutlineUser className="w-5 h-5" />
-                  <span>Hello, Sign In</span>
-                </button>
-
-               
-
-
-                {/* Reuse same categories component inside the drawer */}
-                <CategoriesButton categories={categories} />
-
-                <div className="border-t bg-white border-border dark:border-d-border pt-4">
-                  <h4 className="font-medium mb-3 text-ink dark:text-d-ink">Quick Links</h4>
-                  <div className="space-y-2">
-                    <Link
-                      href="/"
-                      className="block p-2 rounded-xl hover:bg-sand/40 dark:hover:bg-white/10 transition-colors duration-200 text-ink dark:text-d-ink"
-                    >
-                      Home
-                    </Link>
-                    <Link
-                      href="/contact"
-                      className="block p-2 rounded-xl hover:bg-sand/40 dark:hover:bg-white/10 transition-colors duration-200 text-ink dark:text-d-ink"
-                    >
-                      Contact
-                    </Link>
-                    <Link
-                      href="/about"
-                      className="block p-2 rounded-xl hover:bg-sand/40 dark:hover:bg-white/10 transition-colors duration-200 text-ink dark:text-d-ink"
-                    >
-                      About Us
-                    </Link>
-                    <Link
-                      href="/track-order"
-                      className="block p-2 rounded-xl hover:bg-sand/40 dark:hover:bg-white/10 transition-colors duration-200 text-ink dark:text-d-ink"
-                    >
-                      Track Order
-                    </Link>
+               <div className="space-y-4 max-h-[calc(100vh-120px)] overflow-y-auto">
+                                   <div className="border-t border-gray-200 pt-4">
+                    <h4 className="font-medium mb-3 text-gray-900">Categories</h4>
+                    <div className="w-full">
+                      <CategoriesButton 
+                        categories={categories} 
+                        isMobile={true} 
+                        onClose={closeMobileMenu}
+                      />
+                    </div>
                   </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
 
-      {/* Secondary Navigation (visible on md and up; no scroll behavior) */}
-      <div className="hidden md:block bg-sand/40 dark:bg-white/5 border-b border-border dark:border-d-border">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
-          <div className="hidden md:flex items-center justify-between gap-4">
-            <div className="flex items-center gap-4">
-              <span className="text-ink dark:text-d-ink font-medium">Welcome To user.Pk!</span>
-              <div className="flex items-center gap-2 text-ink/70 dark:text-d-ink/70">
-                <HiOutlinePhone className="w-4 h-4" />
-                <span className="text-sm">(021) 111-624-333</span>
-              </div>
-            </div>
-
-            <nav className="flex items-center gap-6 text-sm text-ink/70 dark:text-d-ink/70">
-              <Link href="/" className="hover:text-brand dark:hover:text-brand transition-colors duration-200">
-                Home
-              </Link>
-              <Link href="/contact" className="hover:text-brand dark:hover:text-brand transition-colors duration-200">
-                Contact
-              </Link>
-              <Link href="/about" className="hover:text-brand dark:hover:text-brand transition-colors duration-200">
-                About Us
-              </Link>
-              <Link href="/track-order" className="hover:text-brand dark:hover:text-brand transition-colors duration-200">
-                Track Order
-              </Link>
-            </nav>
-          </div>
-        </div>
-      </div>
+                 <div className="border-t border-gray-200 pt-4">
+                   <h4 className="font-medium mb-3 text-gray-900">Quick Links</h4>
+                   <div className="space-y-2">
+                     <Link href="/" className="block p-3 rounded-lg hover:bg-gray-50 transition-colors text-gray-700" onClick={closeMobileMenu}>
+                       Home
+                     </Link>
+                     <Link href="/wishlist" className="block p-3 rounded-lg hover:bg-gray-50 transition-colors text-gray-700" onClick={closeMobileMenu}>
+                       Wishlist
+                     </Link>
+                     <Link href="/contact" className="block p-3 rounded-lg hover:bg-gray-50 transition-colors text-gray-700" onClick={closeMobileMenu}>
+                       Contact
+                     </Link>
+                     <Link href="/track-order" className="block p-3 rounded-lg hover:bg-gray-50 transition-colors text-gray-700" onClick={closeMobileMenu}>
+                       Track Order
+                     </Link>
+                   </div>
+                 </div>
+               </div>
+             </div>
+           </motion.div>
+         </motion.div>
+       )}
     </header>
   );
 }
