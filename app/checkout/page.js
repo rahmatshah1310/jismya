@@ -11,7 +11,7 @@ import Image from "next/image";
 import { useForm } from "react-hook-form";
 
 const CheckoutPage = () => {
-  const { cart, getCartTotal, getCartItemCount } = useCart();
+  const { cart, getCartTotal, getCartItemCount, clearCart } = useCart();
   const placeOrderMutation = useCreateOrder();
 
   const {
@@ -53,6 +53,8 @@ const CheckoutPage = () => {
       console.log(res.message, "res.message");
       toast.success(res?.message || "Order placed successfully!");
       reset();
+      // Clear cart after successful order
+      clearCart();
     } catch (error) {
       console.error("Order placement error:", error);
       toast.error(typeof error === "string" ? error : "Failed to place order.");
