@@ -61,7 +61,7 @@ export function ProductGrid({ categoryId }) {
         <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
           <HiOutlineX className="w-10 h-10 text-red-500" />
         </div>
-        <h2 className="text-2xl font-bold text-gray-800 mb-2">Failed to Load Products</h2>
+        <h2 className="text-2xl font-bold text-gray-800 mb-2">{error}</h2>
         <button onClick={() => window.location.reload()} className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">
           Try Again
         </button>
@@ -70,7 +70,7 @@ export function ProductGrid({ categoryId }) {
   }
 
   return (
-    <div className="container-custom py-10">
+    <div className="container-custom py-10 px-4 sm:px-14">
       {/* Header */}
       <div className="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 animate-fade-in-up">
         <h1 className="text-3xl sm:text-4xl font-serif font-bold text-ink dark:text-d-ink">{categoryName} Category</h1>
@@ -96,7 +96,7 @@ export function ProductGrid({ categoryId }) {
       {/* Products Grid */}
       {displayedProducts.length > 0 ? (
         <>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 mb-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6 md:gap-8 mb-10">
             {displayedProducts.map((product) => (
               <div key={product._id} className="animate-fade-in">
                 <ProductCard product={product} />
@@ -106,7 +106,10 @@ export function ProductGrid({ categoryId }) {
           {totalPages > 1 && (
             <div className="flex justify-center">
               {currentPage < totalPages ? (
-                <button onClick={handleLoadMore} className="bg-brand hover:bg-brand-600 text-white px-8 py-3 rounded-2xl shadow-card hover:shadow-hover transition-all duration-200 font-medium">
+                <button
+                  onClick={handleLoadMore}
+                  className="bg-brand hover:bg-brand-600 text-white px-8 py-3 rounded-2xl shadow-card hover:shadow-hover transition-all duration-200 font-medium"
+                >
                   Load More Products
                 </button>
               ) : (
