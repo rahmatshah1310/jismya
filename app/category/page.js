@@ -29,11 +29,8 @@ export default function CategoriesPage() {
       <div className="container-custom py-8">
         <div className="text-center">
           <h1 className="text-3xl font-bold text-gray-800 mb-4">Categories</h1>
-          <p className="text-gray-600 mb-4">Failed to load categories. Please try again later.</p>
-          <button
-            onClick={() => window.location.reload()}
-            className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
-          >
+          <p className="text-gray-600 mb-4">{error}</p>
+          <button onClick={() => window.location.reload()} className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">
             Try Again
           </button>
         </div>
@@ -44,7 +41,7 @@ export default function CategoriesPage() {
   return (
     <div className="container-custom py-8">
       <h1 className="text-3xl font-bold text-gray-800 mb-8">All Categories</h1>
-      
+
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {categories.map((category) => (
           <Link
@@ -58,14 +55,8 @@ export default function CategoriesPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                 </svg>
               </div>
-              <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors mb-2">
-                {category.name}
-              </h3>
-              {category.description && (
-                <p className="text-sm text-gray-600 line-clamp-2">
-                  {category.description}
-                </p>
-              )}
+              <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors mb-2">{category.name}</h3>
+              {category.description && <p className="text-sm text-gray-600 line-clamp-2">{category.description}</p>}
             </div>
           </Link>
         ))}
