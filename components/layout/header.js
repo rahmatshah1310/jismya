@@ -28,13 +28,19 @@ function CategoriesButton({ categories }) {
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
-        <Button variant="outline" className="w-full border-border dark:border-d-border text-ink dark:text-d-ink hover:bg-sand/60 dark:hover:bg-white/10 hover:text-ink dark:hover:text-d-ink transition-all duration-200">
+        <Button
+          variant="outline"
+          className="w-full border-border dark:border-d-border text-ink dark:text-d-ink hover:bg-sand/60 dark:hover:bg-white/10 hover:text-ink dark:hover:text-d-ink transition-all duration-200"
+        >
           <HiOutlineMenu className="w-5 h-5 mr-2" />
           CATEGORIES
         </Button>
       </DropdownMenu.Trigger>
 
-      <DropdownMenu.Content sideOffset={8} className="w-64 bg-white dark:bg-d-card border border-border dark:border-d-border rounded-2xl shadow-hover p-2 animate-scale-in">
+      <DropdownMenu.Content
+        sideOffset={8}
+        className="w-64 bg-white dark:bg-d-card border border-border dark:border-d-border rounded-2xl shadow-hover p-2 animate-scale-in"
+      >
         <DropdownMenu.Item asChild>
           <Link
             href="/category"
@@ -92,7 +98,9 @@ export function Header() {
                 <div className="w-8 md:w-10 h-8 md:h-10 bg-brand rounded-2xl flex items-center justify-center group-hover:bg-brand-600 transition-colors duration-200">
                   <span className="text-white font-bold text-lg md:text-xl">U</span>
                 </div>
-                <span className="text-ink dark:text-d-ink text-xl md:text-2xl font-serif font-bold group-hover:text-brand dark:group-hover:text-brand transition-colors duration-200">user</span>
+                <span className="text-ink dark:text-d-ink text-xl md:text-2xl font-serif font-bold group-hover:text-brand dark:group-hover:text-brand transition-colors duration-200">
+                  user
+                </span>
               </Link>
             </div>
 
@@ -109,18 +117,16 @@ export function Header() {
             {/* Actions - Desktop/Tablet */}
             <div className="hidden md:flex md:col-span-2 items-center justify-end gap-4">
               <ThemeToggle />
-              
-              <button className="flex flex-col items-center text-ink dark:text-d-ink hover:text-brand dark:hover:text-brand transition-colors duration-200 group">
-                <HiOutlineUser className="w-6 h-6 group-hover:scale-110 transition-transform duration-200" />
-                <span className="text-xs">Hello, Sign In</span>
-              </button>
 
               <button className="flex flex-col items-center text-ink dark:text-d-ink hover:text-brand dark:hover:text-brand transition-colors duration-200 group">
                 <HiOutlineHeart className="w-6 h-6 group-hover:scale-110 transition-transform duration-200" />
                 <span className="text-xs">0 item</span>
               </button>
 
-              <Link href="/cart" className="flex flex-col items-center text-ink dark:text-d-ink hover:text-brand dark:hover:text-brand transition-colors duration-200 group relative">
+              <Link
+                href="/cart"
+                className="flex flex-col items-center text-ink dark:text-d-ink hover:text-brand dark:hover:text-brand transition-colors duration-200 group relative"
+              >
                 <HiOutlineShoppingCart className="w-6 h-6 group-hover:scale-110 transition-transform duration-200" />
                 <span className="text-xs">Cart</span>
                 {cartItemCount > 0 && (
@@ -141,7 +147,10 @@ export function Header() {
                   </span>
                 )}
               </Link>
-              <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-ink dark:text-d-ink hover:text-brand dark:hover:text-brand transition-colors duration-200">
+              <button
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="text-ink dark:text-d-ink hover:text-brand dark:hover:text-brand transition-colors duration-200"
+              >
                 <HiOutlineMenu className="w-6 h-6" />
               </button>
             </div>
@@ -156,7 +165,10 @@ export function Header() {
             <div className="p-6">
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-lg font-serif font-semibold text-ink dark:text-d-ink">Menu</h3>
-                <button onClick={closeMobileMenu} className="text-ink/60 dark:text-d-ink/60 hover:text-ink dark:hover:text-d-ink transition-colors duration-200">
+                <button
+                  onClick={closeMobileMenu}
+                  className="text-ink/60 dark:text-d-ink/60 hover:text-ink dark:hover:text-d-ink transition-colors duration-200"
+                >
                   <HiX className="w-6 h-6" />
                 </button>
               </div>
@@ -175,23 +187,32 @@ export function Header() {
                 {/* Reuse same categories component inside the drawer */}
                 <CategoriesButton categories={categories} />
 
-                <div className="border-t border-border dark:border-d-border pt-4">
+                <div className="border-t bg-whtie border-border dark:border-d-border pt-4">
                   <h4 className="font-medium mb-3 text-ink dark:text-d-ink">Quick Links</h4>
                   <div className="space-y-2">
-                    <Link href="/" className="block p-2 rounded-xl hover:bg-sand/40 dark:hover:bg-white/10 transition-colors duration-200 text-ink dark:text-d-ink">
+                    <Link
+                      href="/"
+                      className="block p-2 rounded-xl hover:bg-sand/40 dark:hover:bg-white/10 transition-colors duration-200 text-ink dark:text-d-ink"
+                    >
                       Home
                     </Link>
-                    <Link href="/contact" className="block p-2 rounded-xl hover:bg-sand/40 dark:hover:bg-white/10 transition-colors duration-200 text-ink dark:text-d-ink">
+                    <Link
+                      href="/contact"
+                      className="block p-2 rounded-xl hover:bg-sand/40 dark:hover:bg-white/10 transition-colors duration-200 text-ink dark:text-d-ink"
+                    >
                       Contact
                     </Link>
-                    <Link href="/about" className="block p-2 rounded-xl hover:bg-sand/40 dark:hover:bg-white/10 transition-colors duration-200 text-ink dark:text-d-ink">
+                    <Link
+                      href="/about"
+                      className="block p-2 rounded-xl hover:bg-sand/40 dark:hover:bg-white/10 transition-colors duration-200 text-ink dark:text-d-ink"
+                    >
                       About Us
                     </Link>
-                    <Link href="/track-order" className="block p-2 rounded-xl hover:bg-sand/40 dark:hover:bg-white/10 transition-colors duration-200 text-ink dark:text-d-ink">
+                    <Link
+                      href="/track-order"
+                      className="block p-2 rounded-xl hover:bg-sand/40 dark:hover:bg-white/10 transition-colors duration-200 text-ink dark:text-d-ink"
+                    >
                       Track Order
-                    </Link>
-                    <Link href="/my-orders" className="block p-2 rounded-xl hover:bg-sand/40 dark:hover:bg-white/10 transition-colors duration-200 text-ink dark:text-d-ink">
-                      My Orders
                     </Link>
                   </div>
                 </div>
@@ -225,9 +246,6 @@ export function Header() {
               </Link>
               <Link href="/track-order" className="hover:text-brand dark:hover:text-brand transition-colors duration-200">
                 Track Order
-              </Link>
-              <Link href="/my-orders" className="hover:text-brand dark:hover:text-brand transition-colors duration-200">
-                My Orders
               </Link>
             </nav>
           </div>
