@@ -89,9 +89,11 @@ export function CartProvider({ children }) {
     (product) => {
       if (!wishlist.find((item) => item._id === product._id)) {
         setWishlist((prev) => [...prev, product]);
-        toast.success(`${product.name} added to wishlist!`);
+        const displayName = product.name || product.productName || "Item";
+        toast.success(`${displayName} added to wishlist!`);
       } else {
-        toast.info(`${product.name} is already in wishlist`);
+        const displayName = product.name || product.productName || "Item";
+        toast.info(`${displayName} is already in wishlist`);
       }
     },
     [wishlist]
