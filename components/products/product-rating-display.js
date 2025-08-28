@@ -123,7 +123,7 @@ export function ProductRatingDisplay({ product, ratings = [], reviews = [] }) {
                   {review.reviewType && (
                     <span className={`px-2 py-1 rounded-full text-xs ${
                       review.reviewType === 'positive' 
-                        ? 'bg-green-100 text-green-700'
+                        ? 'bg-blue-100 text-blue-700'
                         : review.reviewType === 'negative'
                         ? 'bg-red-100 text-red-700'
                         : 'bg-gray-100 text-gray-700'
