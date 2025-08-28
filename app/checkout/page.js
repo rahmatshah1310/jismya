@@ -50,6 +50,7 @@ const CheckoutPage = () => {
 
     try {
       const res = await placeOrderMutation.mutateAsync(orderData);
+      console.log(res.message, "res.message");
       toast.success(res?.message || "Order placed successfully!");
       reset();
     } catch (error) {
@@ -140,7 +141,7 @@ const CheckoutPage = () => {
                     <p className="font-medium text-gray-800">{item.name}</p>
                     <p className="text-sm text-gray-500">Qty: {item.quantity}</p>
                   </div>
-                  <p className="font-semibold text-gray-800">{formatPrice(item.price * item.quantity)}</p>
+                  <p className="font-semibold text-gray-800">{item.price * item.quantity}</p>
                 </div>
               ))}
             </Accordion.Content>
@@ -151,7 +152,7 @@ const CheckoutPage = () => {
         <div className="border-t border-b border-gray-200 py-4 my-4">
           <div className="flex justify-between mb-2">
             <span className="text-gray-600">Cart Subtotal</span>
-            <span className="text-xl font-bold">{formatPrice(getCartTotal())}</span>
+            <span className="text-xl font-bold">{getCartTotal()}</span>
           </div>
           <div className="flex justify-between mb-2">
             <span className="text-gray-600">Shipping</span>
