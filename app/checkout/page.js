@@ -90,9 +90,12 @@ const CheckoutPage = () => {
             {errors.phone && <p className="text-red-500">Required</p>}
           </div>
           <div>
-            <label>Country</label>
-            <input {...register("country")} className="border p-2 mb-2 w-full" />
-          </div>
+  <label>Country</label>
+  <select {...register("country")} defaultValue="Pakistan" className="border p-2 w-full">
+    <option value="Pakistan">Pakistan</option>
+  </select>
+</div>
+
           <div>
             <label>City</label>
             <input {...register("city", { required: true })} className="border p-2 mb-2 w-full" />
@@ -115,8 +118,7 @@ const CheckoutPage = () => {
         <div className="mb-6">
           <label>Shipping Method</label>
           <select {...register("shippingMethod")} className="border p-2 w-full">
-            <option value="standard">Standard (Rs. 0)</option>
-            <option value="express">Express</option>
+            <option value="standard">Standard</option>
           </select>
         </div>
       </form>
