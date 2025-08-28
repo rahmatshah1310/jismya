@@ -84,7 +84,7 @@ export default function RootLayout({ children }) {
       </head>
       <body
         suppressHydrationWarning
-        className={`${inter.variable} ${merriweather.variable} font-sans antialiased bg-cream dark:bg-d-bg text-ink dark:text-d-ink`}
+        className={`${inter.variable} ${merriweather.variable} font-sans antialiased bg-cream  text-ink`}
       >
         <QueryProvider>
           <CartProvider>
