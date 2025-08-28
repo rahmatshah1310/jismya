@@ -159,8 +159,8 @@ export default function ContactForm() {
 
             {/* Email */}
             <div className="flex items-center gap-4">
-              <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-                <HiOutlineMail className="w-5 h-5 text-green-500" />
+              <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                <HiOutlineMail className="w-5 h-5 text-blue-500" />
               </div>
               <div>
                 <h3 className="font-medium text-gray-900 mb-1">Email</h3>
