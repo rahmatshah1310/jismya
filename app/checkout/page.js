@@ -50,7 +50,6 @@ const CheckoutPage = () => {
 
     try {
       const res = await placeOrderMutation.mutateAsync(orderData);
-      console.log(res.message, "res.message");
       toast.success(res?.message || "Order placed successfully!");
       reset();
       // Clear cart after successful order
@@ -90,11 +89,11 @@ const CheckoutPage = () => {
             {errors.phone && <p className="text-red-500">Required</p>}
           </div>
           <div>
-  <label>Country</label>
-  <select {...register("country")} defaultValue="Pakistan" className="border p-2 w-full">
-    <option value="Pakistan">Pakistan</option>
-  </select>
-</div>
+            <label>Country</label>
+            <select {...register("country")} defaultValue="Pakistan" className="border p-2 w-full">
+              <option value="Pakistan">Pakistan</option>
+            </select>
+          </div>
 
           <div>
             <label>City</label>
