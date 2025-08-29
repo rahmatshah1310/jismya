@@ -25,17 +25,16 @@ export function ProductSection({ title, category, showViewAll = true, maxProduct
   const { addToCart, processingItems, toggleWishlist, wishlist } = useCart();
   const { data: apiResponse, isLoading: apiLoading, error } = useProductsByCategory(category);
 
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-
   if (isLoading || apiLoading) {
     return <ProductGridSkeleton count={maxProducts} />;
   }
 
   const products = apiResponse?.data || [];
   const displayedProducts = products.slice(0, maxProducts);
+  const hasData = products.length > 0;
+  const shouldAnimate = displayedProducts.length > 0; // ignore isInView
 
-  if (!products || products.length === 0) {
+  if (!hasData) {
     return (
       <section className="py-8 sm:py-12 md:py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -58,18 +57,12 @@ export function ProductSection({ title, category, showViewAll = true, maxProduct
   }
 
   return (
-    <motion.section
-      ref={ref}
-      initial={{ opacity: 0, y: 50 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-      className="py-12 bg-white"
-    >
+    <motion.section initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: "easeOut" }} className="py-12 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+          animate={{ opacity: 1, scale: 1 }} // always visible
+          whileHover={{ y: -5, scale: 1.02 }}
           className="flex flex-col sm:flex-row items-center justify-between mb-8 gap-4"
         >
           <div>
@@ -107,7 +100,7 @@ export function ProductSection({ title, category, showViewAll = true, maxProduct
                 >
                   <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
-                    animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }} // always vi
                     transition={{ duration: 0.5, delay: index * 0.1, ease: "easeOut" }}
                     whileHover={{ y: -5, scale: 1.02 }}
                     className="h-full flex flex-col p-4 hover:shadow-xl transition-all duration-300 group/slide relative bg-white rounded-xl"
@@ -116,8 +109,8 @@ export function ProductSection({ title, category, showViewAll = true, maxProduct
                       <Link href={`/product/${product._id}`} className="block w-full h-full">
                         <div className="relative w-full h-full">
                           <Image
-                            src={product.imageUrl}
-                            alt={product.productName}
+                            src={product.imageUrl || "/placeholder.png"}
+                            alt={product.productName || "Product"}
                             fill
                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw,33vw"
                             className="object-cover transition-transform duration-300 group-hover/slide:scale-105"
@@ -131,7 +124,6 @@ export function ProductSection({ title, category, showViewAll = true, maxProduct
                         </div>
                       )}
 
-                      {/* Hover actions */}
                       <div className="absolute bottom-3 right-3 opacity-0 group-hover/slide:opacity-100 transition-all duration-300 transform translate-y-2 group-hover/slide:translate-y-0">
                         <div className="flex gap-2">
                           <button
