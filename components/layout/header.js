@@ -4,7 +4,16 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { HiOutlineMenu, HiOutlineSearch, HiOutlineUser, HiOutlineHeart, HiOutlineShoppingCart, HiOutlinePhone, HiX, HiOutlineChevronDown } from "react-icons/hi";
+import {
+  HiOutlineMenu,
+  HiOutlineSearch,
+  HiOutlineUser,
+  HiOutlineHeart,
+  HiOutlineShoppingCart,
+  HiOutlinePhone,
+  HiX,
+  HiOutlineChevronDown,
+} from "react-icons/hi";
 import { useGetAllCategories } from "../../app/api/productApi";
 import { useCart } from "../../context/CartContext";
 import { motion } from "framer-motion";
@@ -31,41 +40,38 @@ function CategoriesButton({ categories, isMobile = false, onClose }) {
         <Button
           variant="outline"
           className={`flex items-center gap-2 px-3 py-2 border-2 border-gray-200 text-gray-700 hover:bg-gray-50 hover:border-gray-300 transition-all duration-200 rounded-lg font-medium text-sm ${
-            isMobile ? 'w-full justify-between' : ''
+            isMobile ? "w-full justify-between" : ""
           }`}
         >
           <HiOutlineMenu className="w-4 h-4" />
-          <span className={isMobile ? 'block' : 'hidden sm:inline'}>Categories</span>
+          <span className={isMobile ? "block" : "hidden sm:inline"}>Categories</span>
           <HiOutlineChevronDown className="w-4 h-4" />
         </Button>
       </DropdownMenu.Trigger>
 
-      <DropdownMenu.Content
-        sideOffset={8}
-        className="w-64 bg-white border border-gray-200 rounded-xl shadow-xl p-2 animate-in fade-in-0 zoom-in-95"
-      >
-                 <DropdownMenu.Item asChild>
-           <Link
-             href="/category"
-             className="block px-4 py-3 rounded-lg hover:bg-blue-50 text-gray-700 hover:text-blue-600 font-medium border-b border-gray-100 mb-2 transition-colors"
-             onClick={isMobile && onClose ? onClose : undefined}
-           >
-             View All Categories
-           </Link>
-         </DropdownMenu.Item>
+      <DropdownMenu.Content sideOffset={8} className="w-64 bg-white border border-gray-200 rounded-xl shadow-xl p-2 animate-in fade-in-0 zoom-in-95">
+        <DropdownMenu.Item asChild>
+          <Link
+            href="/category"
+            className="block px-4 py-3 rounded-lg hover:bg-blue-50 text-gray-700 hover:text-blue-600 font-medium border-b border-gray-100 mb-2 transition-colors"
+            onClick={isMobile && onClose ? onClose : undefined}
+          >
+            View All Categories
+          </Link>
+        </DropdownMenu.Item>
 
-                 {categories.slice(0, 8).map((category) => (
-           <DropdownMenu.Item key={category._id} asChild>
-             <Link
-               href={`/category/${category._id}`}
-               className="flex items-center justify-between px-4 py-3 rounded-lg hover:bg-blue-50 text-gray-700 hover:text-blue-600 transition-colors"
-               onClick={isMobile && onClose ? onClose : undefined}
-             >
-               <span className="font-medium">{category.name}</span>
-               <span className="text-xs text-gray-400">→</span>
-             </Link>
-           </DropdownMenu.Item>
-         ))}
+        {categories.slice(0, 8).map((category) => (
+          <DropdownMenu.Item key={category._id} asChild>
+            <Link
+              href={`/category/${category._id}`}
+              className="flex items-center justify-between px-4 py-3 rounded-lg hover:bg-blue-50 text-gray-700 hover:text-blue-600 transition-colors"
+              onClick={isMobile && onClose ? onClose : undefined}
+            >
+              <span className="font-medium">{category.name}</span>
+              <span className="text-xs text-gray-400">→</span>
+            </Link>
+          </DropdownMenu.Item>
+        ))}
       </DropdownMenu.Content>
     </DropdownMenu.Root>
   );
@@ -86,8 +92,8 @@ export function Header() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const closeMobileMenu = () => {
@@ -95,7 +101,7 @@ export function Header() {
   };
 
   return (
-    <header className={`sticky top-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white shadow-lg' : 'bg-white/95 backdrop-blur-sm'}`}>
+    <header className={`sticky top-0 z-10 transition-all duration-300 ${isScrolled ? "bg-white shadow-lg" : "bg-white/95 backdrop-blur-sm"}`}>
       {/* Top Bar */}
       <div className="bg-blue-600 text-white py-2">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -108,8 +114,12 @@ export function Header() {
               </div>
             </div>
             <nav className="hidden sm:flex items-center gap-6">
-              <Link href="/contact" className="hover:text-blue-200 transition-colors">Contact</Link>
-              <Link href="/track-order" className="hover:text-blue-200 transition-colors">Track Order</Link>
+              <Link href="/contact" className="hover:text-blue-200 transition-colors">
+                Contact
+              </Link>
+              <Link href="/track-order" className="hover:text-blue-200 transition-colors">
+                Track Order
+              </Link>
             </nav>
           </div>
         </div>
@@ -125,16 +135,14 @@ export function Header() {
                 <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center group-hover:bg-blue-700 transition-colors">
                   <span className="text-white font-bold text-xl">U</span>
                 </div>
-                <span className="text-gray-900 text-2xl font-bold group-hover:text-blue-600 transition-colors">
-                  user
-                </span>
+                <span className="text-gray-900 text-2xl font-bold group-hover:text-blue-600 transition-colors">user</span>
               </Link>
             </div>
 
-                         {/* Categories - Desktop Only */}
-             <div className="hidden lg:block">
-               <CategoriesButton categories={categories} />
-             </div>
+            {/* Categories - Desktop Only */}
+            <div className="hidden lg:block">
+              <CategoriesButton categories={categories} />
+            </div>
 
             {/* Search - Desktop */}
             <div className="hidden lg:block flex-1 max-w-2xl mx-8">
@@ -143,10 +151,7 @@ export function Header() {
 
             {/* Actions - Desktop */}
             <div className="hidden lg:flex items-center gap-6">
-              <Link
-                href="/wishlist"
-                className="flex flex-col items-center text-gray-600 hover:text-blue-600 transition-colors group relative"
-              >
+              <Link href="/wishlist" className="flex flex-col items-center text-gray-600 hover:text-blue-600 transition-colors group relative">
                 <HiOutlineHeart className="w-6 h-6 group-hover:scale-110 transition-transform" />
                 <span className="text-xs font-medium">Wishlist</span>
                 {wishlistCount > 0 && (
@@ -156,10 +161,7 @@ export function Header() {
                 )}
               </Link>
 
-              <Link
-                href="/cart"
-                className="flex flex-col items-center text-gray-600 hover:text-blue-600 transition-colors group relative"
-              >
+              <Link href="/cart" className="flex flex-col items-center text-gray-600 hover:text-blue-600 transition-colors group relative">
                 <HiOutlineShoppingCart className="w-6 h-6 group-hover:scale-110 transition-transform" />
                 <span className="text-xs font-medium">Cart</span>
                 {cartItemCount > 0 && (
@@ -170,31 +172,28 @@ export function Header() {
               </Link>
             </div>
 
-                         {/* Mobile Actions */}
-             <div className="lg:hidden flex items-center gap-3">
-               <Link href="/wishlist" className="text-gray-600 relative hover:text-blue-600 transition-colors">
-                 <HiOutlineHeart className="w-6 h-6" />
-                 {wishlistCount > 0 && (
-                   <span className="absolute -top-1 -right-2 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-                     {wishlistCount}
-                   </span>
-                 )}
-               </Link>
-               <Link href="/cart" className="text-gray-600 relative hover:text-blue-600 transition-colors">
-                 <HiOutlineShoppingCart className="w-6 h-6" />
-                 {cartItemCount > 0 && (
-                   <span className="absolute -top-1 -right-2 bg-blue-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-                     {cartItemCount}
-                   </span>
-                 )}
-               </Link>
-               <button
-                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                 className="text-gray-600 hover:text-blue-600 transition-colors"
-               >
-                 <HiOutlineMenu className="w-6 h-6" />
-               </button>
-             </div>
+            {/* Mobile Actions */}
+            <div className="lg:hidden flex items-center gap-3">
+              <Link href="/wishlist" className="text-gray-600 relative hover:text-blue-600 transition-colors">
+                <HiOutlineHeart className="w-6 h-6" />
+                {wishlistCount > 0 && (
+                  <span className="absolute -top-1 -right-2 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                    {wishlistCount}
+                  </span>
+                )}
+              </Link>
+              <Link href="/cart" className="text-gray-600 relative hover:text-blue-600 transition-colors">
+                <HiOutlineShoppingCart className="w-6 h-6" />
+                {cartItemCount > 0 && (
+                  <span className="absolute -top-1 -right-2 bg-blue-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                    {cartItemCount}
+                  </span>
+                )}
+              </Link>
+              <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-gray-600 hover:text-blue-600 transition-colors">
+                <HiOutlineMenu className="w-6 h-6" />
+              </button>
+            </div>
           </div>
 
           {/* Search - Mobile */}
@@ -204,69 +203,44 @@ export function Header() {
         </div>
       </div>
 
-             {/* Mobile Menu */}
-       {isMobileMenuOpen && (
-         <motion.div 
-           initial={{ opacity: 0 }}
-           animate={{ opacity: 1 }}
-           exit={{ opacity: 0 }}
-           transition={{ duration: 0.3 }}
-           className="lg:hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50" 
-           onClick={closeMobileMenu}
-         >
-           <motion.div
-             initial={{ x: "100%" }}
-             animate={{ x: 0 }}
-             exit={{ x: "100%" }}
-             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-             className="absolute top-0 right-0 h-full w-80 bg-gradient-to-b from-white to-gray-50 shadow-2xl border-l border-gray-200"
-             onClick={(e) => e.stopPropagation()}
-           >
-             <div className="p-6">
-               <div className="flex items-center justify-between mb-6">
-                 <h3 className="text-lg font-semibold text-gray-900">Menu</h3>
-                 <button
-                   onClick={closeMobileMenu}
-                   className="text-gray-400 hover:text-gray-600 transition-colors"
-                 >
-                   <HiX className="w-6 h-6" />
-                 </button>
-               </div>
+      {/* Mobile Menu */}
+      {isMobileMenuOpen && (
+        <div className="p-6 bg-white">
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="text-lg font-semibold text-gray-900">Menu</h3>
+            <button onClick={closeMobileMenu} className="text-gray-400 hover:text-gray-600 transition-colors">
+              <HiX className="w-6 h-6" />
+            </button>
+          </div>
 
-               <div className="space-y-4 max-h-[calc(100vh-120px)] overflow-y-auto">
-                                   <div className="border-t border-gray-200 pt-4">
-                    <h4 className="font-medium mb-3 text-gray-900">Categories</h4>
-                    <div className="w-full">
-                      <CategoriesButton 
-                        categories={categories} 
-                        isMobile={true} 
-                        onClose={closeMobileMenu}
-                      />
-                    </div>
-                  </div>
+          <div className="space-y-4  overflow-y-auto">
+            <div className="border-t border-gray-200 pt-4">
+              <h4 className="font-medium mb-3 text-gray-900">Categories</h4>
+              <div className="w-full">
+                <CategoriesButton categories={categories} isMobile={true} onClose={closeMobileMenu} />
+              </div>
+            </div>
 
-                 <div className="border-t border-gray-200 pt-4">
-                   <h4 className="font-medium mb-3 text-gray-900">Quick Links</h4>
-                   <div className="space-y-2">
-                     <Link href="/" className="block p-3 rounded-lg hover:bg-gray-50 transition-colors text-gray-700" onClick={closeMobileMenu}>
-                       Home
-                     </Link>
-                     <Link href="/wishlist" className="block p-3 rounded-lg hover:bg-gray-50 transition-colors text-gray-700" onClick={closeMobileMenu}>
-                       Wishlist
-                     </Link>
-                     <Link href="/contact" className="block p-3 rounded-lg hover:bg-gray-50 transition-colors text-gray-700" onClick={closeMobileMenu}>
-                       Contact
-                     </Link>
-                     <Link href="/track-order" className="block p-3 rounded-lg hover:bg-gray-50 transition-colors text-gray-700" onClick={closeMobileMenu}>
-                       Track Order
-                     </Link>
-                   </div>
-                 </div>
-               </div>
-             </div>
-           </motion.div>
-         </motion.div>
-       )}
+            <div className="border-t border-gray-200 pt-4">
+              <h4 className="font-medium mb-3 text-gray-900">Quick Links</h4>
+              <div className="space-y-2">
+                <Link href="/" className="block p-3 rounded-lg hover:bg-gray-50 transition-colors text-gray-700" onClick={closeMobileMenu}>
+                  Home
+                </Link>
+                <Link href="/wishlist" className="block p-3 rounded-lg hover:bg-gray-50 transition-colors text-gray-700" onClick={closeMobileMenu}>
+                  Wishlist
+                </Link>
+                <Link href="/contact" className="block p-3 rounded-lg hover:bg-gray-50 transition-colors text-gray-700" onClick={closeMobileMenu}>
+                  Contact
+                </Link>
+                <Link href="/track-order" className="block p-3 rounded-lg hover:bg-gray-50 transition-colors text-gray-700" onClick={closeMobileMenu}>
+                  Track Order
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </header>
   );
 }
