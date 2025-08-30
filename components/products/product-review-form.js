@@ -10,6 +10,7 @@ import { BeatLoader } from "react-spinners";
 export default function ProductReview({ productId }) {
   const [rating, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
+  const [visibility, setVisibility] = useState("public");
   const [name, setName] = useState("");
   const [from, setFrom] = useState("");
   const [reviewDescription, setReviewDescription] = useState("");
@@ -35,12 +36,13 @@ export default function ProductReview({ productId }) {
         name,
         from,
         reviewDescription,
+        visibility,
       });
       toast.success(res?.message || "Review submitted successfully!");
-      setRating(0);
       setName("");
       setFrom("");
       setReviewDescription("");
+      setVisibility("public");
     } catch (error) {
       console.error("Review submission error:", error);
       toast.error(typeof error === "string" ? error : "Failed to submit review.");
@@ -100,6 +102,15 @@ export default function ProductReview({ productId }) {
             rows={4}
             className="w-full px-3 py-2 border rounded-lg"
           />
+          <label className="flex items-center gap-2">
+            <input
+              type="checkbox"
+              checked={visibility === "private"}
+              onChange={(e) => setVisibility(e.target.checked ? "private" : "public")}
+              className="text-blue-600 focus:ring-blue-500"
+            />
+            <span>Mark as private</span>
+          </label>
           <button
             type="submit"
             disabled={createReview.isPending}
