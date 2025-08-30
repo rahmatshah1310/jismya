@@ -18,6 +18,7 @@ import { useGetAllCategories } from "../../app/api/productApi";
 import { useCart } from "../../context/CartContext";
 import { motion } from "framer-motion";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
+import Image from "next/image";
 
 function SearchBar() {
   return (
@@ -39,9 +40,8 @@ function CategoriesButton({ categories, isMobile = false, onClose }) {
       <DropdownMenu.Trigger asChild>
         <Button
           variant="outline"
-          className={`flex items-center gap-2 px-3 py-2 border-2 border-gray-200 text-gray-700 hover:bg-gray-50 hover:border-gray-300 transition-all duration-200 rounded-lg font-medium text-sm ${
-            isMobile ? "w-full justify-between" : ""
-          }`}
+          className={`flex items-center gap-2 px-3 py-2 border-2 border-gray-200 text-gray-700 hover:bg-gray-50 hover:border-gray-300 transition-all duration-200 rounded-lg font-medium text-sm ${isMobile ? "w-full justify-between" : ""
+            }`}
         >
           <HiOutlineMenu className="w-4 h-4" />
           <span className={isMobile ? "block" : "hidden sm:inline"}>Categories</span>
@@ -114,6 +114,9 @@ export function Header() {
               </div>
             </div>
             <nav className="hidden sm:flex items-center gap-6">
+              <Link href="/" className="hover:text-blue-200 transition-colors" onClick={closeMobileMenu}>
+                Home
+              </Link>
               <Link href="/contact" className="hover:text-blue-200 transition-colors">
                 Contact
               </Link>
@@ -132,10 +135,7 @@ export function Header() {
             {/* Logo */}
             <div className="flex-shrink-0">
               <Link href="/" className="flex items-center gap-2 group">
-                <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center group-hover:bg-blue-700 transition-colors">
-                  <span className="text-white font-bold text-xl">U</span>
-                </div>
-                <span className="text-gray-900 text-2xl font-bold group-hover:text-blue-600 transition-colors">user</span>
+               <Image src="/cart.png" alt="logo" width={50} height={50} />
               </Link>
             </div>
 
