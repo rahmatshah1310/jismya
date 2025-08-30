@@ -157,10 +157,6 @@ const CheckoutPage = () => {
             <span className="text-gray-600">Cart Subtotal</span>
             <span className="text-xl font-bold">{getCartTotal()}</span>
           </div>
-          <div className="flex justify-between mb-2">
-            <span className="text-gray-600">Shipping</span>
-            <span className="font-medium">Rs. 0</span>
-          </div>
         </div>
 
         <div className="flex justify-between text-lg font-semibold mb-6">
