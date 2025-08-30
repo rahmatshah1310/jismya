@@ -41,7 +41,7 @@ export function ProductDetailSkeleton() {
 export function CarouselSkeleton() {
   return (
     <div className="flex justify-center items-center w-full py-8">
-      <div className="relative w-full mx-4 max-w-7xl h-64 sm:h-80 md:h-96 lg:h-[400px] rounded-2xl overflow-hidden shadow-2xl">
+      <div className="relative w-full  h-64 sm:h-80 md:h-96 lg:h-[500px] overflow-hidden shadow-2xl">
         {/* Image area */}
         <div className="absolute inset-0 bg-gray-200 animate-pulse" />
         {/* Overlay mimic */}
