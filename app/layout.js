@@ -80,7 +80,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/cart.png" className="rounded-full w-full h-full" />
       </head>
       <body
         suppressHydrationWarning
