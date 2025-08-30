@@ -37,18 +37,27 @@ export const useUpdateProductOrder = () =>
     mutationFn: ({ id, data }) => productService.updateProductOrder(id, data),
   });
 
-  export const useCreateReview = () => {
-    return useMutation({
-      mutationFn: ({ productId, ...data }) => productService.createProductReview(productId, data),
-    });
-  }
+export const useCreateReview = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ productId, ...data }) => productService.createProductReview(productId, data),
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ["products"] });
+      queryClient.invalidateQueries({ queryKey: ["product", variables.productId] });
+    },
+  });
+};
 
-  
-  export const useCreateRating = () => {
-    return useMutation({
-      mutationFn: ({ productId, ...data }) => productService.createProductRating(productId, data),
-    });
-  };
+export const useCreateRating = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ productId, ...data }) => productService.createProductRating(productId, data),
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ["products"] });
+      queryClient.invalidateQueries({ queryKey: ["product", variables.productId] });
+    },
+  });
+};
 
 export const useSingleProduct = (id) =>
   useQuery({
@@ -119,29 +128,29 @@ export const useProductsByCategory = (categoryName) =>
     enabled: !!categoryName,
   });
 
-export const useGetProductReviews = (id) =>{
+export const useGetProductReviews = (id) => {
   const queryClient = useQueryClient();
   useQuery({
     queryKey: ["product-reviews", id],
     queryFn: () => productService.getProductReviews(id),
-    onSuccess:()=>{
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["products"] });
     },
     enabled: !!id,
   });
-}
+};
 
-export const useGetProductRatings = (id) =>{
+export const useGetProductRatings = (id) => {
   const queryClient = useQueryClient();
   useQuery({
     queryKey: ["product-ratings", id],
     queryFn: () => productService.getProductRatings(id),
-    onSuccess:()=>{
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["products"] });
     },
     enabled: !!id,
   });
-} 
+};
 
 export const useProductSaleStats = () => {
   return useQuery({
