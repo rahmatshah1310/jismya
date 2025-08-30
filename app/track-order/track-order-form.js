@@ -71,7 +71,7 @@ export function TrackOrderForm() {
           </div>
 
           {/* Track Button */}
-          <Button type="submit" variant="user" className="w-full py-3 text-lg" disabled={isTracking}>
+          <Button type="submit" variant="user" className="w-full py-3 text-lg bg-blue-600 text-white " disabled={isTracking}>
             {isTracking ? "Tracking..." : "Track Order"}
           </Button>
         </form>
