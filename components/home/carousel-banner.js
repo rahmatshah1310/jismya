@@ -54,15 +54,15 @@ export function CarouselBanner() {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
       viewport={{ once: true, margin: "-100px" }}
-      className="w-full bg-gradient-to-r from-blue-50 to-indigo-50 py-8"
+      className="w-full bg-gradient-to-r from-blue-50 to-indigo-50 mt-6"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-full mx-auto">
         <motion.div 
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
           viewport={{ once: true, margin: "-100px" }}
-          className="relative w-full h-64 sm:h-80 md:h-96 lg:h-[400px] rounded-3xl overflow-hidden shadow-2xl"
+          className="relative w-full h-64 sm:h-80 md:h-96 lg:h-[500px]  overflow-hidden shadow-2xl"
         >
         <Swiper
           modules={[Navigation, Pagination, Autoplay, EffectFade]}
