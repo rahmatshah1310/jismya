@@ -7,6 +7,8 @@ import { HiOutlineStar } from "react-icons/hi";
 import { useParams } from "next/navigation";
 import { useSingleProduct } from "../../api/productApi";
 import ProductReview from "../../../components/products/product-review-form";
+import * as Accordion from "@radix-ui/react-accordion";
+import { ChevronDown } from "lucide-react";
 import { useCart } from "../../../context/CartContext"; //
 import { BeatLoader } from "react-spinners";
 import { ProductDetailSkeleton } from "../../../components/skeletons/product-skeleton";
@@ -19,6 +21,7 @@ export default function ProductDetailPage() {
 
   const { data: productsData, isLoading: productsIsLoading } = useSingleProduct(id);
   const product = productsData?.data;
+  console.log("Product Data:", product);
 
   const allImages = product ? [product.imageUrl, ...(product.additionalImages?.map((img) => img.imageUrl) || [])].filter(Boolean) : [];
 
@@ -84,9 +87,9 @@ export default function ProductDetailPage() {
                       />
                     ))}
                   </div>
-                  <span className="text-gray-600 font-medium text-sm sm:text-base">{product.averageRating.toFixed(1)}</span>
+                  <span className="text-gray-600 font-medium text-sm sm:text-base">Avg:({product.averageRating.toFixed(1)})</span>
                 </div>
-                <span className="text-gray-500 text-sm sm:text-base">({product.ratingCount} reviews)</span>
+                <span className="text-gray-500 text-sm sm:text-base">Total:({product.ratingCount})</span>
               </div>
 
               {/* Price */}
@@ -137,27 +140,36 @@ export default function ProductDetailPage() {
               </button>
 
               {/* Reviews Section */}
-              <div className="border-t border-gray-200 pt-6 sm:pt-8">
-                <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">Customer Reviews</h2>
-
-                {product.reviews && product.reviews.length > 0 ? (
-                  <div className="space-y-4 sm:space-y-6">
-                    {product.reviews
-                      .filter((review) => review.visibility === "public")
-                      .map((review) => (
-                        <div key={review._id} className="border border-gray-200 p-4 sm:p-6 rounded-lg sm:rounded-xl bg-gray-50">
-                          <div className="flex items-center justify-between mb-2 sm:mb-3">
-                            <span className="font-semibold text-gray-900 text-sm sm:text-base">{review.name}</span>
-                            <span className="text-gray-500 text-xs sm:text-sm">{review.from}</span>
-                          </div>
-                          <p className="text-gray-700 leading-relaxed text-sm sm:text-base">{review.reviewDescription}</p>
-                        </div>
-                      ))}
-                  </div>
-                ) : (
-                  <p className="text-gray-500 text-center py-6 sm:py-8 text-sm sm:text-base">No reviews yet. Be the first to review this product!</p>
-                )}
-              </div>
+              <Accordion.Root type="single" collapsible className="w-full">
+                <span>({product.reviewsCount} reviews)</span>
+                <Accordion.Item value="cart-items" className="border-b">
+                  <Accordion.Header>
+                    <Accordion.Trigger className="flex justify-between items-center w-full py-2 text-left font-medium text-gray-800 hover:text-blue-600">
+                      <span>Customer Reviews</span>
+                      <ChevronDown className="h-4 w-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+                    </Accordion.Trigger>
+                  </Accordion.Header>
+                  <Accordion.Content className="mt-2 space-y-4 max-h-60 overflow-y-auto">
+                    {product.reviews && product.reviews.length > 0 ? (
+                      <div className="space-y-4 sm:space-y-6">
+                        {product.reviews
+                          .filter((review) => review.visibility === "public")
+                          .map((review) => (
+                            <div key={review._id} className="border border-gray-200 p-4 sm:p-6 rounded-lg sm:rounded-xl bg-gray-50">
+                              <div className="flex items-center justify-between mb-2 sm:mb-3">
+                                <span className="font-semibold text-gray-900 text-sm sm:text-base">{review.name}</span>
+                                <span className="text-gray-500 text-xs sm:text-sm">{review.from}</span>
+                              </div>
+                              <p className="text-gray-700 leading-relaxed text-sm sm:text-base">{review.reviewDescription}</p>
+                            </div>
+                          ))}
+                      </div>
+                    ) : (
+                      <p className="text-gray-500 text-center py-6 sm:py-8 text-sm sm:text-base">No reviews yet. Be the first to review this product!</p>
+                    )}
+                  </Accordion.Content>
+                </Accordion.Item>
+              </Accordion.Root>
             </div>
           </div>
         </div>
