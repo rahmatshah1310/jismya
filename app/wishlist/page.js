@@ -11,7 +11,6 @@ export default function WishlistContent() {
   const { wishlist, removeFromWishlist, addToCart } = useCart();
 
   const handleAddToCart = (item) => {
-    // Add to cart and remove from wishlist to avoid duplication
     addToCart({ ...item, quantity: 1 }, 1);
     removeFromWishlist(item._id);
   };
@@ -98,11 +97,11 @@ export default function WishlistContent() {
 
                     {/* Actions */}
                     <div className="col-span-2 flex items-center justify-center gap-3">
-                      <Button onClick={() => handleAddToCart(item)} size="sm">
+                      <Button onClick={() => handleAddToCart(item)} size="sm" className="px-3  bg-blue-600 text-white ">
                         <HiOutlineShoppingCart className="w-4 h-4 mr-2" />
                         Add to Cart
                       </Button>
-                      <Button onClick={() => removeFromWishlist(item._id)}  size="sm" className="px-3">
+                      <Button onClick={() => removeFromWishlist(item._id)}  size="sm" className="px-3  bg-blue-600 text-white ">
                         <HiOutlineTrash className="w-4 h-4" />
                       </Button>
                     </div>
