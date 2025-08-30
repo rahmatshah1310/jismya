@@ -7,8 +7,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/ca
 import { toast } from "react-toastify";
 import { HiOutlineLockClosed, HiOutlineMinus, HiOutlinePlus, HiOutlineTrash } from "react-icons/hi";
 import { useCart } from "../../context/CartContext"; // adjust import path
-import { formatPrice } from "../../lib/utils";
-import { BeatLoader } from "react-spinners";
 
 export function CartContent() {
   const { cart, updateQuantity, removeFromCart, getCartTotal, processingItems } = useCart();
@@ -25,7 +23,7 @@ export function CartContent() {
           <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-3 sm:mb-4">Your cart is empty</h1>
           <p className="text-muted-foreground mb-6 sm:mb-8 text-sm sm:text-base">Looks like you havenst added any items yet.</p>
           <Link href="/">
-            <Button variant="user" size="lg">
+            <Button className="bg-blue-600" size="lg">
               Start Shopping
             </Button>
           </Link>
