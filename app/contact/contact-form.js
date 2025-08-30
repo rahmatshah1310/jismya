@@ -118,7 +118,7 @@ export default function ContactForm() {
                 </div>
 
                 {/* Submit Button */}
-                <Button type="submit" variant="user" className="w-full py-3">
+                <Button type="submit" variant="user" className="w-full py-3 bg-blue-600 text-white ">
                   Submit
                 </Button>
               </form>
