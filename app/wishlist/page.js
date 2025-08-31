@@ -2,10 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "../../components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { HiOutlineShoppingCart, HiOutlineTrash } from "react-icons/hi";
-import { useCart } from "../../context/CartContext";
+import { useCart } from "@/ontext/CartContext";
 
 export default function WishlistContent() {
   const { wishlist, removeFromWishlist, addToCart } = useCart();
@@ -27,7 +27,7 @@ export default function WishlistContent() {
           <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-3 sm:mb-4">Your wishlist is empty</h1>
           <p className="text-muted-foreground mb-6 sm:mb-8 text-sm sm:text-base">Save items you love and get back to them anytime.</p>
           <Link href="/">
-            <Button variant="default" size="lg">
+            <Button className="bg-blue-600" size="lg">
               Continue Shopping
             </Button>
           </Link>
@@ -68,11 +68,11 @@ export default function WishlistContent() {
                     </div>
 
                     <div className="flex items-center justify-between gap-2">
-                      <Button onClick={() => handleAddToCart(item)} className="flex-1" size="sm">
+                      <Button onClick={() => handleAddToCart(item)} className="flex-1 bg-blue-600" size="sm">
                         <HiOutlineShoppingCart className="w-4 h-4 mr-2" />
                         Add to Cart
                       </Button>
-                      <Button onClick={() => removeFromWishlist(item._id)} variant="destructive" size="sm">
+                      <Button onClick={() => removeFromWishlist(item._id)} className="bg-blue-600" size="sm">
                         <HiOutlineTrash className="w-4 h-4" />
                       </Button>
                     </div>
@@ -101,7 +101,7 @@ export default function WishlistContent() {
                         <HiOutlineShoppingCart className="w-4 h-4 mr-2" />
                         Add to Cart
                       </Button>
-                      <Button onClick={() => removeFromWishlist(item._id)}  size="sm" className="px-3  bg-blue-600 text-white ">
+                      <Button onClick={() => removeFromWishlist(item._id)} size="sm" className="px-3  bg-blue-600 text-white ">
                         <HiOutlineTrash className="w-4 h-4" />
                       </Button>
                     </div>
@@ -122,11 +122,11 @@ export default function WishlistContent() {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
-              <p className="text-sm text-muted-foreground">
-                Move items to your cart when you’re ready to check out.
-              </p>
+              <p className="text-sm text-muted-foreground">Move items to your cart when you’re ready to check out.</p>
               <Link href="/cart">
-                <Button variant="outline" className="w-full">Go to Cart</Button>
+                <Button variant="outline" className="w-full">
+                  Go to Cart
+                </Button>
               </Link>
             </CardContent>
           </Card>
