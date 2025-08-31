@@ -1,4 +1,4 @@
-import { sendRequest } from "./sendingRequests";
+import { sendRequest } from "@/services/sendingRequests";
 
 // POST /products
 export const createProduct = async (data) => {
@@ -168,6 +168,14 @@ export const getProductSalestats = async () => {
   return response.data;
 };
 
+export const searchProducts = async (searchTerm) => {
+  const response = await sendRequest({
+    method: "GET",
+    url: `/products/search?item=${encodeURIComponent(searchTerm)}`,
+  });
+  return response.data;
+};
+
 export const productService = {
   createProduct,
   updateProduct,
@@ -187,4 +195,5 @@ export const productService = {
   createProductRating,
   createProductReview,
   getProductSalestats,
+  searchProducts, // Add this line
 };
