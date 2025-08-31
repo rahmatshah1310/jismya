@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { HiOutlineShoppingCart, HiOutlineTrash } from "react-icons/hi";
-import { useCart } from "@/ontext/CartContext";
+import { useCart } from "@/context/CartContext";
 
 export default function WishlistContent() {
   const { wishlist, removeFromWishlist, addToCart } = useCart();
