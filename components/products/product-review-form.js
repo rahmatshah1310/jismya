@@ -1,10 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { HiOutlineStar, HiOutlineThumbUp, HiOutlineThumbDown } from "react-icons/hi";
+import { HiOutlineStar } from "react-icons/hi";
 import { toast } from "react-toastify";
-import { useCreateReview, useCreateRating } from "../../app/api/productApi";
+import { useCreateReview, useCreateRating } from "@/app/api/productApi";
 import { BeatLoader } from "react-spinners";
 
 export default function ProductReview({ productId }) {
