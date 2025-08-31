@@ -1,4 +1,4 @@
-import { sendRequest } from "../services/sendingRequests";
+import { sendRequest } from "@/services/sendingRequests";
 
 // ✅ Create Banner (Admin)
 export const createBanner = async (formData) => {
@@ -29,7 +29,6 @@ export const getBanners = async () => {
   }
 };
 
-
 export const getSingleBanner = async (id) => {
   try {
     const response = await sendRequest({
@@ -42,7 +41,6 @@ export const getSingleBanner = async (id) => {
     throw error;
   }
 };
-
 
 export const getBannersByDevice = async (deviceType) => {
   try {
@@ -57,21 +55,19 @@ export const getBannersByDevice = async (deviceType) => {
   }
 };
 
-
-export const reorderBanner = async (id,data) => {
+export const reorderBanner = async (id, data) => {
   try {
     const response = await sendRequest({
       method: "PUT", // or PATCH, based on your backend
-      url: `/banners/order/${id}`, 
+      url: `/banners/order/${id}`,
       data,
     });
     return response.data;
   } catch (error) {
     console.error("BannerService [reorderBanner] error:", error);
-   throw error;
+    throw error;
   }
 };
-
 
 // ✅ Delete Banner (Admin)
 export const deleteBanner = async (id) => {
@@ -102,7 +98,6 @@ export const updateBanner = async (id, data) => {
   }
 };
 
-
 export const toggleBannerStatus = async (id, data) => {
   try {
     const response = await sendRequest({
@@ -126,5 +121,5 @@ export const bannerService = {
   updateBanner,
   getSingleBanner,
   reorderBanner,
-  toggleBannerStatus
+  toggleBannerStatus,
 };
