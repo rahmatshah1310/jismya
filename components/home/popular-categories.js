@@ -1,18 +1,17 @@
-"use client"
+"use client";
 
-import Link from 'next/link'
-import { Card, CardContent } from '../ui/card'
+import Link from "next/link";
+import { Card, CardContent } from "@/components/ui/card";
 
 export function PopularCategories() {
-  
   const categories = [
-    { name: 'Health & Beauty', icon: '💄', href: '/category/health-beauty' },
-    { name: 'Electronics', icon: '💻', href: '/category/electronics' },
-    { name: 'Fashion', icon: '👕', href: '/category/fashion' },
-    { name: 'Home & Living', icon: '🏠', href: '/category/home-living' },
-    { name: 'Sports', icon: '⚽', href: '/category/sports' },
-    { name: 'Books', icon: '📚', href: '/category/books' },
-  ]
+    { name: "Health & Beauty", icon: "💄", href: "/category/health-beauty" },
+    { name: "Electronics", icon: "💻", href: "/category/electronics" },
+    { name: "Fashion", icon: "👕", href: "/category/fashion" },
+    { name: "Home & Living", icon: "🏠", href: "/category/home-living" },
+    { name: "Sports", icon: "⚽", href: "/category/sports" },
+    { name: "Books", icon: "📚", href: "/category/books" },
+  ];
 
   return (
     <section className="py-8 sm:py-12 md:py-16 bg-white">
@@ -32,5 +31,5 @@ export function PopularCategories() {
         </div>
       </div>
     </section>
-  )
+  );
 }
