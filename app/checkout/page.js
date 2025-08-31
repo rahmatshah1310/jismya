@@ -55,7 +55,6 @@ const CheckoutPage = () => {
       // Clear cart after successful order
       clearCart();
     } catch (error) {
-      console.error("Order placement error:", error);
       toast.error(typeof error === "string" ? error : "Failed to place order.");
     }
   };
