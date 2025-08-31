@@ -173,7 +173,12 @@ export function Header() {
                   </span>
                 )}
               </Link>
-              <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-gray-600 hover:text-blue-600 transition-colors">
+              <button
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="text-gray-600 hover:text-blue-600 transition-colors"
+                aria-label="Toggle mobile menu"
+                aria-expanded={isMobileMenuOpen}
+              >
                 <HiOutlineMenu className="w-6 h-6" />
               </button>
             </div>
@@ -198,7 +203,7 @@ export function Header() {
           >
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-lg font-semibold text-gray-900">Menu</h3>
-              <button onClick={closeMobileMenu} className="text-gray-400 hover:text-gray-600 transition-colors">
+              <button onClick={closeMobileMenu} className="text-gray-400 hover:text-gray-600 transition-colors" aria-label="Close mobile menu">
                 <HiX className="w-6 h-6" />
               </button>
             </div>
