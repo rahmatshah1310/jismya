@@ -1,9 +1,9 @@
 "use client";
 
-import { useCart } from "../../context/CartContext";
-import { formatPrice } from "../../lib/utils";
+import { useCart } from "@/context/CartContext";
+import { formatPrice } from "@/lib/utils";
 import { BeatLoader } from "react-spinners";
-import { useCreateOrder } from "../../app/api/orderApi";
+import { useCreateOrder } from "@/app/api/orderApi";
 import * as Accordion from "@radix-ui/react-accordion";
 import { ChevronDown } from "lucide-react";
 import { toast } from "react-toastify";
