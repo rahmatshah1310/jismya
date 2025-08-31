@@ -2,37 +2,15 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
-import {
-  HiOutlineMenu,
-  HiOutlineSearch,
-  HiOutlineUser,
-  HiOutlineHeart,
-  HiOutlineShoppingCart,
-  HiOutlinePhone,
-  HiX,
-  HiOutlineChevronDown,
-} from "react-icons/hi";
-import { useGetAllCategories } from "../../app/api/productApi";
-import { useCart } from "../../context/CartContext";
-import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { HiOutlineMenu, HiOutlineHeart, HiOutlineShoppingCart, HiOutlinePhone, HiX, HiOutlineChevronDown } from "react-icons/hi";
+import { useGetAllCategories } from "@/app/api/productApi";
+import { useCart } from "@/context/CartContext";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import Image from "next/image";
-
-function SearchBar() {
-  return (
-    <div className="relative flex-1 max-w-2xl">
-      <Input
-        placeholder="Search for products, brands, and categories..."
-        className="w-full pl-4 pr-12 py-3 rounded-full border-2 border-gray-200 bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 shadow-sm"
-      />
-      <button className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-blue-600 transition-colors">
-        <HiOutlineSearch className="w-5 h-5" />
-      </button>
-    </div>
-  );
-}
+import SearchBar from "@/components/ui/SearchBar";
+import { motion } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 
 function CategoriesButton({ categories, isMobile = false, onClose }) {
   return (
@@ -40,8 +18,9 @@ function CategoriesButton({ categories, isMobile = false, onClose }) {
       <DropdownMenu.Trigger asChild>
         <Button
           variant="outline"
-          className={`flex items-center gap-2 px-3 py-2 border-2 border-gray-200 text-gray-700 hover:bg-gray-50 hover:border-gray-300 transition-all duration-200 rounded-lg font-medium text-sm ${isMobile ? "w-full justify-between" : ""
-            }`}
+          className={`flex items-center gap-2 px-3 py-2 border-2 border-gray-200 text-gray-700 hover:bg-gray-50 hover:border-gray-300 transition-all duration-200 rounded-lg font-medium text-sm ${
+            isMobile ? "w-full justify-between" : ""
+          }`}
         >
           <HiOutlineMenu className="w-4 h-4" />
           <span className={isMobile ? "block" : "hidden sm:inline"}>Categories</span>
@@ -103,17 +82,21 @@ export function Header() {
   return (
     <header className={`sticky top-0 z-10 transition-all duration-300 ${isScrolled ? "bg-white shadow-lg" : "bg-white/95 backdrop-blur-sm"}`}>
       {/* Top Bar */}
-      <div className="bg-blue-600 text-white py-2">
+      {/* Top Bar - hidden on mobile */}
+      <div className="hidden lg:block bg-blue-600 text-white py-2">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between text-sm">
+            {/* Left side: Free shipping + phone */}
             <div className="flex items-center gap-4">
               <span className="font-medium">Free shipping on orders over $50!</span>
-              <div className="hidden sm:flex items-center gap-2">
+              <div className="flex items-center gap-2">
                 <HiOutlinePhone className="w-4 h-4" />
                 <span>(021) 111-624-333</span>
               </div>
             </div>
-            <nav className="hidden sm:flex items-center gap-6">
+
+            {/* Right side: Links */}
+            <div className="flex items-center gap-6">
               <Link href="/" className="hover:text-blue-200 transition-colors" onClick={closeMobileMenu}>
                 Home
               </Link>
@@ -123,19 +106,19 @@ export function Header() {
               <Link href="/track-order" className="hover:text-blue-200 transition-colors">
                 Track Order
               </Link>
-            </nav>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Main Navigation */}
       <div className="border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center justify-between gap-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-0 pb-2 sm:py-4 ">
+          <div className="flex items-center justify-between gap-x-4">
             {/* Logo */}
             <div className="flex-shrink-0">
               <Link href="/" className="flex items-center gap-2 group">
-               <Image src="/cart.png" alt="logo" width={50} height={50} />
+                <Image src="/cart.png" alt="logo" width={50} height={50} />
               </Link>
             </div>
 
@@ -197,50 +180,55 @@ export function Header() {
           </div>
 
           {/* Search - Mobile */}
-          <div className="lg:hidden mt-4">
+          <div className="lg:hidden mt-2">
             <SearchBar />
           </div>
         </div>
       </div>
 
       {/* Mobile Menu */}
-      {isMobileMenuOpen && (
-        <div className="p-6 bg-white">
-          <div className="flex items-center justify-between mb-6">
-            <h3 className="text-lg font-semibold text-gray-900">Menu</h3>
-            <button onClick={closeMobileMenu} className="text-gray-400 hover:text-gray-600 transition-colors">
-              <HiX className="w-6 h-6" />
-            </button>
-          </div>
-
-          <div className="space-y-4  overflow-y-auto">
-            <div className="border-t border-gray-200 pt-4">
-              <h4 className="font-medium mb-3 text-gray-900">Categories</h4>
-              <div className="w-full">
-                <CategoriesButton categories={categories} isMobile={true} onClose={closeMobileMenu} />
-              </div>
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ y: -50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -50, opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="p-6 bg-white absolute top-0 w-full shadow-lg rounded"
+          >
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-lg font-semibold text-gray-900">Menu</h3>
+              <button onClick={closeMobileMenu} className="text-gray-400 hover:text-gray-600 transition-colors">
+                <HiX className="w-6 h-6" />
+              </button>
             </div>
 
-            <div className="border-t border-gray-200 pt-4">
-              <h4 className="font-medium mb-3 text-gray-900">Quick Links</h4>
-              <div className="space-y-2">
-                <Link href="/" className="block p-3 rounded-lg hover:bg-gray-50 transition-colors text-gray-700" onClick={closeMobileMenu}>
-                  Home
-                </Link>
-                <Link href="/wishlist" className="block p-3 rounded-lg hover:bg-gray-50 transition-colors text-gray-700" onClick={closeMobileMenu}>
-                  Wishlist
-                </Link>
-                <Link href="/contact" className="block p-3 rounded-lg hover:bg-gray-50 transition-colors text-gray-700" onClick={closeMobileMenu}>
-                  Contact
-                </Link>
-                <Link href="/track-order" className="block p-3 rounded-lg hover:bg-gray-50 transition-colors text-gray-700" onClick={closeMobileMenu}>
-                  Track Order
-                </Link>
+            <div className="space-y-4  overflow-y-auto">
+              <div className="border-t border-gray-200 pt-4">
+                <h4 className="font-medium mb-3 text-gray-900">Categories</h4>
+                <div className="w-full">
+                  <CategoriesButton categories={categories} isMobile={true} onClose={closeMobileMenu} />
+                </div>
+              </div>
+
+              <div className="border-t border-gray-200 pt-4">
+                <h4 className="font-medium mb-3 text-gray-900">Quick Links</h4>
+                <div className="space-y-2">
+                  <Link href="/" className="block p-3 rounded-lg hover:bg-gray-50 transition-colors text-gray-700" onClick={closeMobileMenu}>
+                    Home
+                  </Link>
+                  <Link href="/contact" className="block p-3 rounded-lg hover:bg-gray-50 transition-colors text-gray-700" onClick={closeMobileMenu}>
+                    Contact
+                  </Link>
+                  <Link href="/track-order" className="block p-3 rounded-lg hover:bg-gray-50 transition-colors text-gray-700" onClick={closeMobileMenu}>
+                    Track Order
+                  </Link>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-      )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }
