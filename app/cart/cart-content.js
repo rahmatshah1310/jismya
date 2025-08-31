@@ -2,11 +2,11 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "../../components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "react-toastify";
 import { HiOutlineLockClosed, HiOutlineMinus, HiOutlinePlus, HiOutlineTrash } from "react-icons/hi";
-import { useCart } from "../../context/CartContext"; // adjust import path
+import { useCart } from "@/context/CartContext"; // adjust import path
 
 export function CartContent() {
   const { cart, updateQuantity, removeFromCart, getCartTotal, processingItems } = useCart();
