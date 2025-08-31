@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { ProductReview } from "./product-review-form";
-import { ProductRatingDisplay } from "./product-rating-display";
-import { SimpleRating, CompactRating, LargeRating } from "./simple-rating";
+import { ProductReview } from "@/components/products/product-review-form";
+import { ProductRatingDisplay } from "@/components/products/product-rating-display";
+import { SimpleRating, CompactRating, LargeRating } from "@/components/products/simple-rating";
 
 // Mock data for demonstration
 const mockProduct = {
@@ -12,7 +12,7 @@ const mockProduct = {
   price: 2999,
   rating: 4.2,
   ratingCount: 47,
-  discount: 15
+  discount: 15,
 };
 
 const mockRatings = [
@@ -35,7 +35,7 @@ const mockReviews = [
     summary: "Excellent product quality!",
     reviewDescription: "This product exceeded my expectations. The quality is outstanding and it's worth every penny.",
     rating: 5,
-    reviewType: "positive"
+    reviewType: "positive",
   },
   {
     name: "Sarah Smith",
@@ -43,7 +43,7 @@ const mockReviews = [
     summary: "Good but could be better",
     reviewDescription: "Overall a good product, but there are some areas that could be improved. Still recommend it.",
     rating: 4,
-    reviewType: "neutral"
+    reviewType: "neutral",
   },
   {
     name: "Mike Johnson",
@@ -51,8 +51,8 @@ const mockReviews = [
     summary: "Not what I expected",
     reviewDescription: "The product didn't meet my expectations. There were some issues with the delivery and quality.",
     rating: 3,
-    reviewType: "negative"
-  }
+    reviewType: "negative",
+  },
 ];
 
 export function RatingReviewDemo() {
@@ -62,9 +62,7 @@ export function RatingReviewDemo() {
     <div className="max-w-7xl mx-auto px-4 py-8">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-800 mb-4">Rating & Review System Demo</h1>
-        <p className="text-gray-600">
-          This demonstrates the complete rating and review functionality for e-commerce products.
-        </p>
+        <p className="text-gray-600">This demonstrates the complete rating and review functionality for e-commerce products.</p>
       </div>
 
       {/* Tab Navigation */}
@@ -73,15 +71,13 @@ export function RatingReviewDemo() {
           { id: "overview", label: "Overview", icon: "📊" },
           { id: "components", label: "Rating Components", icon: "⭐" },
           { id: "display", label: "Rating Display", icon: "📈" },
-          { id: "form", label: "Review Form", icon: "✍️" }
+          { id: "form", label: "Review Form", icon: "✍️" },
         ].map((tab) => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
             className={`px-6 py-3 text-sm font-medium transition-colors ${
-              activeTab === tab.id
-                ? "border-b-2 border-blue-500 text-blue-600"
-                : "text-gray-500 hover:text-gray-700"
+              activeTab === tab.id ? "border-b-2 border-blue-500 text-blue-600" : "text-gray-500 hover:text-gray-700"
             }`}
           >
             <span className="mr-2">{tab.icon}</span>
@@ -126,9 +122,9 @@ export function RatingReviewDemo() {
                 <div className="text-2xl font-bold text-blue-600">{mockProduct.rating}</div>
                 <div className="text-sm text-blue-600">Average Rating</div>
               </div>
-                      <div className="p-4 bg-blue-50 rounded-lg">
-          <div className="text-2xl font-bold text-blue-600">{mockRatings.length}</div>
-          <div className="text-sm text-blue-600">Total Ratings</div>
+              <div className="p-4 bg-blue-50 rounded-lg">
+                <div className="text-2xl font-bold text-blue-600">{mockRatings.length}</div>
+                <div className="text-sm text-blue-600">Total Ratings</div>
               </div>
               <div className="p-4 bg-purple-50 rounded-lg">
                 <div className="text-2xl font-bold text-purple-600">{mockReviews.length}</div>
@@ -143,7 +139,7 @@ export function RatingReviewDemo() {
         <div className="space-y-6">
           <div className="bg-white border border-gray-200 rounded-lg p-6">
             <h2 className="text-xl font-semibold mb-4 text-gray-800">Rating Component Examples</h2>
-            
+
             <div className="space-y-6">
               {/* Simple Rating */}
               <div>
@@ -192,11 +188,7 @@ export function RatingReviewDemo() {
 
       {activeTab === "display" && (
         <div className="space-y-6">
-          <ProductRatingDisplay 
-            product={mockProduct}
-            ratings={mockRatings}
-            reviews={mockReviews}
-          />
+          <ProductRatingDisplay product={mockProduct} ratings={mockRatings} reviews={mockReviews} />
         </div>
       )}
 
@@ -210,10 +202,18 @@ export function RatingReviewDemo() {
       <div className="mt-8 bg-blue-50 border border-blue-200 rounded-lg p-6">
         <h3 className="text-lg font-semibold text-blue-800 mb-3">How to Use</h3>
         <div className="text-sm text-blue-700 space-y-2">
-          <p><strong>1. Rating Components:</strong> Use SimpleRating, CompactRating, or LargeRating for different contexts</p>
-          <p><strong>2. Rating Display:</strong> Use ProductRatingDisplay to show comprehensive rating information</p>
-          <p><strong>3. Review Form:</strong> Use ProductReview for user submission of ratings and reviews</p>
-          <p><strong>4. Integration:</strong> All components work together and automatically update when data changes</p>
+          <p>
+            <strong>1. Rating Components:</strong> Use SimpleRating, CompactRating, or LargeRating for different contexts
+          </p>
+          <p>
+            <strong>2. Rating Display:</strong> Use ProductRatingDisplay to show comprehensive rating information
+          </p>
+          <p>
+            <strong>3. Review Form:</strong> Use ProductReview for user submission of ratings and reviews
+          </p>
+          <p>
+            <strong>4. Integration:</strong> All components work together and automatically update when data changes
+          </p>
         </div>
       </div>
     </div>
