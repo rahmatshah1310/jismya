@@ -242,7 +242,7 @@ export default function ContactForm() {
           <div className="bg-user-red text-white px-4 py-3 rounded-lg shadow-lg flex items-center gap-3">
             <HiOutlineShoppingBag className="w-5 h-5" />
             <span className="font-medium">ON SALE</span>
-            <button onClick={() => setIsOnSaleVisible(false)} className="text-white hover:text-gray-200 transition-colors">
+            <button onClick={() => setIsOnSaleVisible(false)} className="text-white hover:text-gray-200 transition-colors" aria-label="Close sale notification">
               <HiX className="w-4 h-4" />
             </button>
           </div>
