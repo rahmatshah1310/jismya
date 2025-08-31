@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { productService } from "../../services/productService";
+import { productService } from "@/services/productService";
 
 // 🔁 Mutations
 
@@ -156,5 +156,14 @@ export const useProductSaleStats = () => {
   return useQuery({
     queryKey: ["product-sale-stats"],
     queryFn: productService.getProductSalestats,
+  });
+};
+
+// Search products mutation
+export const useSearchProducts = (searchTerm) => {
+  return useQuery({
+    queryKey: ["searchProducts", searchTerm],
+    queryFn: () => productService.searchProducts(searchTerm),
+    enabled: !!searchTerm, 
   });
 };
