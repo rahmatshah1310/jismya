@@ -59,6 +59,7 @@ export default function ProductCard({ product }) {
               e.stopPropagation();
               toggleWishlist(product);
             }}
+            aria-label={`${wishlist.find((item) => item._id === product._id) ? "Remove from" : "Add to"} wishlist`}
             className={`w-9 h-9 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center transition-all duration-200 shadow hover:scale-105 ${
               wishlist?.find((item) => item._id === product._id) ? "text-red-500 bg-red-50" : "text-gray-600 hover:text-red-500 hover:bg-white"
             }`}
