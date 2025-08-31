@@ -5,13 +5,13 @@ import Image from "next/image";
 import { HiOutlinePlus, HiOutlineMinus } from "react-icons/hi";
 import { HiOutlineStar } from "react-icons/hi";
 import { useParams } from "next/navigation";
-import { useSingleProduct } from "../../api/productApi";
-import ProductReview from "../../../components/products/product-review-form";
+import { useSingleProduct } from "@/app/api/productApi";
+import ProductReview from "@/components/products/product-review-form";
 import * as Accordion from "@radix-ui/react-accordion";
 import { ChevronDown } from "lucide-react";
-import { useCart } from "../../../context/CartContext"; //
+import { useCart } from "@/context/CartContext"; //
 import { BeatLoader } from "react-spinners";
-import { ProductDetailSkeleton } from "../../../components/skeletons/product-skeleton";
+import { ProductDetailSkeleton } from "@/components/skeletons/product-skeleton";
 
 export default function ProductDetailPage() {
   const [selectedImage, setSelectedImage] = useState(0);
@@ -21,7 +21,6 @@ export default function ProductDetailPage() {
 
   const { data: productsData, isLoading: productsIsLoading } = useSingleProduct(id);
   const product = productsData?.data;
-  console.log("Product Data:", product);
 
   const allImages = product ? [product.imageUrl, ...(product.additionalImages?.map((img) => img.imageUrl) || [])].filter(Boolean) : [];
 
