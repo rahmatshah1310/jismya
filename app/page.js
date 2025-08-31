@@ -1,12 +1,12 @@
 "use client";
 
 import { Suspense } from "react";
-import { useGetAllCategories } from "../app/api/productApi";
-import { ProductSection } from "../components/home/product-section";
-import { ProductGridSkeleton } from "../components/skeletons/product-skeleton";
-import { CarouselBanner } from "../components/home/carousel-banner";
-import { PopularCategories } from "../components/home/popular-categories";
-import { TrendingBrands } from "../components/home/trending-brands";
+import { useGetAllCategories } from "@/app/api/productApi";
+import { ProductSection } from "@/components/home/product-section";
+import { ProductGridSkeleton } from "@/components/skeletons/product-skeleton";
+import { CarouselBanner } from "@/components/home/carousel-banner";
+import { PopularCategories } from "@/components/home/popular-categories";
+import { TrendingBrands } from "@/components/home/trending-brands";
 import { motion } from "framer-motion";
 
 export default function HomePage() {
@@ -32,12 +32,6 @@ export default function HomePage() {
       >
         <TrendingBrands />
       </motion.div>
-
-      {isLoading && (
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <ProductGridSkeleton count={4} />
-        </motion.div>
-      )}
 
       {error && (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
