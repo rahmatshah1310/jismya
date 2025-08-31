@@ -1,6 +1,4 @@
-import Button from "../../components/ui/button";
-import { HiOutlinePhone } from "react-icons/hi";
-import { TrackOrderForm } from "./track-order-form";
+import { TrackOrderForm } from "@/app/track-order/track-order-form";
 
 export const metadata = {
   title: "Track Your Order | User.pk",
