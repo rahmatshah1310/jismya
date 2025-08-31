@@ -101,7 +101,12 @@ export default function WishlistContent() {
                         <HiOutlineShoppingCart className="w-4 h-4 mr-2" />
                         Add to Cart
                       </Button>
-                      <Button onClick={() => removeFromWishlist(item._id)} size="sm" className="px-3  bg-blue-600 text-white ">
+                      <Button
+                        onClick={() => removeFromWishlist(item._id)}
+                        size="sm"
+                        className="px-3  bg-blue-600 text-white"
+                        aria-label={`Remove ${item.name || item.productName || "item"} from wishlist`}
+                      >
                         <HiOutlineTrash className="w-4 h-4" />
                       </Button>
                     </div>
