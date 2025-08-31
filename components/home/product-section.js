@@ -20,13 +20,11 @@ const truncateText = (text, maxLength) => {
   return text.length <= maxLength ? text : text.slice(0, maxLength) + "...";
 };
 
-export function ProductSection({ title, category, showViewAll = true, maxProducts = 6, isLoading = false }) {
+export function ProductSection({ title, category, showViewAll = true, maxProducts = 4, isLoading = false }) {
   const { addToCart, processingItems, toggleWishlist, wishlist } = useCart();
   const { data: apiResponse, isLoading: apiLoading, error } = useProductsByCategory(category);
 
-  if (isLoading || apiLoading) {
-    return <ProductGridSkeleton count={maxProducts} />;
-  }
+  
 
   const products = apiResponse?.data || [];
   const displayedProducts = products.slice(0, maxProducts);
@@ -52,7 +50,7 @@ export function ProductSection({ title, category, showViewAll = true, maxProduct
           </div>
           {showViewAll && (
             <Link href={`/category/${category}`}>
-              <Button className="hidden md:block bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
+              <Button className="hidden md:block" variant="outline">
                 View All Products
               </Button>
             </Link>
@@ -64,9 +62,9 @@ export function ProductSection({ title, category, showViewAll = true, maxProduct
             <div className="w-full overflow-hidden bg-white rounded-2xl shadow-lg border border-gray-100 p-1">
               <Swiper
                 modules={[Navigation, Pagination, Autoplay]}
-                spaceBetween={16}
+                spaceBetween={4}
                 slidesPerView="auto"
-                autoplay={{ delay: 3000, disableOnInteraction: false, pauseOnMouseEnter: true }}
+                // autoplay={{ delay: 3000, disableOnInteraction: false, pauseOnMouseEnter: true }}
                 loop={displayedProducts.length > 3}
                 navigation={{
                   nextEl: `.product-swiper-next-${category}`,
@@ -169,7 +167,7 @@ export function ProductSection({ title, category, showViewAll = true, maxProduct
           {showViewAll && (
             <div className="text-center mt-8 md:hidden">
               <Link href={`/category/${category}`}>
-                <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors">View All Products</Button>
+                <Button variant="outline">View All Products</Button>
               </Link>
             </div>
           )}
