@@ -17,10 +17,7 @@ export default function SearchBar() {
   };
 
   return (
-    <form
-      onSubmit={handleSearch}
-      className="relative flex-1 max-w-2xl"
-    >
+    <form onSubmit={handleSearch} className="relative flex-1 max-w-2xl">
       <Input
         placeholder="Search for products, brands, and categories..."
         value={searchTerm}
@@ -30,6 +27,7 @@ export default function SearchBar() {
       <button
         type="submit"
         className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-blue-600 transition-colors"
+        aria-label="Search products"
       >
         <HiOutlineSearch className="w-5 h-5" />
       </button>
