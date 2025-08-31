@@ -1,9 +1,9 @@
 import { Inter, Merriweather } from "next/font/google";
 import "./globals.css";
-import { Layout } from "../components/layout/layout";
-import { QueryProvider } from "../components/providers/query-provider";
-import { CartProvider } from "../context/CartContext";
-import { ToastProvider } from "../components/providers/toast-providers";
+import { Layout } from "@/components/layout/layout";
+import { QueryProvider } from "@/components/providers/query-provider";
+import { CartProvider } from "@/context/CartContext";
+import { ToastProvider } from "@/components/providers/toast-providers";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -82,10 +82,7 @@ export default function RootLayout({ children }) {
       <head>
         <link rel="icon" href="/cart.png" className="rounded-full w-full h-full" />
       </head>
-      <body
-        suppressHydrationWarning
-        className={`${inter.variable} ${merriweather.variable} font-sans antialiased bg-cream  text-ink`}
-      >
+      <body suppressHydrationWarning className={`${inter.variable} ${merriweather.variable} font-sans antialiased bg-cream  text-ink`}>
         <QueryProvider>
           <CartProvider>
             <Layout>{children}</Layout>
