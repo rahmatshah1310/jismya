@@ -22,7 +22,6 @@ export default function ProductReview({ productId }) {
       const res = await createRating.mutateAsync({ productId, rating });
       toast.success(res?.message || "Rating submitted successfully!");
     } catch (error) {
-      console.error("Rating submission error:", error);
       toast.error(typeof error === "string" ? error : "Failed to submit rating.");
     }
   };
@@ -43,7 +42,6 @@ export default function ProductReview({ productId }) {
       setReviewDescription("");
       setVisibility("public");
     } catch (error) {
-      console.error("Review submission error:", error);
       toast.error(typeof error === "string" ? error : "Failed to submit review.");
     }
   };
