@@ -10,7 +10,6 @@ export const createBanner = async (formData) => {
     });
     return response.data;
   } catch (error) {
-    console.error("BannerService [createBanner] error:", error);
     throw error;
   }
 };
@@ -24,7 +23,6 @@ export const getBanners = async () => {
     });
     return response.data;
   } catch (error) {
-    console.error("BannerService [getBanners] error:", error);
     throw error;
   }
 };
@@ -37,7 +35,6 @@ export const getSingleBanner = async (id) => {
     });
     return response.data;
   } catch (error) {
-    console.error("BannerService [getSingleBanner] error:", error);
     throw error;
   }
 };
@@ -50,7 +47,6 @@ export const getBannersByDevice = async (deviceType) => {
     });
     return response.data.data;
   } catch (error) {
-    console.error(`BannerService [getBannersByDevice] error:`, error);
     throw error;
   }
 };
@@ -64,7 +60,6 @@ export const reorderBanner = async (id, data) => {
     });
     return response.data;
   } catch (error) {
-    console.error("BannerService [reorderBanner] error:", error);
     throw error;
   }
 };
@@ -78,7 +73,6 @@ export const deleteBanner = async (id) => {
     });
     return response.data;
   } catch (error) {
-    console.error("BannerService [deleteBanner] error:", error);
     throw error;
   }
 };
@@ -93,7 +87,6 @@ export const updateBanner = async (id, data) => {
     });
     return response.data;
   } catch (error) {
-    console.error("BannerService [updateBanner] error:", error);
     throw error;
   }
 };
@@ -107,7 +100,6 @@ export const toggleBannerStatus = async (id, data) => {
     });
     return response.data;
   } catch (error) {
-    console.error("BannerService [toggleBannerStatus] error:", error);
     throw error;
   }
 };
