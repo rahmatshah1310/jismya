@@ -1,19 +1,16 @@
 "use client";
 
 import { HiOutlineStar } from "react-icons/hi";
-import { formatPrice } from "../../lib/utils";
 
 export function ProductRatingDisplay({ product, ratings = [], reviews = [] }) {
   // Calculate average rating
-  const averageRating = ratings.length > 0 
-    ? ratings.reduce((sum, rating) => sum + rating.rating, 0) / ratings.length 
-    : 0;
-  
+  const averageRating = ratings.length > 0 ? ratings.reduce((sum, rating) => sum + rating.rating, 0) / ratings.length : 0;
+
   const roundedRating = Math.round(averageRating * 10) / 10;
-  
+
   // Rating distribution
-  const ratingDistribution = [5, 4, 3, 2, 1].map(star => {
-    const count = ratings.filter(r => r.rating === star).length;
+  const ratingDistribution = [5, 4, 3, 2, 1].map((star) => {
+    const count = ratings.filter((r) => r.rating === star).length;
     const percentage = ratings.length > 0 ? (count / ratings.length) * 100 : 0;
     return { star, count, percentage };
   });
@@ -34,11 +31,7 @@ export function ProductRatingDisplay({ product, ratings = [], reviews = [] }) {
       <HiOutlineStar
         key={i}
         className={`${size} ${
-          i < Math.floor(rating)
-            ? "text-yellow-400 fill-current"
-            : rating - i >= 0.5
-            ? "text-yellow-400 fill-current opacity-70"
-            : "text-gray-300"
+          i < Math.floor(rating) ? "text-yellow-400 fill-current" : rating - i >= 0.5 ? "text-yellow-400 fill-current opacity-70" : "text-gray-300"
         }`}
       />
     ));
@@ -56,15 +49,13 @@ export function ProductRatingDisplay({ product, ratings = [], reviews = [] }) {
   return (
     <div className="bg-white border border-gray-200 rounded-lg p-6">
       <h3 className="text-lg font-semibold mb-6 text-gray-800">Customer Ratings & Reviews</h3>
-      
+
       {/* Overall Rating Summary */}
       <div className="flex items-start gap-6 mb-8 p-6 bg-gray-50 rounded-lg">
         {/* Average Rating */}
         <div className="text-center">
           <div className="text-4xl font-bold text-gray-800 mb-2">{roundedRating}</div>
-          <div className="flex justify-center mb-2">
-            {renderStars(roundedRating, "w-6 h-6")}
-          </div>
+          <div className="flex justify-center mb-2">{renderStars(roundedRating, "w-6 h-6")}</div>
           <div className="text-sm text-gray-600 mb-1">{getRatingText(roundedRating)}</div>
           <div className="text-xs text-gray-500">{ratings.length} ratings</div>
         </div>
@@ -80,14 +71,9 @@ export function ProductRatingDisplay({ product, ratings = [], reviews = [] }) {
                   <HiOutlineStar className="w-3 h-3 text-yellow-400 fill-current" />
                 </div>
                 <div className="flex-1 bg-gray-200 rounded-full h-2">
-                  <div
-                    className="bg-yellow-400 h-2 rounded-full transition-all duration-300"
-                    style={{ width: `${percentage}%` }}
-                  />
+                  <div className="bg-yellow-400 h-2 rounded-full transition-all duration-300" style={{ width: `${percentage}%` }} />
                 </div>
-                <div className="text-xs text-gray-600 w-12 text-right">
-                  {count}
-                </div>
+                <div className="text-xs text-gray-600 w-12 text-right">{count}</div>
               </div>
             ))}
           </div>
@@ -103,31 +89,29 @@ export function ProductRatingDisplay({ product, ratings = [], reviews = [] }) {
               <div key={index} className="border-b border-gray-100 pb-4 last:border-b-0">
                 <div className="flex items-start justify-between mb-2">
                   <div className="flex items-center gap-2">
-                    <div className="flex">
-                      {renderStars(review.rating)}
-                    </div>
+                    <div className="flex">{renderStars(review.rating)}</div>
                     <span className="text-sm text-gray-600">({review.rating}/5)</span>
                   </div>
-                  <div className="text-xs text-gray-500">
-                    {review.from && `from ${review.from}`}
-                  </div>
+                  <div className="text-xs text-gray-500">{review.from && `from ${review.from}`}</div>
                 </div>
-                
+
                 <div className="mb-2">
                   <h5 className="font-medium text-gray-800 mb-1">{review.summary}</h5>
                   <p className="text-sm text-gray-600">{review.reviewDescription}</p>
                 </div>
-                
+
                 <div className="flex items-center gap-2 text-xs text-gray-500">
                   <span className="font-medium">{review.name}</span>
                   {review.reviewType && (
-                    <span className={`px-2 py-1 rounded-full text-xs ${
-                      review.reviewType === 'positive' 
-                        ? 'bg-blue-100 text-blue-700'
-                        : review.reviewType === 'negative'
-                        ? 'bg-red-100 text-red-700'
-                        : 'bg-gray-100 text-gray-700'
-                    }`}>
+                    <span
+                      className={`px-2 py-1 rounded-full text-xs ${
+                        review.reviewType === "positive"
+                          ? "bg-blue-100 text-blue-700"
+                          : review.reviewType === "negative"
+                          ? "bg-red-100 text-red-700"
+                          : "bg-gray-100 text-gray-700"
+                      }`}
+                    >
                       {review.reviewType}
                     </span>
                   )}
@@ -135,12 +119,10 @@ export function ProductRatingDisplay({ product, ratings = [], reviews = [] }) {
               </div>
             ))}
           </div>
-          
+
           {reviews.length > 5 && (
             <div className="text-center mt-4">
-              <button className="text-blue-600 hover:text-blue-700 text-sm font-medium">
-                View All {reviews.length} Reviews
-              </button>
+              <button className="text-blue-600 hover:text-blue-700 text-sm font-medium">View All {reviews.length} Reviews</button>
             </div>
           )}
         </div>
