@@ -10,17 +10,23 @@ export function Footer() {
   return (
     <footer className="bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
           {/* Company Info */}
           <div className="text-center sm:text-left">
             <h3 className="text-lg font-bold mb-3 sm:mb-4 text-blue-200">User.pk</h3>
             <p className="text-blue-100 mb-3 sm:mb-4 text-sm sm:text-base">
-              Pakistan's leading e-commerce platform for health & beauty, electronics, fashion, and more.
+              Pakistans leading e-commerce platform for health & beauty, electronics, fashion, and more.
             </p>
             <div className="flex justify-center sm:justify-start space-x-4">
-              <a href="#" className="text-blue-200 hover:text-white transition-colors duration-200">Facebook</a>
-              <a href="#" className="text-blue-200 hover:text-white transition-colors duration-200">Twitter</a>
-              <a href="#" className="text-blue-200 hover:text-white transition-colors duration-200">Instagram</a>
+              <a href="#" className="text-blue-200 hover:text-white transition-colors duration-200">
+                Facebook
+              </a>
+              <a href="#" className="text-blue-200 hover:text-white transition-colors duration-200">
+                Twitter
+              </a>
+              <a href="#" className="text-blue-200 hover:text-white transition-colors duration-200">
+                Instagram
+              </a>
             </div>
           </div>
 
