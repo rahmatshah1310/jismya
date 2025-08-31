@@ -1,8 +1,8 @@
-import { Skeleton } from '../ui/skeleton'
+import { Skeleton } from "@/components/ui/skeleton";
 
 export function ProductGridSkeleton({ count = 4 }) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 px-3">
       {Array.from({ length: count }).map((_, index) => (
         <div key={index} className="space-y-3">
           <Skeleton className="h-48 w-full rounded-lg" />
@@ -12,7 +12,7 @@ export function ProductGridSkeleton({ count = 4 }) {
         </div>
       ))}
     </div>
-  )
+  );
 }
 
 export function ProductDetailSkeleton() {
@@ -34,9 +34,8 @@ export function ProductDetailSkeleton() {
         <Skeleton className="w-full h-32 rounded-lg" />
       </div>
     </div>
-  )
+  );
 }
-
 
 export function CarouselSkeleton() {
   return (
@@ -71,7 +70,7 @@ export function CarouselSkeleton() {
 
 export function ProductSwiperSkeleton({ count = 6 }) {
   return (
-    <div className="w-full">
+    <div className="w-full max-w-7xl">
       {/* Header skeleton */}
       <div className="flex flex-col sm:flex-row items-center justify-between mb-8 gap-4">
         <div>
