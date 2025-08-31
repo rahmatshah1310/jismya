@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 
 const brands = [
   {
@@ -70,10 +70,9 @@ const brands = [
 ];
 
 export function TrendingBrands() {
-  
   return (
     <section className="py-8 sm:py-12 md:py-16 bg-white">
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row items-center justify-between mb-6 sm:mb-8 gap-4">
           <h2 className="text-2xl md:text-3xl font-bold mb-0 text-center sm:text-left text-gray-800">Trending Brands</h2>
           <Button variant="outline" className="hidden md:block">
@@ -99,13 +98,15 @@ export function TrendingBrands() {
 
                     {/* Discount Badge */}
                     {brand.hasDiscount && (
-                      <div className="absolute -top-2 -right-2 bg-primary text-primary-foreground text-xs font-bold px-2 py-1 rounded-full">{brand.discount}</div>
+                      <div className="absolute -top-2 -right-2 bg-primary text-primary-foreground text-xs font-bold px-2 py-1 rounded-full">
+                        {brand.discount}
+                      </div>
                     )}
 
-                                         {/* Brand Name */}
-                     <div className="text-center mt-2 sm:mt-3">
-                       <h3 className="text-xs sm:text-sm font-medium text-gray-800 group-hover:text-primary transition-colors">{brand.name}</h3>
-                     </div>
+                    {/* Brand Name */}
+                    <div className="text-center mt-2 sm:mt-3">
+                      <h3 className="text-xs sm:text-sm font-medium text-gray-800 group-hover:text-primary transition-colors">{brand.name}</h3>
+                    </div>
                   </div>
                 </Link>
               </div>
