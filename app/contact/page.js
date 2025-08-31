@@ -1,4 +1,4 @@
-import ContactForm from "./contact-form";
+import ContactForm from "@/app/contact/contact-form";
 
 export const metadata = {
   title: "Contact Us | User.pk",
