@@ -17,8 +17,6 @@ export const sendRequest = async (configs) => {
   try {
     return await axios(requestConfig);
   } catch (error) {
-    console.error("AXIOS ERROR", error);
-
     if (axios.isAxiosError(error)) {
       if (error.code === "ERR_CANCELED") return Promise.reject(error);
 
