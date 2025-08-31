@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { orderService } from "../../services/order.service";
+import { orderService } from "@/services/order.service";
 
 // 🔁 Mutations
 
