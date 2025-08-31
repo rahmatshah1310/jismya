@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useGetAllCategories } from "../api/productApi";
-import { ProductGridSkeleton } from "../../components/skeletons/product-skeleton";
+import { useGetAllCategories } from "@/app/api/productApi";
+import { ProductGridSkeleton } from "@/components/skeletons/product-skeleton";
 
 export default function CategoriesPage() {
   const { data: categoriesResponse, isLoading, error } = useGetAllCategories();
