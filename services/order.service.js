@@ -1,4 +1,4 @@
-import { sendRequest } from "./sendingRequests";
+import { sendRequest } from "@/services/sendingRequests";
 
 export const createOrder = async (data) => {
   const response = await sendRequest({
