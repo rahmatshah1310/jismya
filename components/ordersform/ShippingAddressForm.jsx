@@ -2,10 +2,14 @@
 
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { useUpdateShippingAddress } from "../../app/api/orderApi";
+import { useUpdateShippingAddress } from "@/app/api/orderApi";
 
 const ShippingAddressForm = ({ onClose }) => {
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const updateShippingMutation = useUpdateShippingAddress();
 
   const onSubmit = (data) => {
@@ -31,8 +35,12 @@ const ShippingAddressForm = ({ onClose }) => {
       <input {...register("city", { required: true })} placeholder="City" className="border p-2 mb-2 w-full" />
       <textarea {...register("completeAddress", { required: true })} placeholder="Address" className="border p-2 mb-2 w-full" />
 
-      <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded-md">Update</button>
-      <button type="button" onClick={onClose} className="ml-2 text-gray-600">Cancel</button>
+      <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded-md">
+        Update
+      </button>
+      <button type="button" onClick={onClose} className="ml-2 text-gray-600">
+        Cancel
+      </button>
     </form>
   );
 };
