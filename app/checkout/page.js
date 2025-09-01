@@ -8,10 +8,12 @@ import { ChevronDown } from "lucide-react";
 import { toast } from "react-toastify";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 
 const CheckoutPage = () => {
   const { cart, getCartTotal, getCartItemCount, clearCart } = useCart();
   const placeOrderMutation = useCreateOrder();
+  const router = useRouter();
 
   const {
     register,
@@ -53,6 +55,8 @@ const CheckoutPage = () => {
       reset();
       // Clear cart after successful order
       clearCart();
+      // Redirect to home page after successful order
+      router.push("/");
     } catch (error) {
       toast.error(typeof error === "string" ? error : "Failed to place order.");
     }
