@@ -9,7 +9,7 @@ import ProductCard from "@/components/products/product-card";
 export function ProductGrid({ categoryId }) {
   const [sortBy, setSortBy] = useState("newest");
   const [currentPage, setCurrentPage] = useState(1);
-  const { data: categoryData, isLoading: categoryLoading } = useGetSingleCategory(categoryId);
+  const { data: categoryData } = useGetSingleCategory(categoryId);
   const categoryName = categoryData?.data?.name || "Category";
 
   // Fetch all products in category
