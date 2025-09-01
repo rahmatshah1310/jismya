@@ -6,7 +6,6 @@ import { Button } from "../ui/button";
 import { HiOutlineShoppingCart, HiOutlineHeart } from "react-icons/hi";
 import { useCart } from "../../context/CartContext";
 import { useProductsByCategory } from "../../app/api/productApi";
-import { ProductGridSkeleton } from "../skeletons/product-skeleton";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import { motion } from "framer-motion";
