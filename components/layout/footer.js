@@ -5,8 +5,6 @@ import Link from "next/link";
 import { FaFacebook, FaInstagram, FaTiktok, FaLinkedin, FaYoutube } from "react-icons/fa";
 
 export function Footer() {
-  const [isOnSaleVisible, setIsOnSaleVisible] = useState(true);
-
   return (
     <footer className="bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
