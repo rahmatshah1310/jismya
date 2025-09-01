@@ -3,9 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useCart } from "@/context/CartContext";
-import { HiOutlineShoppingCart, HiOutlinePlus, HiOutlineHeart, HiOutlineStar } from "react-icons/hi";
-import { formatPrice } from "@/lib/utils";
-import { SimpleRating } from "./simple-rating";
+import { HiOutlineShoppingCart, HiOutlineHeart, HiOutlineStar } from "react-icons/hi";
 
 const truncateText = (text, maxLength = 50) => {
   if (!text) return "";
