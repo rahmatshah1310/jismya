@@ -2,7 +2,7 @@
 
 import { HiOutlineStar } from "react-icons/hi";
 
-export function ProductRatingDisplay({ product, ratings = [], reviews = [] }) {
+export function ProductRatingDisplay({ ratings = [], reviews = [] }) {
   // Calculate average rating
   const averageRating = ratings.length > 0 ? ratings.reduce((sum, rating) => sum + rating.rating, 0) / ratings.length : 0;
 
