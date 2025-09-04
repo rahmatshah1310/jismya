@@ -129,6 +129,10 @@ export function CartProvider({ children }) {
     [wishlist, addToWishlist, removeFromWishlist]
   );
 
+  const clearWishlist = useCallback(() => {
+    setWishlist([]);
+  }, []);
+
   // -------------------- Provide context --------------------
   return (
     <CartContext.Provider
@@ -144,6 +148,7 @@ export function CartProvider({ children }) {
         addToWishlist,
         removeFromWishlist,
         toggleWishlist,
+        clearWishlist,
         processingItems,
       }}
     >
