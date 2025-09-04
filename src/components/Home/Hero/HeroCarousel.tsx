@@ -63,14 +63,7 @@ const HeroCarousal = () => {
 
             {/* Content */}
             <div className="relative z-10 max-w-7xl text-center px-4 text-white">
-              <div className="flex justify-center items-center gap-4 mb-6">
-                <span className="block font-semibold text-4xl sm:text-6xl text-blue">{banner.discount || "30%"}</span>
-                <span className="block text-white text-lg sm:text-xl leading-6">
-                  Sale
-                  <br />
-                  Off
-                </span>
-              </div>
+              
 
               <h1 className="font-semibold text-2xl sm:text-4xl lg:text-5xl mb-4">
                 <Link href={banner.ctaLink || "#"}>{banner.heading}</Link>
