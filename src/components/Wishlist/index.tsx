@@ -6,7 +6,7 @@ import { useCart } from "@/app/context/CartContext";
 import Link from "next/link";
 
 export const Wishlist = () => {
-  const { wishlist: wishlistItems } = useCart();
+  const { wishlist: wishlistItems, clearWishlist } = useCart();
 
   return (
     <>
@@ -16,7 +16,7 @@ export const Wishlist = () => {
           <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
             <div className="flex flex-wrap items-center justify-between gap-5 mb-7.5">
               <h2 className="font-medium text-dark text-2xl">Your Wishlist</h2>
-              <button className="text-blue">Clear Wishlist Cart</button>
+              <button className="text-blue" onClick={() => clearWishlist()}>Clear Wishlist Cart</button>
             </div>
 
             <div className="bg-white rounded-[10px] shadow-1">
