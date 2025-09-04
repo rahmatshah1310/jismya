@@ -10,7 +10,12 @@ import { ProductGridSkeleton } from "@/components/skeletons/product-skeleton";
 const BestSeller = () => {
   const { data: products, isLoading, error } = useGetAllProducts();
 
-  if (isLoading) return <div className="max-w-7xl sm:px-10 px-2 mx-auto"><ProductGridSkeleton/></div>;
+  if (isLoading)
+    return (
+      <div className="max-w-7xl sm:px-10 px-2 mx-auto">
+        <ProductGridSkeleton />
+      </div>
+    );
   if (error || !products?.data || products.data.length === 0) return <div>No products found</div>;
 
   // ✅ Sort products by sales (highest first)
@@ -39,7 +44,7 @@ const BestSeller = () => {
 
         <div className="text-center mt-12.5">
           <Link
-            href="/shop-without-sidebar"
+            href="/shop"
             className="inline-flex font-medium text-custom-sm py-3 px-7 sm:px-12.5 rounded-md border-gray-3 border bg-gray-1 text-dark ease-out duration-200 hover:bg-dark hover:text-white hover:border-transparent"
           >
             View All

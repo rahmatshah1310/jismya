@@ -13,13 +13,13 @@ const CustomSelect = ({ options }) => {
   const handleOptionClick = (option) => {
     setSelectedOption(option);
     toggleDropdown();
-    
+
     // Navigate to category page if a specific category is selected
     if (option.value !== "0") {
       router.push(`/category/${option.value}`);
     } else {
       // Navigate to shop page for "All Categories"
-      router.push("/shop-with-sidebar");
+      router.push("/shop");
     }
   };
 
@@ -42,23 +42,12 @@ const CustomSelect = ({ options }) => {
 
   return (
     <div className="dropdown-content custom-select relative" style={{ width: "200px" }}>
-      <div
-        className={`select-selected whitespace-nowrap ${
-          isOpen ? "select-arrow-active" : ""
-        }`}
-        onClick={toggleDropdown}
-      >
+      <div className={`select-selected whitespace-nowrap ${isOpen ? "select-arrow-active" : ""}`} onClick={toggleDropdown}>
         {selectedOption.label}
       </div>
       <div className={`select-items ${isOpen ? "" : "select-hide"}`}>
         {options.slice(1).map((option, index) => (
-          <div
-            key={index}
-            onClick={() => handleOptionClick(option)}
-            className={`select-item ${
-              selectedOption === option ? "same-as-selected" : ""
-            }`}
-          >
+          <div key={index} onClick={() => handleOptionClick(option)} className={`select-item ${selectedOption === option ? "same-as-selected" : ""}`}>
             {option.label}
           </div>
         ))}

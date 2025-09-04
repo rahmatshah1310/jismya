@@ -8,14 +8,7 @@ const EmptyCart = () => {
   return (
     <div className="text-center">
       <div className="mx-auto pb-7.5">
-        <svg
-          className="mx-auto"
-          width="100"
-          height="100"
-          viewBox="0 0 100 100"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
+        <svg className="mx-auto" width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle cx="50" cy="50" r="50" fill="#F3F4F6" />
           <path
             fill-rule="evenodd"
@@ -42,7 +35,7 @@ const EmptyCart = () => {
 
       <Link
         onClick={() => closeCartModal()}
-        href="/shop-with-sidebar"
+        href="/shop"
         className="w-full lg:w-10/12 mx-auto flex justify-center font-medium text-white bg-dark py-[13px] px-6 rounded-md ease-out duration-200 hover:bg-opacity-95"
       >
         Continue Shopping
