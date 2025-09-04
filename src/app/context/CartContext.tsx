@@ -96,7 +96,6 @@ export function CartProvider({ children }) {
 
   const clearCart = useCallback(() => {
     setCart([]);
-    toast.info("Cart cleared!");
   }, []);
 
   const getCartTotal = useCallback(() => cart.reduce((total, item) => total + item.price * item.quantity, 0), [cart]);
