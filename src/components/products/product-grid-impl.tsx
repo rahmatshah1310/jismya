@@ -130,6 +130,14 @@ export function ProductGrid({ categoryId }: { categoryId: string }) {
             {displayedProducts.map((product: any) => (
               <div key={product._id} className="group">
                 <div className="relative overflow-hidden flex items-center justify-center rounded-lg bg-[#F6F7FB] mb-4 min-h-[250px]">
+                {product.discount > 0 && (
+        <div className="absolute top-2 left-2 bg-red-500  px-3 py-2 rounded-lg shadow-lg z-10">
+          <div className="font-bold text-sm">{product.discount}% OFF</div>
+          {product.saleName && (
+            <div className="text-xs opacity-90">{product.saleName}</div>
+          )}
+        </div>
+      )}
                   <Image 
                     src={product?.imageUrl || product.imgs?.previews?.[0] || "/images/products/product-1-sm-1.png"} 
                     alt={product.productName} 
