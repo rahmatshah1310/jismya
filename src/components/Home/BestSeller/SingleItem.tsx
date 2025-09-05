@@ -34,7 +34,7 @@ const SingleItem = ({ item }: { item: Product }) => {
                 <Image key={i} src="/images/icons/icon-star.svg" alt="star icon" width={14} height={14} />
               ))}
             </div>
-            <p className="text-custom-sm">{item.ratingCount}</p>
+            <p className="text-custom-sm">({item.ratingCount})</p>
           </div>
 
           {/* Title */}
@@ -44,13 +44,21 @@ const SingleItem = ({ item }: { item: Product }) => {
 
           {/* Price */}
           <span className="flex items-center justify-center gap-2 font-medium text-lg">
-            <span className="text-dark">Rs. {item.discount > 0 ? item.price * (1 - item.discount / 100) : item.price}</span>
-            {item.discount > 0 && <span className="text-dark-4 line-through">Rs. {item.price}</span>}
+            <span className="text-dark">Rs. {item.discount > 0 ? item.price * (1 - item.discount / 100) : item.price.toFixed(2)}</span>
+            {item.discount > 0 && <span className="text-dark-4 line-through">Rs. {item.price.toFixed(2)}</span>}
           </span>
         </div>
 
         {/* Product Image */}
         <div className="flex justify-center items-center">
+        {item.discount > 0 && (
+        <div className="absolute top-2 left-2 bg-red-500  px-3 py-2 rounded-lg shadow-lg z-10">
+          <div className="font-bold text-sm">{item.discount}% OFF</div>
+          {item.saleName && (
+            <div className="text-xs opacity-90">{item.saleName}</div>
+          )}
+        </div>
+      )}
           <Image src={item?.imageUrl} alt={item.productName} width={280} height={280} className="object-cover w-full h-auto" />
         </div>
 
