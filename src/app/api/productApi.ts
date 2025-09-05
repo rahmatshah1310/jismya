@@ -42,8 +42,10 @@ export const useUpdateProductOrder = () =>
 export const useCreateReview = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (variables: { productId: string | number } & Record<string, any>) =>
-      productService.createProductReview(variables.productId, variables),
+    mutationFn: (variables: { productId: string | number } & Record<string, any>) => {
+      const { productId, ...payload } = variables;
+      return productService.createProductReview(productId, payload);
+    },
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ["products"] });
       queryClient.invalidateQueries({ queryKey: ["product", variables.productId] });
@@ -54,8 +56,10 @@ export const useCreateReview = () => {
 export const useCreateRating = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (variables: { productId: string | number } & Record<string, any>) =>
-      productService.createProductRating(variables.productId, variables),
+    mutationFn: (variables: { productId: string | number } & Record<string, any>) => {
+      const { productId, ...payload } = variables;
+      return productService.createProductRating(productId, payload);
+    },
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ["products"] });
       queryClient.invalidateQueries({ queryKey: ["product", variables.productId] });
