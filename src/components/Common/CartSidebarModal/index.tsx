@@ -91,7 +91,7 @@ const CartSidebarModal = () => {
               <p className="font-medium text-xl text-dark">${totalPrice}</p>
             </div>
 
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 pb-10">
               <Link
                 onClick={() => closeCartModal()}
                 href="/cart"
