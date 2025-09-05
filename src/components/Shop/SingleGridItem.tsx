@@ -33,6 +33,14 @@ const SingleGridItem = ({ item }: { item: Product }) => {
   return (
     <div className="group">
       <div className="relative overflow-hidden flex items-center justify-center rounded-lg bg-white shadow-1 min-h-[270px] mb-4">
+      {item.discount > 0 && (
+        <div className="absolute top-2 left-2 bg-red-500  px-3 py-2 rounded-lg shadow-lg z-10">
+          <div className="font-bold text-sm">{item.discount}% OFF</div>
+          {item.saleName && (
+            <div className="text-xs opacity-90">{item.saleName}</div>
+          )}
+        </div>
+      )}
         <Image
           src={(item as any).imgs?.previews?.[0] || (item as any).image || (item as any).imageUrl || "/images/products/product-1-sm-1.png"}
           alt=""
@@ -103,9 +111,10 @@ const SingleGridItem = ({ item }: { item: Product }) => {
         <Link href={`/product/${(item as any)._id || (item as any).id}`}> {(item as any).title || (item as any).productName} </Link>
       </h3>
 
-      <span className="flex items-center gap-2 font-medium text-lg">
-        <span className="text-dark">${(item as any).discountedPrice ?? (item as any).price}</span>
-        {(item as any).discountedPrice && <span className="text-dark-4 line-through">${(item as any).price}</span>}
+            {/* Price */}
+        <span className="flex items-center gap-2 font-medium text-lg">
+        <span className="text-dark">Rs. {item.discount > 0 ? item.price * (1 - item.discount / 100) : item.price.toFixed(2)}</span>
+        {item.discount > 0 && <span className="text-dark-4 line-through">Rs. {item.price.toFixed(2)}</span>}
       </span>
     </div>
   );
