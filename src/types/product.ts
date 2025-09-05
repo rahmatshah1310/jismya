@@ -9,6 +9,7 @@ export type Product = {
   productName?: string;
   imageUrl?: string;
   discount?: number;
+  saleName?: string;
   reviewsCount?: number;
   ratingCount?: number;
   imgs?: {
