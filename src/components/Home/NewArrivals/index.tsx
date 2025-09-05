@@ -19,6 +19,7 @@ const NewArrival = () => {
 
   // ✅ Sort products by createdAt (latest first)
   const sortedProducts = [...products.data].sort((a: any, b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  console.log(sortedProducts,"sortedproducts................");
 
   // ✅ Take only the latest 8 products (you can adjust the number)
   const latestProducts = sortedProducts.slice(0, 8);
