@@ -6,11 +6,13 @@ import { useCart } from "@/app/context/CartContext";
 import SingleItem from "./SingleItem";
 import Link from "next/link";
 import EmptyCart from "./EmptyCart";
+import { usePathname } from "next/navigation";
 
 const CartSidebarModal = () => {
   const { isCartModalOpen, closeCartModal } = useCartModalContext();
   const { cart: cartItems, getCartTotal } = useCart();
   const totalPrice = getCartTotal();
+  const pathname = usePathname();
 
   useEffect(() => {
     // closing modal while clicking outside
@@ -28,6 +30,14 @@ const CartSidebarModal = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isCartModalOpen, closeCartModal]);
+
+  // Close the modal whenever the route changes
+  useEffect(() => {
+    if (isCartModalOpen) {
+      closeCartModal();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname]);
 
   return (
     <div
@@ -101,6 +111,7 @@ const CartSidebarModal = () => {
               </Link>
 
               <Link
+                onClick={() => closeCartModal()}
                 href="/checkout"
                 className="w-full flex justify-center font-medium text-white bg-dark py-[13px] px-6 rounded-md ease-out duration-200 hover:bg-opacity-95"
               >
