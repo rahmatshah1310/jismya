@@ -54,7 +54,7 @@ const CartSidebarModal = () => {
             <button
               onClick={() => closeCartModal()}
               aria-label="button for close modal"
-              className="flex items-center justify-center ease-in duration-150 bg-meta text-dark-5 hover:text-dark"
+              className="flex items-center justify-center ease-in duration-150 text-dark-5 hover:text-dark"
             >
               <svg
                 className="fill-current"
@@ -98,10 +98,10 @@ const CartSidebarModal = () => {
             <div className="flex items-center justify-between gap-5 mb-6">
               <p className="font-medium text-xl text-dark">Subtotal:</p>
 
-              <p className="font-medium text-xl text-dark">${totalPrice}</p>
+              <p className="font-medium text-xl text-dark">${totalPrice.toFixed(2)}</p>
             </div>
 
-            <div className="flex items-center gap-4 pb-10">
+            <div className="flex items-center gap-4 pb-14">
               <Link
                 onClick={() => closeCartModal()}
                 href="/cart"
