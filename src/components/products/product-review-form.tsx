@@ -1,12 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { HiOutlineStar } from "react-icons/hi";
+import { HiOutlineStar, HiStar } from "react-icons/hi";
 import { toast } from "react-toastify";
 import { useCreateReview, useCreateRating } from "@/app/api/productApi";
 import { BeatLoader } from "react-spinners";
 
-export default function ProductReview({ productId }: { productId: string }) {
+export default function ProductReview({ productId }: { productId: string | number }) {
   const [rating, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
   const [visibility, setVisibility] = useState<"public" | "private">("public");
@@ -30,7 +30,7 @@ export default function ProductReview({ productId }: { productId: string }) {
     e.preventDefault();
     try {
       const res = await createReview.mutateAsync({
-        productId,
+        productId: productId as string,
         name,
         from,
         reviewDescription,
@@ -57,29 +57,33 @@ export default function ProductReview({ productId }: { productId: string }) {
         <div className="mb-8 p-6 bg-gray-50 rounded-[10px]">
           <h3 className="text-lg font-medium mb-4 text-dark">Rate this Product</h3>
           <div className="flex items-center gap-2 mb-4">
-            {[1, 2, 3, 4, 5].map((star) => (
-              <button
-                key={star}
-                type="button"
-                onClick={() => setRating(star)}
-                onMouseEnter={() => setHoverRating(star)}
-                onMouseLeave={() => setHoverRating(0)}
-                className={`w-10 h-10 transition-all duration-200 ${
-                  star <= (hoverRating || rating) ? "text-yellow-400 scale-110" : "text-gray-300 hover:text-yellow-400"
-                }`}
-                aria-label={`Rate ${star}`}
-              >
-                <HiOutlineStar className="w-full h-full fill-current" />
-              </button>
-            ))}
+            {[1, 2, 3, 4, 5].map((star) => {
+              const isActive = star <= (hoverRating || rating);
+              return (
+                <button
+                  key={star}
+                  type="button"
+                  onClick={() => setRating(star)}
+                  onMouseEnter={() => setHoverRating(star)}
+                  onMouseLeave={() => setHoverRating(0)}
+                  className="w-6 h-6"
+                >
+                  {isActive ? (
+                    <HiStar className="w-full h-full text-yellow-400" style={{ fill: "#facc15" }} />
+                  ) : (
+                    <HiOutlineStar className="w-full h-full text-gray-400 hover:text-yellow-400" />
+                  )}
+                </button>
+              );
+            })}
+
           </div>
           <p className="text-sm text-dark-4 mb-4">{rating > 0 && `${getRatingText(rating)} (${rating}/5)`}</p>
           <button
             onClick={handleRatingSubmit}
             disabled={!rating || createRating.isPending}
-            className={`px-6 py-2 rounded-md font-medium ease-in duration-150 ${
-              !rating || createRating.isPending ? "bg-gray-3 text-dark-5 cursor-not-allowed" : "bg-blue hover:bg-blue-dark text-white"
-            }`}
+            className={`px-6 py-2 rounded-md font-medium ease-in duration-150 ${!rating || createRating.isPending ? "bg-gray-3 text-dark-5 cursor-not-allowed" : "bg-blue hover:bg-blue-dark text-white"
+              }`}
           >
             {createRating.isPending ? <BeatLoader color="lightBlue" /> : "Submit Rating"}
           </button>
@@ -121,9 +125,8 @@ export default function ProductReview({ productId }: { productId: string }) {
           <button
             type="submit"
             disabled={createReview.isPending}
-            className={`px-6 py-2 rounded-md font-medium ease-in duration-150 ${
-              createReview.isPending ? "bg-gray-3 text-dark-5 cursor-not-allowed" : "bg-blue hover:bg-blue-dark text-white"
-            }`}
+            className={`px-6 py-2 rounded-md font-medium ease-in duration-150 ${createReview.isPending ? "bg-gray-3 text-dark-5 cursor-not-allowed" : "bg-blue hover:bg-blue-dark text-white"
+              }`}
           >
             {createReview.isPending ? <BeatLoader color="lightBlue" /> : "Submit Review"}
           </button>
