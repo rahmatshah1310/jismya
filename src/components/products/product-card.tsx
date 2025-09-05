@@ -12,6 +12,7 @@ interface ProductCardProps {
     productName: string;
     price: number;
     discount?: number;
+    saleName?: string;
     imageUrl?: string;
     imgs?: {
       previews: string[];
@@ -45,6 +46,19 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       {/* Product Image */}
       <div className="relative aspect-square overflow-hidden bg-gray-50">
         <Link href={`/product/${product._id}`}>
+        {product.discount > 0 && (
+        <div className="absolute top-2 left-2 bg-red-500  px-3 py-2 rounded-lg shadow-lg z-10">
+          <div className="font-bold text-sm">{product.discount}% OFF</div>
+          {product.saleName && (
+            <div className="text-xs opacity-90">{product.saleName}</div>
+          )}
+        </div>
+      )}
+      {/* Price */}
+      <span className="flex items-center gap-2 font-medium text-lg">
+        <span className="text-dark">Rs. {product.discount > 0 ? product.price * (1 - product.discount / 100) : product.price.toFixed(2)}</span>
+        {product.discount > 0 && <span className="text-dark-4 line-through">Rs. {product.price.toFixed(2)}</span>}
+      </span>
           <Image
             src={product?.imageUrl || product.imgs?.previews?.[0] || "/images/products/product-1-sm-1.png"}
             alt={product.productName}
