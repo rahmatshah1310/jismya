@@ -61,12 +61,23 @@ export function ProductGrid({ categoryId }: { categoryId: string }) {
     setCurrentPage(1);
   }, [sortBy]);
 
+  const discountedPrice =
+  products.discount > 0
+    ? Number((products.price * (1 - products.discount / 100)).toFixed(2))
+    : products.price;
+  
   const handleAddToCart = (product: any) => {
+    const productDiscountedPrice = product.discount > 0
+      ? Number((product.price * (1 - product.discount / 100)).toFixed(2))
+      : product.price;
+
     addToCart(
       {
         _id: product._id,
         name: product.productName,
         price: product.price,
+        discount: product.discount,
+        discountedPrice: productDiscountedPrice,
         image: product.imageUrl || product.imgs?.previews?.[0],
       },
       1
