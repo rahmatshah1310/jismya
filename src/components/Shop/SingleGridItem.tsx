@@ -7,14 +7,19 @@ import Image from "next/image";
 
 const SingleGridItem = ({ item }: { item: Product }) => {
   const { addToCart, addToWishlist } = useCart();
-
+  const discountedPrice =
+  item.discount > 0
+    ? Number((item.price * (1 - item.discount / 100)).toFixed(2))
+    : item.price;
   // add to cart
   const handleAddToCart = () => {
     addToCart(
       {
         _id: (item as any)._id || (item as any).id,
         name: (item as any).productName || (item as any).title,
-        price: (item as any).discountedPrice ?? (item as any).price,
+        price: (item as any).price,
+        discount: (item as any).discount,
+        discountedPrice: discountedPrice,
         image: (item as any).imageUrl || (item as any).imgs?.previews?.[0],
       },
       1
