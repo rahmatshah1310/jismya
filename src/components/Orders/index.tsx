@@ -12,7 +12,7 @@ const Orders = () => {
         setOrders(data.orders);
       })
       .catch((err) => {
-        console.log(err.message);
+        console.error(err.message);
       });
   }, []);
 
@@ -48,20 +48,13 @@ const Orders = () => {
             </div>
           )}
           {ordersData.length > 0 ? (
-            ordersData.map((orderItem, key) => (
-              <SingleOrder key={key} orderItem={orderItem} smallView={false} />
-            ))
+            ordersData.map((orderItem, key) => <SingleOrder key={key} orderItem={orderItem} smallView={false} />)
           ) : (
-            <p className="py-9.5 px-4 sm:px-7.5 xl:px-10">
-              You don&apos;t have any orders!
-            </p>
+            <p className="py-9.5 px-4 sm:px-7.5 xl:px-10">You don&apos;t have any orders!</p>
           )}
         </div>
 
-        {ordersData.length > 0 &&
-          ordersData.map((orderItem, key) => (
-            <SingleOrder key={key} orderItem={orderItem} smallView={true} />
-          ))}
+        {ordersData.length > 0 && ordersData.map((orderItem, key) => <SingleOrder key={key} orderItem={orderItem} smallView={true} />)}
       </div>
     </>
   );
