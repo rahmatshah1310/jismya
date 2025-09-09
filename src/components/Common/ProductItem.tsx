@@ -11,6 +11,11 @@ const ProductItem = ({ item }: { item: Product }) => {
 
   const isInWishlist = wishlist?.find((p) => p._id === item._id);
   const isProcessing = processingItems[item._id];
+  const discountedPrice =
+  item.discount > 0
+    ? Number((item.price * (1 - item.discount / 100)).toFixed(2))
+    : item.price;
+
 
   const handleAddToCart = () => {
     addToCart(
@@ -18,6 +23,8 @@ const ProductItem = ({ item }: { item: Product }) => {
         _id: item._id,
         name: item.productName,
         price: item.price,
+        discount: item.discount,
+        discountedPrice: discountedPrice,
         image: item.imageUrl || item.imgs?.previews?.[0],
       },
       1
