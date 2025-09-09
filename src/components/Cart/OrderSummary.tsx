@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 
 const OrderSummary = () => {
   const { cart: cartItems, getCartTotal } = useCart();
-  console.log(cartItems[0]);
   const totalPrice = getCartTotal();
   const router = useRouter();
   return (
