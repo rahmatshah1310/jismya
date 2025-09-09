@@ -99,7 +99,9 @@ export default function ProductDetailPage() {
               </div>
 
               {/* Price */}
-              <div className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4 sm:mb-6">Rs. {product.price}</div>
+              <div className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4 sm:mb-6">
+                <span className="text-dark">Rs. {(product.price * (1 - product.discount / 100)).toFixed(2)}</span>
+              </div>
 
               {/* Quantity Selector */}
               <div className="flex items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
