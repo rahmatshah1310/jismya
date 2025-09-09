@@ -126,29 +126,27 @@ export function ProductGrid({ categoryId }: { categoryId: string }) {
 
       {displayedProducts.length > 0 ? (
         <>
-                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7.5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7.5">
             {displayedProducts.map((product: any) => (
               <div key={product._id} className="group">
                 <div className="relative overflow-hidden flex items-center justify-center rounded-lg bg-[#F6F7FB] mb-4 min-h-[250px]">
-                {product.discount > 0 && (
-        <div className="absolute top-2 left-2 bg-red-500  px-3 py-2 rounded-lg shadow-lg z-10">
-          <div className="font-bold text-sm">{product.discount}% OFF</div>
-          {product.saleName && (
-            <div className="text-xs opacity-90">{product.saleName}</div>
-          )}
-        </div>
-      )}
-                  <Image 
-                    src={product?.imageUrl || product.imgs?.previews?.[0] || "/images/products/product-1-sm-1.png"} 
-                    alt={product.productName} 
-                    width={250} 
-                    height={250} 
-                    className="object-cover w-full h-[250px]" 
+                  {product.discount > 0 && (
+                    <div className="absolute top-2 left-2 bg-red-500  px-3 py-2 rounded-lg shadow-lg z-10">
+                      <div className="font-bold text-sm">{product.discount}% OFF</div>
+                      {product.saleName && <div className="text-xs opacity-90">{product.saleName}</div>}
+                    </div>
+                  )}
+                  <Image
+                    src={product?.imageUrl || product.imgs?.previews?.[0] || "/images/products/product-1-sm-1.png"}
+                    alt={product.productName}
+                    width={250}
+                    height={250}
+                    className="object-cover w-full h-[250px]"
                   />
 
                   <div className="absolute left-0 bottom-0 translate-y-full w-full flex items-center justify-center gap-2.5 pb-5 ease-linear duration-200 group-hover:translate-y-0">
                     {/* Quick View */}
-                    <Link 
+                    <Link
                       href={`/product/${product._id}`}
                       aria-label="button for quick view"
                       className="flex items-center justify-center w-9 h-9 rounded-[5px] shadow-1 ease-out duration-200 text-dark bg-white hover:text-blue"
@@ -217,8 +215,8 @@ export function ProductGrid({ categoryId }: { categoryId: string }) {
 
                 {/* Price */}
                 <span className="flex items-center gap-2 font-medium text-lg">
-                  <span className="text-dark">Rs. {product.discount > 0 ? product.price * (1 - product.discount / 100) : product.price}</span>
-                  {product.discount > 0 && <span className="text-dark-4 line-through">Rs. {product.price}</span>}
+                  <span className="text-dark">Rs. {(product.price * (1 - product.discount / 100)).toFixed(2)}</span>
+                  {product.discount > 0 && <span className="text-dark-4 line-through">Rs. {product.price.toFixed(2)}</span>}
                 </span>
               </div>
             ))}
@@ -247,5 +245,3 @@ export function ProductGrid({ categoryId }: { categoryId: string }) {
     </div>
   );
 }
-
-
