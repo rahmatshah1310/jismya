@@ -42,6 +42,12 @@ export default function ProductDetailPage() {
     );
   }
 
+  const discountedPrice =
+  product.discount > 0
+    ? Number((product.price * (1 - product.discount / 100)).toFixed(2))
+    : product.price;
+
+
   return (
     <div className="min-h-screen bg-gray-50 sm:mt-36 mt-55">
       <div key={product._id} className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-8 md:py-12">
@@ -124,7 +130,8 @@ export default function ProductDetailPage() {
                     {
                       _id: product._id,
                       name: product.productName,
-                      price: product.price,
+                      price: discountedPrice,
+                      discount:product.discount,
                       image: product.imageUrl,
                     },
                     quantity
