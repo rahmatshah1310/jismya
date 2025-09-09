@@ -5,6 +5,7 @@ import Link from "next/link";
 
 const SingleItem = ({ item }) => {
   const { removeFromCart } = useCart();
+  console.log(item.discountedPrice,"pricein singel item..........")
 
   const handleRemoveFromCart = () => {
     removeFromCart(item._id);
@@ -14,14 +15,18 @@ const SingleItem = ({ item }) => {
     <div className="flex items-center justify-between gap-5">
       <div className="w-full flex items-center gap-6">
         <Link href={`/product/${item._id}`} className="flex items-center justify-center rounded-[10px] bg-gray-3 max-w-[90px] w-full h-22.5">
-          <Image src={item.image || item.imageUrl || "/images/products/product-1-sm-1.png"} alt="product" width={100} height={100} className="w-full h-full object-cover rounded-[5px]" />
+          <Image
+            src={item.image || item.imageUrl || "/images/products/product-1-sm-1.png"}
+            alt="product"
+            width={100}
+            height={100}
+            className="w-full h-full object-cover rounded-[5px]"
+          />
         </Link>
 
         <div>
-          <h3 className="font-medium text-dark mb-1 ease-out duration-200 hover:text-blue">
-            {item.productName}
-          </h3>
-          <p className="text-custom-sm">Price: ${item.discountedPrice ?? item.price}</p>
+          <h3 className="font-medium text-dark mb-1 ease-out duration-200 hover:text-blue">{item.productName}</h3>
+          <p className="text-custom-sm">Price: Rs.{item.discountedPrice ?? item.price}</p>
         </div>
       </div>
 
@@ -30,14 +35,7 @@ const SingleItem = ({ item }) => {
         aria-label="button for remove product from cart"
         className="flex items-center justify-center rounded-lg max-w-[38px] w-full h-9.5 bg-gray-2 border border-gray-3 text-dark ease-out duration-200 hover:bg-red-light-6 hover:border-red-light-4 hover:text-red"
       >
-        <svg
-          className="fill-current"
-          width="22"
-          height="22"
-          viewBox="0 0 22 22"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
+        <svg className="fill-current" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
             fillRule="evenodd"
             clipRule="evenodd"
