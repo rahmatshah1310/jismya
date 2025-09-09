@@ -181,7 +181,7 @@ const Checkout = () => {
                               <p className="text-dark">{item.productName}</p>
                             </div>
                             <div>
-                              <p className="text-dark text-right">${(item.discountedPrice ?? item.price) * (item.quantity || 1)}</p>
+                              <p className="text-dark text-right">Rs.{(item.discountedPrice ?? item.price) * (item.quantity || 1)}</p>
                             </div>
                           </div>
                         ))}
@@ -192,7 +192,7 @@ const Checkout = () => {
                             <p className="font-medium text-lg text-dark">Total</p>
                           </div>
                           <div>
-                            <p className="font-medium text-lg text-dark text-right">${subtotal}</p>
+                            <p className="font-medium text-lg text-dark text-right">Rs.{subtotal}</p>
                           </div>
                         </div>
                       </div>
