@@ -13,6 +13,7 @@ interface ProductCardProps {
     price: number;
     discount?: number;
     saleName?: string;
+    discountedPrice?:number
     imageUrl?: string;
     imgs?: {
       previews: string[];
@@ -27,12 +28,19 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const isInWishlist = wishlist?.find((p) => p._id === product._id);
   const isProcessing = processingItems[product._id];
 
+  const discountedPrice =
+  product.discount > 0
+    ? Number((product.price * (1 - product.discount / 100)).toFixed(2))
+    : product.price;
+
   const handleAddToCart = () => {
     addToCart(
       {
         _id: product._id,
         name: product.productName,
         price: product.price,
+        discount: product.discount,
+        discountedPrice: discountedPrice,
         image: product.imageUrl || product.imgs?.previews?.[0],
       },
       1
