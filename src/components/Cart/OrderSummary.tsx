@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 
 const OrderSummary = () => {
   const { cart: cartItems, getCartTotal } = useCart();
+  console.log(cartItems[0]);
   const totalPrice = getCartTotal();
   const router = useRouter();
   return (
@@ -33,6 +34,7 @@ const OrderSummary = () => {
               </div>
               <div>
                 <p className="text-dark text-right">
+                  {item.discount}
                   Rs. {(item.discountedPrice ?? item.price) * item.quantity}
                 </p>
               </div>
@@ -45,9 +47,7 @@ const OrderSummary = () => {
               <p className="font-medium text-lg text-dark">Total</p>
             </div>
             <div>
-              <p className="font-medium text-lg text-dark text-right">
-                Rs. {totalPrice}
-              </p>
+              <p className="font-medium text-lg text-dark text-right">Rs. {totalPrice}</p>
             </div>
           </div>
 
