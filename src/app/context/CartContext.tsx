@@ -56,12 +56,31 @@ export function CartProvider({ children }) {
       // If the product exists in wishlist, remove it when adding to cart
       setWishlist((prev) => prev.filter((item) => item._id !== product._id));
 
+      // Calculate the effective price (discounted or original)
+      const basePrice = typeof product.price === "number" ? product.price : 0;
+      const hasDiscountedPrice = typeof product.discountedPrice === "number" && product.discountedPrice >= 0;
+      const hasDiscountPercent = typeof product.discount === "number" && product.discount > 0;
+
+      const effectivePrice = hasDiscountedPrice
+        ? product.discountedPrice
+        : hasDiscountPercent
+        ? Number((basePrice * (1 - product.discount / 100)).toFixed(2))
+        : basePrice;
+
+      // Create cart item with calculated price
+      const cartItem = {
+        ...product,
+        price: effectivePrice,
+        originalPrice: basePrice,
+        quantity
+      };
+
       setCart((prev) => {
         const index = prev.findIndex((item) => item._id === product._id);
         if (index > -1) {
           return prev.map((item, i) => (i === index ? { ...item, quantity: item.quantity + quantity } : item));
         } else {
-          return [...prev, { ...product, quantity }];
+          return [...prev, cartItem];
         }
       });
 
@@ -98,7 +117,23 @@ export function CartProvider({ children }) {
     setCart([]);
   }, []);
 
-  const getCartTotal = useCallback(() => cart.reduce((total, item) => total + item.price * item.quantity, 0), [cart]);
+  const getCartTotal = useCallback(
+    () =>
+      cart.reduce((total, item) => {
+        const basePrice = typeof item.price === "number" ? item.price : 0;
+        const hasDiscountedPrice = typeof item.discountedPrice === "number" && item.discountedPrice >= 0;
+        const hasDiscountPercent = typeof item.discount === "number" && item.discount > 0;
+
+        const effectivePrice = hasDiscountedPrice
+          ? item.discountedPrice
+          : hasDiscountPercent
+          ? +(basePrice * (1 - item.discount / 100)).toFixed(2)
+          : basePrice;
+
+        return total + effectivePrice * (item.quantity || 1);
+      }, 0),
+    [cart]
+  );
   const getCartItemCount = useCallback(() => cart.reduce((count, item) => count + item.quantity, 0), [cart]);
 
   // -------------------- Wishlist Functions --------------------
