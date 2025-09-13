@@ -17,11 +17,10 @@ const NewArrival = () => {
     );
   if (error || !products?.data || products.data.length === 0) return <div>No products found</div>;
 
-  // ✅ Sort products by createdAt (latest first)
+  // ort products by createdAt (latest first)
   const sortedProducts = [...products.data].sort((a: any, b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
-  console.log(sortedProducts,"sortedproducts................");
 
-  // ✅ Take only the latest 8 products (you can adjust the number)
+  // Take only the latest 8 products (you can adjust the number)
   const latestProducts = sortedProducts.slice(0, 8);
 
   return (
