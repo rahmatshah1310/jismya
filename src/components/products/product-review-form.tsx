@@ -76,14 +76,14 @@ export default function ProductReview({ productId }: { productId: string | numbe
                 </button>
               );
             })}
-
           </div>
           <p className="text-sm text-dark-4 mb-4">{rating > 0 && `${getRatingText(rating)} (${rating}/5)`}</p>
           <button
             onClick={handleRatingSubmit}
             disabled={!rating || createRating.isPending}
-            className={`px-6 py-2 rounded-md font-medium ease-in duration-150 ${!rating || createRating.isPending ? "bg-gray-3 text-dark-5 cursor-not-allowed" : "bg-blue hover:bg-blue-dark text-white"
-              }`}
+            className={`px-6 py-2 rounded-md font-medium ease-in duration-150 ${
+              !rating || createRating.isPending ? "bg-gray-3 text-dark-5 cursor-not-allowed" : "bg-blue hover:bg-blue-dark text-white"
+            }`}
           >
             {createRating.isPending ? <BeatLoader color="lightBlue" /> : "Submit Rating"}
           </button>
@@ -111,7 +111,7 @@ export default function ProductReview({ productId }: { productId: string | numbe
             onChange={(e) => setReviewDescription(e.target.value)}
             placeholder="Your Review"
             rows={4}
-            className="w-full px-4 py-2 border border-gray-3 rounded-md bg-gray-1 placeholder:text-dark-5 outline-none focus:border-transparent focus:shadow-input focus:ring-2 focus:ring-blue/20"
+            className="w-full px-4 py-2 border border-gray-3 rounded-md bg-gray-1 placeholder:text-dark-5 outline-none focus:border-transparent focus:shadow-input focus:ring-2 focus:ring-blue/20 resize-none overflow-y-auto"
           />
           <label className="flex items-center gap-2">
             <input
@@ -125,8 +125,9 @@ export default function ProductReview({ productId }: { productId: string | numbe
           <button
             type="submit"
             disabled={createReview.isPending}
-            className={`px-6 py-2 rounded-md font-medium ease-in duration-150 ${createReview.isPending ? "bg-gray-3 text-dark-5 cursor-not-allowed" : "bg-blue hover:bg-blue-dark text-white"
-              }`}
+            className={`px-6 py-2 rounded-md font-medium ease-in duration-150 ${
+              createReview.isPending ? "bg-gray-3 text-dark-5 cursor-not-allowed" : "bg-blue hover:bg-blue-dark text-white"
+            }`}
           >
             {createReview.isPending ? <BeatLoader color="lightBlue" /> : "Submit Review"}
           </button>
@@ -135,5 +136,3 @@ export default function ProductReview({ productId }: { productId: string | numbe
     </div>
   );
 }
-
-
