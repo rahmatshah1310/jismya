@@ -21,7 +21,9 @@ const Cart = () => {
           <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
             <div className="flex flex-wrap items-center justify-between gap-5 mb-7.5">
               <h2 className="font-medium text-dark text-2xl">Your Cart</h2>
-              <button className="text-blue" onClick={() => clearCart()}>Clear Shopping Cart</button>
+              <button className="text-blue" onClick={() => clearCart()}>
+                Clear Shopping Cart
+              </button>
             </div>
 
             <div className="bg-white rounded-[10px] shadow-1">
@@ -51,10 +53,7 @@ const Cart = () => {
                   </div>
 
                   {/* <!-- cart item --> */}
-                  {cartItems.length > 0 &&
-                    cartItems.map((item, key) => (
-                      <SingleItem item={item} key={key} />
-                    ))}
+                  {cartItems.length > 0 && cartItems.map((item, key) => <SingleItem item={item} key={key} />)}
                 </div>
               </div>
             </div>
@@ -68,14 +67,7 @@ const Cart = () => {
         <>
           <div className="text-center mt-8">
             <div className="mx-auto pb-7.5">
-              <svg
-                className="mx-auto"
-                width="100"
-                height="100"
-                viewBox="0 0 100 100"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
+              <svg className="mx-auto" width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="50" cy="50" r="50" fill="#F3F4F6" />
                 <path
                   fill-rule="evenodd"
@@ -102,7 +94,7 @@ const Cart = () => {
 
             <Link
               href="/shop"
-              className="w-96 mx-2px sm:mx-auto flex justify-center font-medium text-white bg-dark py-[13px]  px-6 rounded-md ease-out duration-200 hover:bg-opacity-95"
+              className="w-96 mx-auto flex justify-center font-medium text-white bg-dark py-[13px] px-6 rounded-md ease-out duration-200 hover:bg-opacity-95"
             >
               Continue Shopping
             </Link>
